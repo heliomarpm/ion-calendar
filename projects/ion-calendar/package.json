@@ -1,0 +1,23 @@
+{
+  "name": "@heliomarpm/ion-calendar",
+  "version": "0.0.1",
+  "description": "A date picker component for ionic2+, this component is a update forked from HsuanXyz/ion2-calendar@3.5.0 ",
+  "author": "heliomarpm",
+  "license": "MIT",
+  "peerDependencies": {
+    "moment": "^2.29.1"
+  },
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/heliomarpm/ion-calendar.git"
+  },
+  "keywords": [
+    "ionic2","ionic3","ionic4","ionic5",
+    "ion-calendar", "calendar","month-calendar",
+    "Datepicker",
+    "date-range"
+  ],
+  "devDependencies": {
+    "tslib": "^2.0.0"
+  }  
+}
