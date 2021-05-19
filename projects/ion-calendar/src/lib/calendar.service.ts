@@ -118,7 +118,6 @@ export class CalendarService {
 	}
 
 	createCalendarDay(time: number, opt: CalendarModalOptions, month?: number): CalendarDay {
-		debugger;
 		//const _time = moment(time);
 		const date = moment(time);
 		const isToday = moment().isSame(date, 'days');
@@ -132,13 +131,13 @@ export class CalendarService {
 		else {
 			disable = opt.disableWeeks.indexOf(date.toDate().getDay()) !== -1;
 
-			if (!disable) {
+			if (!disable && opt.to != 0) {
 
 				const _rangeBeg = moment(opt.from).valueOf();
 				let _rangeEnd = moment(opt.to).valueOf();
 				let isNotBetween = true;
 
-				if (_rangeEnd === 0) _rangeEnd = moment().valueOf();
+				//if (_rangeEnd === 0) _rangeEnd = moment().set('days', 1).valueOf();
 
 				if (!opt.canBackwardsSelected) {
 					isNotBetween = !date.isBetween(_rangeBeg, _rangeEnd, 'days', '[]');
@@ -245,7 +244,6 @@ export class CalendarService {
 	}
 
 	createMonthsByPeriod(startTime: number, monthsNum: number, opt: CalendarModalOptions): Array<CalendarMonth> {
-		debugger;
 		let _array: Array<CalendarMonth> = [];
 
 		let _start = new Date(startTime);

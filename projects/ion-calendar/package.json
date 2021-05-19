@@ -19,7 +19,7 @@
     "@angular/common": "~11.2.0",
     "@angular/core": "~11.2.0"
   },
-  "devDependencies": {
+  "dependencies": {
     "tslib": "^2.0.0"
   }  
 }
