@@ -1,17 +1,17 @@
 <div class="title">
-    <ng-template [ngIf]="_showMonthPicker" [ngIfElse]="title">
-        <ion-button type="button" fill="clear" class="switch-btn"
-            [attr.aria-label]="getDate(monthOpt.original.time) | date:MONTH_DATE_FORMAT" (click)="switchView(false)">
-            {{ _monthFormat(monthOpt.original.time) }}
-            <ion-icon class="arrow-dropdown" [name]="switchIcon(false)"></ion-icon>
+    <ng-template [ngIf]="showMonthPicker || showYearPicker" [ngIfElse]="title">
+        <ion-button type="button" fill="clear" class="switch-btn" (click)="switchView()">
+            {{ _monthFormat(monthOpt.original.time) }}            
+            <ion-icon class="arrow-dropdown" [name]="switchIcon()"></ion-icon>
         </ion-button>
     </ng-template>
     <ng-template #title>
-        <div class="switch-btn" [attr.aria-label]="getDate(monthOpt.original.time) | date:MONTH_DATE_FORMAT">
-            {{ _monthFormat(monthOpt.original.time) }}
+        <div class="switch-btn">
+            {{ _monthFormat(monthOpt.original.time) | uppercase }}
         </div>
     </ng-template>
-    <ng-template [ngIf]="_showToggleButtons">
+
+    <ng-template [ngIf]="showToggleButtons">
         <ion-button type="button" fill="clear" class="back" [disabled]="!canBack()" (click)="prev()">
             <ion-icon slot="icon-only" size="small" name="chevron-back"></ion-icon>
         </ion-button>
@@ -20,7 +20,9 @@
         </ion-button>
     </ng-template>
 </div>
-<ng-template [ngIf]="_view === 'days'" [ngIfElse]="monthPicker">
+
+<ng-template #viewDays [ngIf]="_view === 'days'">
+    <!--  [ngIfElse]="monthPicker"> -->
     <ion-calendar-week color="transparent" [weekArray]="_d.weekdays" [weekStart]="_d.weekStart">
     </ion-calendar-week>
 
@@ -31,14 +33,27 @@
     </ion-calendar-month>
 </ng-template>
 
-<ng-template #monthPicker> <!--  [ngIf]="_view === 'month'" [ngIfElse]="yearPicker"> -->
-    <ion-month-picker [color]="_d.color" [monthFormat]="_options?.monthPickerFormat"
-        (select)="monthOnSelect($event)" [month]="monthOpt">
+<ng-template #viewMonths [ngIf]="_view === 'month'">
+    <ion-month-picker
+        (select)="monthOnSelect($event)"
+        [color]="_d.color"  
+        [month]="monthOpt" 
+        [monthFormat]="options?.monthPickerFormat">
     </ion-month-picker>
 </ng-template>
 
-<!-- <ng-template #yearPicker>
-    <ion-year-picker [color]="_d?.color" [yearFormat]="_options?.monthPickerFormat"
-        (select)="monthOnSelect($event)" [year]="monthOpt">
+<ng-template #viewYears [ngIf]="_view === 'year'">
+    <ion-year-picker 
+        (select)="yearOnSelect($event)" 
+        [color]="_d?.color" 
+        [year]="monthOpt.original.year" 
+        [yearStep]="yearStep">
     </ion-year-picker>
+</ng-template>
+
+<!-- <ng-template [ngIf]="_view === 'year'">
+    <ion-calendar-year-picker [color]="_d.color" (onSelect)="yearOnSelect($event)"
+        (onYearRangeUppdated)="onYearRangeUppdatedAction($event)"
+        [year]="_monthFormat(monthOpt.original.time).substr(-4)" [yearStep]="yearStep">
+    </ion-calendar-year-picker>
 </ng-template> -->

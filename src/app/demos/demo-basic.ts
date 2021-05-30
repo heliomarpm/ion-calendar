@@ -20,9 +20,10 @@ import { CalendarComponentOptions } from 'projects/ion-calendar/src/lib';
   `,
 })
 export class DemoBasicComponent {
-  date = '100-01-01';
+  date = '1970-01-01';
   options: CalendarComponentOptions = {
-    from: new Date(-1, 0, 1),
+    from: new Date(1950, 0, 1),
+    showYearPicker: true,
   };
 
   constructor(public modalCtrl: ModalController) {}

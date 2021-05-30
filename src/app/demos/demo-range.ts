@@ -17,13 +17,7 @@ import { CalendarComponentOptions } from 'projects/ion-calendar/src/lib';
   `,
 })
 export class DemoRangeComponent {
-  date: {
-    from: string;
-    to: string;
-  } = {
-    from: '2018-01-01',
-    to: '2018-01-05',
-  };
+  date: {from: string; to: string} = {from: '2018-01-01',to: '2018-01-05'};
   options: CalendarComponentOptions = {
     from: new Date(2000, 0, 1),
     pickMode: 'range',

@@ -1,7 +1,7 @@
 <div [class]="color">
   <ng-template [ngIf]="!_isRange" [ngIfElse]="rangeBox">
     <div class="days-box">
-      <ng-template ngFor let-day [ngForOf]="month.days" [ngForTrackBy]="trackByTime">
+      <ng-template ngFor let-day [ngForOf]="month.days"><!--  [ngForTrackBy]="trackByTime">   -->
         <div class="days">
           <ng-container *ngIf="day">
             <button type='button' 
@@ -25,7 +25,7 @@
 
   <ng-template #rangeBox>
     <div class="days-box">
-      <ng-template ngFor let-day [ngForOf]="month.days" [ngForTrackBy]="trackByTime">
+      <ng-template ngFor let-day [ngForOf]="month.days"><!--  [ngForTrackBy]="trackByTime">   -->
         <div class="days" 
         	 [class.startSelection]="isStartSelection(day)" 
         	 [class.endSelection]="isEndSelection(day)"

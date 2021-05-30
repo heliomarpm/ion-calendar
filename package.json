@@ -10,7 +10,8 @@
     "test": "ng test",
     "lint": "ng lint",
     "e2e": "ng e2e",
-    "pack": "cd dist/ion-calendar && npm pack"
+    "package": "cd dist/ion-calendar && npm pack",
+    "release": "npm run build && npm run package"
   },
   "private": false,
   "devDependencies": {

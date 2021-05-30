@@ -1,7 +1,13 @@
+<!-- && month.original.year === _thisMonth.getFullYear()" -->
 <div [class]="'month-picker ' + color">
-  <div class="month-packer-item"
-    [class.this-month]=" i === _thisMonth.getMonth() && month.original.year === _thisMonth.getFullYear()"
-    *ngFor="let item of _monthFormat; let i = index">
-    <button type="button" (click)="_onSelect(i)" [attr.aria-label]="getDate(i) | date:MONTH_FORMAT">{{ item }}</button>
+  <div class="month-packer-item" 
+    *ngFor="let m of _monthFormat; let idx = index"
+    [class.this-month]=" idx === _thisMonth.getMonth()"
+    [class.active]=" idx === monthSelected">
+
+    <button type="button" (click)="_onSelect(idx)" [attr.aria-label]="getDate(idx) | date:MONTH_FORMAT">
+      {{ m }}
+    </button>
+
   </div>
 </div>

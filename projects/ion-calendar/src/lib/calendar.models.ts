@@ -66,6 +66,9 @@ export interface CalendarOptions {
    * show last month & next month days fill six weeks
    */
   showAdjacentMonthDay?: boolean;
+  displayMode?: DisplayMode;
+  weeks?: number;
+  continuous?: boolean;
 }
 
 export interface CalendarModalOptions extends CalendarOptions {
@@ -96,6 +99,7 @@ export interface CalendarModalOptions extends CalendarOptions {
 export interface CalendarComponentOptions extends CalendarOptions {
   showToggleButtons?: boolean;
   showMonthPicker?: boolean;
+  showYearPicker?: boolean;
   monthPickerFormat?: string[];
 }
 
@@ -109,6 +113,10 @@ export class CalendarResult {
   date: number;
 }
 
+export class CalendarComponentWeekChange {
+  oldWeek: CalendarResult;
+  newWeek: CalendarResult;
+}
 export class CalendarComponentMonthChange {
   oldMonth: CalendarResult;
   newMonth: CalendarResult;
@@ -119,3 +127,4 @@ export type Colors = 'primary' | 'secondary' | 'danger' | 'light' | 'dark' | str
 export type PickMode = 'multi' | 'single' | 'range';
 export type CalendarComponentTypeProperty = 'string' | 'js-date' | 'moment' | 'time' | 'object';
 export type CalendarComponentPayloadTypes = string | Date | number | {};
+export type DisplayMode = 'month' | 'week';

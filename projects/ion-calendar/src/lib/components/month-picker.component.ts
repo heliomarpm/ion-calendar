@@ -41,4 +41,8 @@ export class MonthPickerComponent {
   getDate(month: number) {
     return new Date(this._thisMonth.getFullYear(), month, 1);
   }
+
+  get monthSelected(): number {
+    return this.month.original.month;
+  }
 }

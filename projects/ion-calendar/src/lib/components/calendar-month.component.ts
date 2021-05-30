@@ -85,6 +85,7 @@ export class CalendarMonthComponent implements ControlValueAccessor, AfterViewIn
   }
 
   trackByTime(index: number, item: CalendarOriginal): number {
+    console.log('trackByTime', index, item);
     return item ? item.time : index;
   }
 

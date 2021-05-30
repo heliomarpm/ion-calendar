@@ -1,5 +1,4 @@
 import { Component, EventEmitter, Input, Output } from '@angular/core';
-import { CalendarMonth } from '../calendar.models';
 import { defaults } from '../utils/config';
 
 @Component({
@@ -8,8 +7,29 @@ import { defaults } from '../utils/config';
   styleUrls: ['./year-picker.component.scss']
 })
 export class YearPickerComponent {
+  _thisYear = new Date();
+  _yearRanges = [ ];
+
+  private _year: number;
+  get year(): number {
+    return this._year;
+  }
   @Input()
-  year: CalendarMonth;
+  set year(value: number) {
+    this._year = value;
+  }
+
+  private _yearStep: number;
+  get yearStep(): number {
+    return this._yearStep;
+  }
+  @Input()
+  set yearStep(value: number) {
+    if (this._year) {
+      this._yearStep = value;
+      this.setYearRanges(this.year, value);
+     }
+  }
 
   @Input()
   color = defaults.COLOR;
@@ -17,28 +37,29 @@ export class YearPickerComponent {
   @Output()
   select: EventEmitter<number> = new EventEmitter();
 
-  _thisYear = new Date();
-  _yearFormat: string[];
+  constructor() {
+    this.setYearRanges(this._thisYear.getFullYear(), 0);
+  }
 
-  YEAR_FORMAT = 'YYYY';
+  private setYearRanges(year: number, step: number) {
+    const yearBase = year + step;
+    const start = yearBase - 7;
+    const end = yearBase + 7;
 
-  @Input()
-  set yearFormat(value: string[]) {
-    if (Array.isArray(value) && value.length === 12) {
-      this._yearFormat = value;
+    this._yearRanges = [];
+    for (var i = start; i <= end; i++) {
+      this._yearRanges.push(i);
     }
   }
-  get yearFormat(): string[] {
-    return this._yearFormat;
-  }
-
-  constructor() {}
 
   _onSelect(year: number): void {
     this.select.emit(year);
   }
 
-  getDate(year: number) {
-    return new Date(year, 0, 1);
+  ngOnChanges(changes: any) {
+    if (changes.year) {
+      this._year = changes.year.currentValue;
+      this.setYearRanges(this._year, 0);
+    }
   }
 }
