@@ -42,7 +42,7 @@ export class YearPickerComponent {
   }
 
   private setYearRanges(year: number, step: number) {
-    const yearBase = year + step;
+    const yearBase = year + (step * 15);
     const start = yearBase - 7;
     const end = yearBase + 7;
 
