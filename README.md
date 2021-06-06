@@ -211,8 +211,9 @@ export class HomePage {
 | color                | string                  | `'primary'`                                                                            | 'primary', 'secondary', 'danger', 'light', 'dark' |
 | pickMode             | string                  | `single`                                                                               | 'multi', 'range', 'single'                        |
 | showToggleButtons    | boolean                 | `true`                                                                                 | show toggle buttons                               |
-| showMonthPicker      | boolean                 | `true`                                                                                 | show month picker                                 |
 | monthPickerFormat    | Array<string>           | `['JAN', 'FEB', 'MAR', 'APR', 'MAY', 'JUN', 'JUL', 'AUG', 'SEP', 'OCT', 'NOV', 'DEC']` | month picker format                               |
+| showMonthPicker      | boolean                 | `true`                                                                                 | show month picker                                 |
+| showYearPicker      | boolean                 | `true`                                                                                 | show year picker                                 |
 | defaultTitle         | string                  | ''                                                                                     | default title in days                             |
 | defaultSubtitle      | string                  | ''                                                                                     | default subtitle in days                          |
 | disableWeeks         | Array<number>           | `[]`                                                                                   | week to be disabled (0-6)                         |
@@ -239,7 +240,7 @@ import {
   CalendarModalOptions,
   DayConfig,
   CalendarResult
-} from 'ion2-calendar';
+} from 'ion-calendar';
 
 @Component({
   selector: 'page-home',

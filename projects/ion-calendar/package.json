@@ -1,6 +1,6 @@
 {
   "name": "@heliomarpm/ion-calendar",
-  "version": "0.0.3",
+  "version": "0.1.0",
   "description": "A date picker component for ionic2+, this component is a update forked from HsuanXyz/ion2-calendar@3.5.0 ",
   "author": "heliomarpm",
   "license": "MIT",

@@ -142,36 +142,21 @@ export class CalendarService {
 			if (!disable) {
 
 				const _rangeBeg = moment(opt.from).valueOf();
+
 				let _rangeEnd = 0;
 				if (opt.to === 0) {
-					_rangeEnd = moment().add(30, 'days').valueOf()
+					_rangeEnd = moment().add(100000, 'years').valueOf()
 				} else {
 					_rangeEnd = moment(opt.to).valueOf();
 				}
-				let isNotBetween = true;
 
+				let isNotBetween = true;
 				if (!opt.canBackwardsSelected) {
 					isNotBetween = !date.isBetween(_rangeBeg, _rangeEnd, 'days', '[]');
 				} else {
-					isNotBetween = moment(date).isBefore(_rangeBeg); // ? false : isBetween;
+					isNotBetween = moment(date).isBefore(_rangeBeg); 
 				}
-				/*
-				if (_rangeBeg > 0 && _rangeEnd > 0) {
-					if (!opt.canBackwardsSelected) {
-						isNotBetween = !_time.isBetween(_rangeBeg, _rangeEnd, 'days', '[]');
-					} else {
-						isNotBetween = moment(_time).isBefore(_rangeBeg); // ? false : isBetween;
-					}
-				} else if (_rangeBeg > 0 && _rangeEnd === 0) {
-					if (!opt.canBackwardsSelected) {
-						let _addTime = _time.add(1, 'day');
-						isNotBetween = !_addTime.isAfter(_rangeBeg);
-					} else {
-						isNotBetween = false;
-					}
-				}
-				*/
-
+				
 				disable = isNotBetween;
 			}
 

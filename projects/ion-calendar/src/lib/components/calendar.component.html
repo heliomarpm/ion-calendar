@@ -1,5 +1,5 @@
 <div class="title">
-    <ng-template [ngIf]="showMonthPicker || showYearPicker" [ngIfElse]="title">
+    <ng-template [ngIf]="showMonthPicker" [ngIfElse]="title">
         <ion-button type="button" fill="clear" class="switch-btn" (click)="switchView()">
             {{ _monthFormat(monthOpt.original.time) }}            
             <ion-icon class="arrow-dropdown" [name]="switchIcon()"></ion-icon>

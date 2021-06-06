@@ -55,7 +55,11 @@ import { CalendarComponentOptions } from 'projects/ion-calendar/src/lib';
             </ion-item>
             <ion-item>
               <ion-label>showYearPicker</ion-label>
-              <ion-checkbox [(ngModel)]="_showYearPicker" (ngModelChange)="_changeShowYearPicker($event)"></ion-checkbox>
+              <ion-checkbox
+                [(ngModel)]="_showYearPicker"
+                (ngModelChange)="_changeShowYearPicker($event)"
+                [disabled]="!_showMonthPicker">
+              </ion-checkbox>
             </ion-item>
             <ion-item>
               <ion-label>showAdjacentMonthDay</ion-label>
