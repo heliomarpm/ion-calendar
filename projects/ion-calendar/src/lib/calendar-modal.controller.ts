@@ -1,22 +1,22 @@
 import { Injectable } from '@angular/core';
 import { ModalController } from '@ionic/angular';
-import { OverlayEventDetail } from '@ionic/core';
 
-import { CalendarModalOptions, ModalOptions } from './calendar.models';
-import { CalendarService } from './calendar.service';
-import { CalendarModalComponent } from './components/calendar-modal.component';
+import { ICalendarModalOptions } from './models/ICalendarOptions';
+import { IModalOptions } from './models/IModalOptions';
+import { IonCalendarService } from './ion-calendar.service';
+import { CalendarModalComponent } from './components';
 
 @Injectable()
 export class CalendarModalController {
-    constructor(public modalCtrl: ModalController, public calSvc: CalendarService) { }
+    constructor(public modalCtrl: ModalController, public calSvc: IonCalendarService) { }
 
     /**
      * @deprecated
-     * @param {CalendarModalOptions} calendarOptions
-     * @param {ModalOptions} modalOptions
+     * @param {ICalendarModalOptions} calendarOptions
+     * @param {IModalOptions} modalOptions
      * @returns {any}
      */
-    async openCalendar(calendarOptions: CalendarModalOptions, modalOptions: ModalOptions = {}): Promise<{}> {
+    async openCalendar(calendarOptions: ICalendarModalOptions, modalOptions: IModalOptions = {}): Promise<{}> {
         const options = this.calSvc.safeOpt(calendarOptions);
 
         const calendarModal = await this.modalCtrl

@@ -1,0 +1,104 @@
+$colors: (
+  primary: var(--ion-color-primary, #343434),
+  secondary: var(--ion-color-secondary, #565656),
+  tertiary: var(--ion-color-tertiary, #454552),
+  success: var(--ion-color-success, #2dd36f),
+  warning: var(--ion-color-warning, #ffc409),
+  danger: var(--ion-color-danger, #e72626),
+  dark: var(--ion-color-dark, #222428),
+  medium: var(--ion-color-medium, #92949c),
+  light: var(--ion-color-light, #f4f5f8),
+  transparent: transparent
+);
+
+@function bindColors($color-value) {
+  $value: map-get($colors, $color-value);
+
+  @if $value {
+    @return $value;
+  }
+
+  @else {
+    @return $color-value;
+  }
+}
+
+@mixin month-picker($background-color: primary, $color) {
+  .month-packer-item {
+    &.this-month button {
+      border: 1px solid bindColors($background-color);
+    }
+
+    &.active {
+      button {
+        background-color: bindColors($background-color);
+        color: $color;
+      }
+    }
+  }
+}
+
+:host {
+  .month-picker {
+    margin: 20px 0;
+    display: inline-block;
+    width: 100%;
+  }
+
+  .month-packer-item {
+    width: 25%;
+    box-sizing: border-box;
+    float: left;
+    height: 50px;
+    padding: 5px;
+
+    button {
+      border-radius: 32px;
+      width: 100%;
+      height: 100%;
+      font-size: 0.9em;
+      background-color: transparent;
+      color: #122;
+    }
+  }
+
+  .month-picker.primary {
+    @include month-picker(primary, #fff);
+  }
+
+  .month-picker.secondary {
+    @include month-picker(secondary, #fff);
+  }
+
+  .month-picker.tertiary {
+    @include month-picker(tertiary, #fff);
+  }
+
+  .month-picker.success {
+    @include month-picker(success, #fff);
+  }
+
+  .month-picker.warning {
+    @include month-picker(warning, #000);
+  }
+
+  .month-picker.danger {
+    @include month-picker(danger, #fff);
+  }
+
+  .month-picker.dark {
+    @include month-picker(dark, #fff);
+  }
+
+  .month-picker.medium {
+    @include month-picker(medium, #fff);
+  }
+
+  .month-picker.light {
+    @include month-picker(light, #000);
+  }
+
+  .month-picker.transparent {
+    @include month-picker(transparent, #000);
+  }
+}

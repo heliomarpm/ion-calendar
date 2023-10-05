@@ -1,0 +1,10 @@
+.github
+src
+test
+coverage
+tsconfig.json
+cmd
+# licence
+docs
+projects
+*.map

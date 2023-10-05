@@ -1,0 +1,12 @@
+<div [class]="'year-picker ' + color">
+  <div class="year-packer-item"
+    *ngFor="let y of _yearRanges"
+    [class.this-year]="y === _thisYear.getFullYear()"
+    [class.active]="y === year">
+
+    <button type="button" (click)="_onSelect(y)" >
+      {{ y }}
+    </button>
+
+  </div>
+</div>

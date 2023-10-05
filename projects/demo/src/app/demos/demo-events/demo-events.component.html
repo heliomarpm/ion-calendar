@@ -1,0 +1,12 @@
+<hr>
+<h3 style="text-align: center;">events</h3>
+<ion-calendar [(ngModel)]="date"
+              (change)="onChange($event)"
+              (select)="onSelect($event)"
+              (selectStart)="onSelectStart($event)"
+              (selectEnd)="onSelectEnd($event)"
+              (monthChange)="monthChange($event)"
+              [options]="options"
+              type="string"
+              format="yyyy-MM-dd">
+</ion-calendar>

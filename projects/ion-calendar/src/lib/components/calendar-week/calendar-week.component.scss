@@ -1,0 +1,145 @@
+$colors: (
+  primary: var(--ion-color-primary, #343434),
+  secondary: var(--ion-color-secondary, #565656),
+  tertiary: var(--ion-color-tertiary, #454552),
+  success: var(--ion-color-success, #2dd36f),
+  warning: var(--ion-color-warning, #ffc409),
+  danger: var(--ion-color-danger, #e72626),
+  dark: var(--ion-color-dark, #222428),
+  medium: var(--ion-color-medium, #92949c),
+  light: var(--ion-color-light, #f4f5f8),
+  transparent: transparent
+);
+
+@function bindColors($color-value) {
+  $value: map-get($colors, $color-value);
+
+  @if $value {
+    @return $value;
+  }
+
+  @else {
+    @return $color-value;
+  }
+}
+
+@mixin week-toolbar($background-color: primary) {
+  --background: bindColors($background-color);
+}
+
+@mixin week-title($color: primary) {
+  color: bindColors($color);
+}
+
+:host {
+
+  .toolbar-background-md,
+  .toolbar-background-ios {
+    background: transparent;
+  }
+
+  .week-toolbar {
+    --padding-start: 0;
+    --padding-end: 0;
+    --padding-bottom: 0;
+    --padding-top: 0;
+
+    &.primary {
+      @include week-toolbar(primary);
+    }
+
+    &.secondary {
+      @include week-toolbar(secondary);
+    }
+
+    &.tertiary {
+      @include week-toolbar(tertiary);
+    }
+
+    &.success {
+      @include week-toolbar(success);
+    }
+
+    &.warning {
+      @include week-toolbar(warning);
+    }
+
+    &.danger {
+      @include week-toolbar(danger);
+    }
+
+    &.dark {
+      @include week-toolbar(dark);
+    }
+
+    &.medium {
+      @include week-toolbar(medium);
+    }
+
+    &.light {
+      @include week-toolbar(light);
+    }
+
+    &.transparent {
+      @include week-toolbar(transparent);
+    }
+
+    &.toolbar-md {
+      min-height: 44px;
+    }
+  }
+
+  .week-title {
+    margin: 0;
+    height: 44px;
+    width: 100%;
+    padding: 15px 0;
+    color: #333;
+    font-size: 0.9em;
+    font-weight: 600;
+
+    // &.primary {
+    //   @include week-title(primary);
+    // }
+    // &.secondary {
+    //   @include week-title(secondary);
+    // }
+    // &.tertiary {
+    //   @include week-title(tertiary);
+    // }
+    // &.success {
+    //   @include week-title(success);
+    // }
+    // &.warning {
+    //   @include week-title(warning);
+    // }
+    // &.danger {
+    //   @include week-title(danger);
+    // }
+    // &.dark {
+    //   @include week-title(dark);
+    // }
+    // &.medium {
+    //   @include week-title(medium);
+    // }
+    // &.light {
+    //   @include week-title(light);
+    // }
+    // &.transparent {
+    //   @include week-title(transparent);
+    // }
+
+    li {
+      list-style-type: none;
+      display: block;
+      float: left;
+      width: 14%;
+      text-align: center;
+
+      &:nth-of-type(7n),
+      &:nth-of-type(7n + 1) {
+        width: 15%;
+      }
+    }
+  }
+}

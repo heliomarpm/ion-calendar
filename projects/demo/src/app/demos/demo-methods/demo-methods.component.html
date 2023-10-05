@@ -1,0 +1,11 @@
+<hr>
+<h3 style="text-align: center;">methods</h3>
+<ion-button color="secondary" (click)="getCalendarViewDate()">get view date</ion-button>
+<ion-button (click)="serCalendarViewDate()">set view date: 2018-02-01</ion-button>
+<ion-calendar #calendar color="primary"
+              [(ngModel)]="date"
+              (onChange)="onChange($event)"
+              [options]="options"
+              type="string"
+              format="yyyy-MM-dd">
+</ion-calendar>

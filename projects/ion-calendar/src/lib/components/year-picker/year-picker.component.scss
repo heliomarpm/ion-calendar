@@ -1,0 +1,104 @@
+$colors: (
+  primary: var(--ion-color-primary, #343434),
+  secondary: var(--ion-color-secondary, #565656),
+  tertiary: var(--ion-color-tertiary, #454552),
+  success: var(--ion-color-success, #2dd36f),
+  warning: var(--ion-color-warning, #ffc409),
+  danger: var(--ion-color-danger, #e72626),
+  dark: var(--ion-color-dark, #222428),
+  medium: var(--ion-color-medium, #92949c),
+  light: var(--ion-color-light, #f4f5f8),
+  transparent: transparent
+);
+
+@function bindColors($color-value) {
+  $value: map-get($colors, $color-value);
+
+  @if $value {
+    @return $value;
+  }
+
+  @else {
+    @return $color-value;
+  }
+}
+
+@mixin year-picker($background-color: primary, $color) {
+  .year-packer-item {
+    &.this-year button {
+      border: 1px solid bindColors($background-color);
+    }
+
+    &.active {
+      button {
+        background-color: bindColors($background-color);
+        color: $color;
+      }
+    }
+  }
+}
+
+:host {
+  .year-picker {
+    margin: 20px 0;
+    display: inline-block;
+    width: 100%;
+  }
+
+  .year-packer-item {
+    width: 20%;
+    box-sizing: border-box;
+    float: left;
+    height: 50px;
+    padding: 5px;
+
+    button {
+      border-radius: 32px;
+      width: 100%;
+      height: 100%;
+      font-size: 0.9em;
+      background-color: transparent;
+      color: #122;
+    }
+  }
+
+  .year-picker.primary {
+    @include year-picker(primary, #fff);
+  }
+
+  .year-picker.secondary {
+    @include year-picker(secondary, #fff);
+  }
+
+  .year-picker.tertiary {
+    @include year-picker(tertiary, #fff);
+  }
+
+  .year-picker.success {
+    @include year-picker(success, #fff);
+  }
+
+  .year-picker.warning {
+    @include year-picker(warning, #000);
+  }
+
+  .year-picker.danger {
+    @include year-picker(danger, #fff);
+  }
+
+  .year-picker.dark {
+    @include year-picker(dark, #fff);
+  }
+
+  .year-picker.medium {
+    @include year-picker(medium, #fff);
+  }
+
+  .year-picker.light {
+    @include year-picker(light, #000);
+  }
+
+  .year-picker.transparent {
+    @include year-picker(transparent, #000);
+  }
+}

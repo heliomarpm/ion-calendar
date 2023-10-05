@@ -1,0 +1,52 @@
+<div class="title">
+  <ng-template [ngIf]="showMonthPicker" [ngIfElse]="title">
+      <ion-button type="button" fill="clear" class="switch-btn" (click)="switchView()" style="margin-top: -6px;">
+          {{ monthFormat(monthOpt.original.time) }}
+          <ion-icon class="arrow-dropdown" [name]="switchIcon()"></ion-icon>
+      </ion-button>
+  </ng-template>
+
+  <ng-template #title>
+      <div class="switch-btn">
+        {{ monthFormat(monthOpt.original.time) }}
+      </div>
+  </ng-template>
+
+  <ng-template [ngIf]="showToggleButtons">
+      <ion-button type="button" fill="clear" class="back" [disabled]="!canPrev()" (click)="prev()">
+          <ion-icon slot="icon-only" size="small" name="chevron-back"></ion-icon>
+      </ion-button>
+      <ion-button type="button" fill="clear" class="forward" [disabled]="!canNext()" (click)="next()">
+          <ion-icon slot="icon-only" size="small" name="chevron-forward"></ion-icon>
+      </ion-button>
+  </ng-template>
+</div>
+
+<ng-template #viewDays [ngIf]="view === 'days'">
+  <ion-calendar-week color="transparent" [weekArray]="def.weekdays||[]" [weekStart]="def.weekStart||0">
+  </ion-calendar-week>
+
+  <ion-calendar-month class="component-mode" [(ngModel)]="calendarMonthValue" [month]="monthOpt"
+      [readonly]="readonly" (change)="onChanged($event)" (swipe)="swipeEvent($event)" (select)="select.emit($event)"
+      (selectStart)="selectStart.emit($event)" (selectEnd)="selectEnd.emit($event)" [pickMode]="def.pickMode||'single'"
+      [color]="def.color!">
+  </ion-calendar-month>
+</ng-template>
+
+<ng-template #viewMonths [ngIf]="view === 'month'">
+  <ion-month-picker
+      (select)="onMonthSelect($event)"
+      [color]="def.color!"
+      [month]="monthOpt"
+      [monthFormat]="options.monthPickerFormat||[]">
+  </ion-month-picker>
+</ng-template>
+
+<ng-template #viewYears [ngIf]="view === 'year'">
+  <ion-year-picker
+      (select)="onYearSelect($event)"
+      [color]="def.color!"
+      [year]="monthOpt.original.year"
+      [yearStep]="yearStep">
+  </ion-year-picker>
+</ng-template>

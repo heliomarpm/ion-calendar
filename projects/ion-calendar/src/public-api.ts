@@ -1,13 +1,12 @@
 /*
- * Public API Surface of calendar
+ * Public API Surface of ion-calendar
  */
-export * from './lib/index';
 
-// export * from './lib/calendar.models';
-// export * from './lib/calendar-modal.controller';
+export * from './lib/ion-calendar.service';
+export * from './lib/ion-calendar.module';
 
-// export * from './lib/calendar.service';
-// export * from './lib/calendar-options.provider';
-// export * from './lib/calendar.components';
+export * from './lib/components';
+export * from './lib/models';
+export * from './lib/calendar-modal.controller';
+export { DEFAULT_CALENDAR_OPTIONS } from './lib/calendar-options.provider';
 
-// export * from './lib/calendar.module';

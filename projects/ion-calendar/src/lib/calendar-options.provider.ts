@@ -1,4 +1,4 @@
 import { InjectionToken } from '@angular/core';
-import { CalendarModalOptions } from './calendar.models';
+import { ICalendarModalOptions } from './models/ICalendarOptions';
 
-export const DEFAULT_CALENDAR_OPTIONS = new InjectionToken<CalendarModalOptions>('DEFAULT_CALENDAR_MODAL_OPTIONS');
+export const DEFAULT_CALENDAR_OPTIONS = new InjectionToken<ICalendarModalOptions>('DEFAULT_CALENDAR_MODAL_OPTIONS');
