@@ -21,6 +21,7 @@
     "calendar",
     "month-calendar",
     "datepicker",
+    "datepicker-component",
     "date-range",
     "date-multi"
   ],
