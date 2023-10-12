@@ -1,5 +1,5 @@
 import { Inject, Injectable, Optional } from '@angular/core';
-import { ICalendarComponentOptions, ICalendarDay, ICalendarLocale, ICalendarModalOptions, ICalendarMonth, ICalendarOriginal, ICalendarResult, IDayConfig } from './models';
+import { ICalendarDay, ICalendarLocale, ICalendarModalOptions, ICalendarMonth, ICalendarOriginal, ICalendarResult, IDayConfig } from './models';
 import defaultValues, { displayModes, pickModes } from './types';
 import { DateTimeHelper } from './helpers';
 import { DEFAULT_CALENDAR_OPTIONS } from './calendar-options.provider';
@@ -211,9 +211,8 @@ export class IonCalendarService {
     let startDay: number;
     let startIndex = 0;
 
-
-    opt.continuous = true //@obsolete
-    if (opt.continuous) {
+    // opt.continuous = true //@obsolete
+    // if (opt.continuous) {
       if (originalDate.getDay() === 0) {
         startWeek = (opt.weekStart === 0) ? 0 : 1;
         startDay = originalDate.getDate() - (opt.weekStart === 0 ? 0 : 6);
@@ -221,58 +220,58 @@ export class IonCalendarService {
         startWeek = (opt.weekStart === 0) ? 0 : 1;
         startDay = originalDate.getDate() - (opt.weekStart === 0 ? originalDate.getDay() : originalDate.getDay() - 1);
       }
-    } else {
-      if (originalDate.getDay() === 0) {
+    // } else {
+    //   if (originalDate.getDay() === 0) {
 
-        startWeek = opt.weekStart === 0 ? 0 : (originalDate.getDate() - 6 > 1) ? 1 : original.firstWeekDay;
-        startWeek = original.firstWeekDay < 0 ? 6 : original.firstWeekDay - 1;
+    //     startWeek = opt.weekStart === 0 ? 0 : (originalDate.getDate() - 6 > 1) ? 1 : original.firstWeekDay;
+    //     startWeek = original.firstWeekDay < 0 ? 6 : original.firstWeekDay - 1;
 
-        if (opt.weekStart === 0) {
-          startWeek = 0;
-          startDay = originalDate.getDate();
-        } else {
-          if (originalDate.getDate() - 6 > 1) {
-            startWeek = 1;
-            startDay = originalDate.getDate() - 6;
-          } else {
-            startWeek = original.firstWeekDay;
-            startDay = 1;
-            startIndex = startWeek - 1;
-            if (startIndex < 0) {
-              startIndex = 6;
-            }
-          }
-        }
-        if (opt.weekStart === 0) {
-          startWeek = original.firstWeekDay < 0 ? 6 : original.firstWeekDay - 1;
-          startDay = original.firstWeekDay < 0 ? 1 : originalDate.getDate() - 6;
-          startIndex = original.firstWeekDay < 0 ? 6 : original.firstWeekDay - 1;
-        } else {
-          startWeek = 1;
-          startDay = originalDate.getDate() - 6;
-        }
-      } else {
-        if (opt.weekStart === 0) {
-          if (originalDate.getDate() - originalDate.getDay() > 1) {
-            startWeek = 0;
-            startDay = originalDate.getDate() - originalDate.getDay();
-          } else {
-            startWeek = original.firstWeekDay;
-            startDay = 1;
-            startIndex = startWeek;
-          }
-        } else {
-          if (originalDate.getDate() - (originalDate.getDay() - 1) > 1) {
-            startWeek = 1;
-            startDay = originalDate.getDate() - (originalDate.getDay() - 1);
-          } else {
-            startWeek = original.firstWeekDay;
-            startDay = 1;
-            startIndex = startWeek - 1;
-          }
-        }
-      }
-    }
+    //     if (opt.weekStart === 0) {
+    //       startWeek = 0;
+    //       startDay = originalDate.getDate();
+    //     } else {
+    //       if (originalDate.getDate() - 6 > 1) {
+    //         startWeek = 1;
+    //         startDay = originalDate.getDate() - 6;
+    //       } else {
+    //         startWeek = original.firstWeekDay;
+    //         startDay = 1;
+    //         startIndex = startWeek - 1;
+    //         if (startIndex < 0) {
+    //           startIndex = 6;
+    //         }
+    //       }
+    //     }
+    //     if (opt.weekStart === 0) {
+    //       startWeek = original.firstWeekDay < 0 ? 6 : original.firstWeekDay - 1;
+    //       startDay = original.firstWeekDay < 0 ? 1 : originalDate.getDate() - 6;
+    //       startIndex = original.firstWeekDay < 0 ? 6 : original.firstWeekDay - 1;
+    //     } else {
+    //       startWeek = 1;
+    //       startDay = originalDate.getDate() - 6;
+    //     }
+    //   } else {
+    //     if (opt.weekStart === 0) {
+    //       if (originalDate.getDate() - originalDate.getDay() > 1) {
+    //         startWeek = 0;
+    //         startDay = originalDate.getDate() - originalDate.getDay();
+    //       } else {
+    //         startWeek = original.firstWeekDay;
+    //         startDay = 1;
+    //         startIndex = startWeek;
+    //       }
+    //     } else {
+    //       if (originalDate.getDate() - (originalDate.getDay() - 1) > 1) {
+    //         startWeek = 1;
+    //         startDay = originalDate.getDate() - (originalDate.getDay() - 1);
+    //       } else {
+    //         startWeek = original.firstWeekDay;
+    //         startDay = 1;
+    //         startIndex = startWeek - 1;
+    //       }
+    //     }
+    //   }
+    // }
 
     for (let i = startIndex; i < 7 * weeks && (opt.continuous || startDay + (i - startIndex) <= original.howManyDays); i++) {
       let itemTime = new Date(original.year, original.month, startDay + (i - startIndex)).getTime();

@@ -487,12 +487,9 @@ export class CalendarComponent implements ControlValueAccessor, OnInit {
         break;
 
       case 'range':
-        if (value.from) {
-          this.calendarMonthValue[0] = value.from ? this._createCalendarDay(value.from) : null;
-        }
-        if (value.to) {
-          this.calendarMonthValue[1] = value.to ? this._createCalendarDay(value.to) : null;
-        }
+        this.calendarMonthValue[0] = value.from ? this._createCalendarDay(value.from) : null;
+        this.calendarMonthValue[1] = value.to ? this._createCalendarDay(value.to) : null;
+
         break;
 
       case 'multi':

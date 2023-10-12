@@ -1,6 +1,4 @@
-import { Info as luxonInfo } from 'luxon';
 import { ICalendarLocale } from '../models';
-import { DateTimeHelper } from '../helpers';
 
 export type DateType = Date | string | number | null;
 export type CalendarComponentPayloadType = string | number | Date | {};

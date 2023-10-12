@@ -1,6 +1,5 @@
-import { Component, OnInit, ViewChild } from '@angular/core';
-import { ModalController, ToastController } from '@ionic/angular';
-import * as luxon from 'luxon';
+import { Component, ViewChild } from '@angular/core';
+import { ToastController } from '@ionic/angular';
 
 import { CalendarComponent, ICalendarComponentOptions, ICalendarLocale } from '@heliomarpm/ion-calendar';
 

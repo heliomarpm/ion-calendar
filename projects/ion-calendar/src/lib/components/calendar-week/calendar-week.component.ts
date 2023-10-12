@@ -1,6 +1,5 @@
 import { Component, Input } from '@angular/core';
 import defaultValues from '../../types';
-import { ICalendarLocale } from '../../models';
 import { DateTimeHelper } from '../../helpers';
 
 

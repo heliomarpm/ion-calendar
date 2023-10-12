@@ -1,4 +1,4 @@
-import { Component, OnInit } from '@angular/core';
+import { Component } from '@angular/core';
 import { ToastController } from '@ionic/angular';
 
 import { ICalendarComponentOptions } from '@heliomarpm/ion-calendar';
