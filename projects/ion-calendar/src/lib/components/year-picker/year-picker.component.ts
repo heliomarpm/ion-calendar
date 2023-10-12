@@ -14,8 +14,7 @@ export class YearPickerComponent {
   get year(): number {
     return this._year;
   }
-  @Input()
-  set year(value: number) {
+  @Input() set year(value: number) {
     this._year = value;
   }
 
@@ -23,21 +22,18 @@ export class YearPickerComponent {
   get yearStep(): number {
     return this._yearStep;
   }
-  @Input()
-  set yearStep(value: number) {
+  @Input() set yearStep(value: number) {
     if (this._year) {
       this._yearStep = value;
       this.setYearRanges(this.year, value);
     }
   }
 
-  @Input()
-  color = defaultValues.COLOR;
-
-  @Output()
-  select: EventEmitter<number> = new EventEmitter();
+  @Input() color = defaultValues.COLOR;
+  @Output() onSelect: EventEmitter<number> = new EventEmitter();
 
   constructor() {
+    // console.log("YearPickerComponent.Constructor");
     this.setYearRanges(this._thisYear.getFullYear(), 0);
   }
 
@@ -53,7 +49,7 @@ export class YearPickerComponent {
   }
 
   _onSelect(year: number): void {
-    this.select.emit(year);
+    this.onSelect.emit(year);
   }
 
   ngOnChanges(changes: any) {

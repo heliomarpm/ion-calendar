@@ -1,7 +1,7 @@
 <ion-header>
-  <ion-toolbar [color]="def.color">
+  <ion-toolbar [color]="def.color" class="ion-no-border">
     <ion-buttons slot="start">
-      <ion-button type='button' slot="icon-only" fill="clear" (click)="onCancel()">
+      <ion-button type='button' slot="icon-only" shape="round" fill="clear" (click)="cancel()">
         <span *ngIf="def.closeLabel !== '' && !def.closeIcon">{{ def.closeLabel }}</span>
         <ion-icon *ngIf="def.closeIcon" name="close"></ion-icon>
       </ion-button>
@@ -10,10 +10,10 @@
     <ion-title>{{ def.title }}</ion-title>
 
     <ion-buttons slot="end">
-      <ion-button type='button' *ngIf="!!def.clearLabel" fill="clear" [disabled]="!canClear()" (click)="clear()">
+      <ion-button type='button' *ngIf="!!def.clearLabel" shape="round" fill="clear" [disabled]="!canClear()" (click)="clear()">
         <span *ngIf="def.clearLabel !== ''">{{ def.clearLabel }}</span>
       </ion-button>
-      <ion-button type='button' slot="icon-only" *ngIf="!def.autoDone" fill="clear" [disabled]="!canDone()" (click)="done()">
+      <ion-button type='button' slot="icon-only" *ngIf="!def.autoDone" shape="round" fill="clear" [disabled]="!canDone()" (click)="done()">
         <span *ngIf="def.doneLabel !== '' && !def.doneIcon">{{ def.doneLabel }}</span>
         <ion-icon *ngIf="def.doneIcon" name="checkmark"></ion-icon>
       </ion-button>
@@ -22,24 +22,25 @@
 
   <ng-content select="[sub-header]"></ng-content>
 
-  <ion-calendar-week [color]="def.color||''" [weekArray]="def.weekdays||[]" [weekStart]="def.weekStart||0">
+  <ion-calendar-week [color]="def.color" [weekDays]="def.weekdays" [weekStart]="def.weekStart??0">
   </ion-calendar-week>
 
 </ion-header>
 
-<ion-content class="calendar-page" [ngClass]="{'multi-selection': def.pickMode === 'multi'}"
+<ion-content #ionContent class="calendar-page"
+             [ngClass]="{'multi-selection': def.pickMode === 'multi'}"
              (ionScroll)="onScroll($event)"
              [scrollEvents]="true">
 
   <div #months>
     <ng-template ngFor let-month [ngForOf]="calendarMonths" [ngForTrackBy]="trackByIndex" let-i="index">
       <div class="month-box" [attr.id]="'month-' + i">
-        <h4 class="text-center month-title">{{ _monthFormat(month.original.date) }}</h4>
+        <h4 class="text-center month-title">{{ _monthTitle(month.original.date) }}</h4>
         <ion-calendar-month [month]="month"
                             [pickMode]="def.pickMode||'single'"
                             [id]="def.id"
-                            [color]="def.color||''"
-                            (change)="onChange($event)"
+                            [color]="def.color"
+                            (onChange)="onChange($event)"
                             [(ngModel)]="datesTemp">
         </ion-calendar-month>
       </div>

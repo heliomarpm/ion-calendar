@@ -1,7 +1,7 @@
 import { Component } from '@angular/core';
 import { ModalController } from '@ionic/angular';
 
-import { CalendarModalComponent, ICalendarModalOptions } from '@heliomarpm/ion-calendar';
+import { CalendarModalComponent, ICalendarModalOptions, ICalendarResult } from '@heliomarpm/ion-calendar';
 
 @Component({
   selector: 'app-demo-modal-custom-style',
@@ -11,13 +11,16 @@ import { CalendarModalComponent, ICalendarModalOptions } from '@heliomarpm/ion-c
 export class DemoModalCustomStyleComponent {
   date: Date = new Date();
 
-  constructor(public modalCtrl: ModalController) {}
+  constructor(public modalCtrl: ModalController) { }
 
   async openCalendar() {
     const options: ICalendarModalOptions = {
-      title: 'CUSTOM-STYLE',
+      title: 'CUSTOM STYLE',
       defaultDate: this.date,
       cssClass: 'my-class',
+      color: 'success',
+      doneIcon: true,
+      closeIcon: true,
     };
 
     const myCalendar = await this.modalCtrl.create({
@@ -28,12 +31,16 @@ export class DemoModalCustomStyleComponent {
     myCalendar.present();
 
     const event: any = await myCalendar.onDidDismiss();
-    const { data: date, role } = event;
+    const { data, role } = event;
 
     if (role === 'done') {
+      const date = data as ICalendarResult;
       this.date = date.dateObj;
+
+      alert(`date: ${date.string}\n\n role: ${role}`);
     }
-    console.log(date);
+
+    console.log('date', data);
     console.log('role', role);
   }
 }

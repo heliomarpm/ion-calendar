@@ -18,7 +18,7 @@ export class DemoModalMultiComponent {
   constructor(public modalCtrl: ModalController) {}
 
   async openCalendar() {
-    const options: CalendarModalOptions = {
+    const options: ICalendarModalOptions = {
       pickMode: 'multi',
       title: 'MULTI',
       defaultDates: this.dates,
@@ -36,7 +36,7 @@ export class DemoModalMultiComponent {
     const { data: dates, role } = event;
 
     if (role === 'done') {
-      this.dates = [...dates.map((e: CalendarResult) => e.dateObj)];
+      this.dates = [...dates.map((e: ICalendarResult) => e.dateObj)];
     }
     console.log(dates);
     console.log(role);

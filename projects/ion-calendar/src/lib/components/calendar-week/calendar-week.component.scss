@@ -1,34 +1,7 @@
-$colors: (
-  primary: var(--ion-color-primary, #343434),
-  secondary: var(--ion-color-secondary, #565656),
-  tertiary: var(--ion-color-tertiary, #454552),
-  success: var(--ion-color-success, #2dd36f),
-  warning: var(--ion-color-warning, #ffc409),
-  danger: var(--ion-color-danger, #e72626),
-  dark: var(--ion-color-dark, #222428),
-  medium: var(--ion-color-medium, #92949c),
-  light: var(--ion-color-light, #f4f5f8),
-  transparent: transparent
-);
-
-@function bindColors($color-value) {
-  $value: map-get($colors, $color-value);
-
-  @if $value {
-    @return $value;
-  }
-
-  @else {
-    @return $color-value;
-  }
-}
+@import '../index.scss';
 
 @mixin week-toolbar($background-color: primary) {
   --background: bindColors($background-color);
-}
-
-@mixin week-title($color: primary) {
-  color: bindColors($color);
 }
 
 :host {
@@ -94,39 +67,11 @@ $colors: (
     height: 44px;
     width: 100%;
     padding: 15px 0;
-    color: #333;
     font-size: 0.9em;
-    font-weight: 600;
+    font-weight: bolder;
 
-    // &.primary {
-    //   @include week-title(primary);
-    // }
-    // &.secondary {
-    //   @include week-title(secondary);
-    // }
-    // &.tertiary {
-    //   @include week-title(tertiary);
-    // }
-    // &.success {
-    //   @include week-title(success);
-    // }
-    // &.warning {
-    //   @include week-title(warning);
-    // }
-    // &.danger {
-    //   @include week-title(danger);
-    // }
-    // &.dark {
-    //   @include week-title(dark);
-    // }
-    // &.medium {
-    //   @include week-title(medium);
-    // }
-    // &.light {
-    //   @include week-title(light);
-    // }
     // &.transparent {
-    //   @include week-title(transparent);
+    //   color: #333;
     // }
 
     li {

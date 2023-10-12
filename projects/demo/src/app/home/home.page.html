@@ -3,42 +3,30 @@
     <ion-title>
       Blank
     </ion-title>
+    <ion-toggle slot="end" (ionChange)="toggleTheme($event)" />
   </ion-toolbar>
 </ion-header>
 
-<ion-content [fullscreen]="true">
+<ion-content [fullscreen]="true" class="ion-padding">
   <ion-header collapse="condense">
     <ion-toolbar>
       <ion-title size="large">Blank</ion-title>
     </ion-toolbar>
   </ion-header>
 
-  <!-- <ion-calendar></ion-calendar> -->
   <div>
+
+    <h2>Modal mode (result in console.log)</h2>
+    <app-demo-modal-basic></app-demo-modal-basic>
+    <app-demo-modal-config-days></app-demo-modal-config-days>
+    <app-demo-modal-custom-style></app-demo-modal-custom-style>
+    <app-demo-modal-disable-week></app-demo-modal-disable-week>
+    <app-demo-modal-locale></app-demo-modal-locale>
+    <app-demo-modal-multi></app-demo-modal-multi>
+    <app-demo-modal-range></app-demo-modal-range>
+    <app-demo-modal-range-backwards></app-demo-modal-range-backwards>
+    <app-demo-modal-range-end-date></app-demo-modal-range-end-date>
+
     <app-demo-basic></app-demo-basic>
-    <!-- <app-demo-events></app-demo-events>
-    <app-demo-methods></app-demo-methods> -->
-    <!-- <app-demo-options></app-demo-options> -->
-    <!-- <h2>modal mode</h2>
-  <demo-modal-basic></demo-modal-basic>
-  <demo-modal-multi></demo-modal-multi>
-  <demo-modal-range></demo-modal-range>
-  <demo-modal-range-backwards></demo-modal-range-backwards>
-  <demo-modal-custom-sub-header></demo-modal-custom-sub-header>
-  <demo-modal-disable-week></demo-modal-disable-week>
-  <demo-modal-locale></demo-modal-locale>
-  <demo-modal-custom-style></demo-modal-custom-style>
-  <demo-modal-default-scroll></demo-modal-default-scroll>
-  <demo-modal-config-days></demo-modal-config-days>
-  <demo-range-with-default-end-date></demo-range-with-default-end-date> -->
-
-    <!--  -->
-    <!-- <demo-options></demo-options>
-  <demo-range></demo-range> -->
-    <!-- <demo-multi></demo-multi>-->
-
-    <!-- <demo-methods></demo-methods> -->
-    <!-- <app-demo-events></app-demo-events> -->
-
   </div>
 </ion-content>

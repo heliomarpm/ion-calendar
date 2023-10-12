@@ -20,7 +20,7 @@ export class DemoModalRangeEndDateComponent {
   async openCalendar() {
     const options: ICalendarModalOptions = {
       pickMode: 'range',
-      title: 'RANGE',
+      title: 'RANGE - END DATE',
       defaultDateRange: this.dateRange,
     };
 

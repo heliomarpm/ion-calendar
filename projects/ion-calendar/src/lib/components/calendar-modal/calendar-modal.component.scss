@@ -1,32 +1,43 @@
-:host ion-select {
-  max-width: unset;
-}
+:host {
 
-:host ion-select .select-icon>.select-icon-inner,
-:host ion-select .select-text {
-  color: #fff !important;
-}
+  ion-toolbar {
+    --border-width: 0;
+  }
 
-:host ion-select.select-ios {
-  max-width: unset;
-}
+  ion-title {
+    text-align: center;
+  }
 
-:host .calendar-page {
-  background-color: #fbfbfb;
-}
+  ion-select {
+    max-width: unset;
 
-:host .month-box {
-  display: inline-block;
-  width: 100%;
-  padding-bottom: 1em;
-  border-bottom: 1px solid #f1f1f1;
-}
+    &.select-ios {
+      max-width: unset;
+    }
 
-:host h4 {
-  font-weight: 400;
-  font-size: 1.1rem;
-  display: block;
-  text-align: center;
-  margin: 1rem 0 0;
-  color: #929292;
+    // .select-icon>.select-icon-inner,
+    // .select-text {
+    //   color: #fff !important;
+    // }
+  }
+
+  // .calendar-page {
+  //   background-color: #fbfbfb;
+  // }
+
+  .month-box {
+    display: inline-block;
+    width: 100%;
+    padding-bottom: 1em;
+    border-bottom: 1px solid rgba(85, 85, 85, 0.346);
+  }
+
+  h4 {
+    font-weight: 500;
+    font-size: 1.1rem;
+    display: block;
+    text-align: center;
+    margin: 1rem 0 0;
+    // color: #333;
+  }
 }

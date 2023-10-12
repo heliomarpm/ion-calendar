@@ -1,5 +1,7 @@
 import { Component, Input } from '@angular/core';
 import defaultValues from '../../types';
+import { ICalendarLocale } from '../../models';
+import { DateTimeHelper } from '../../helpers';
 
 
 @Component({
@@ -8,40 +10,56 @@ import defaultValues from '../../types';
   styleUrls: ['./calendar-week.component.scss']
 })
 export class CalendarWeekComponent {
-  private _weekArray: string[] = defaultValues.WEEKS_FORMAT;
+  private WEEKDAYS = DateTimeHelper.weekDays();
+  private _weekDaysOld: string[] = this.WEEKDAYS;
+  private _weekDays: string[] = this.WEEKDAYS;
   private _weekStart = 0;
 
-  displayWeekArray: string[] = this._weekArray;
+  public displayWeekDays: string[] = this._weekDays;
 
   @Input()
-  color: string = defaultValues.COLOR;
+  color: string | undefined = defaultValues.COLOR;
 
-  constructor() {}
+  constructor() {
+    // console.log("CalendarWeekComponent.constructor");
+  }
 
   @Input()
-  set weekArray(value: string[]) {
+  set weekDays(value: string[] | undefined) {
     if (value && value.length === 7) {
-      this._weekArray = [...value];
-      this.adjustSort();
+      this._weekDays = [...value];
+      this.adjustSort(this._weekStart);
     }
   }
 
   @Input()
   set weekStart(value: number) {
-    if (value === 0 || value === 1) {
-      this._weekStart = value;
-      this.adjustSort();
-    }
+    this.adjustSort(value);
   }
 
-  private adjustSort(): void {
-    if (this._weekStart === 1) {
-      const cacheWeekArray = [...this._weekArray];
-      cacheWeekArray.push(cacheWeekArray.shift()!);
-      this.displayWeekArray = [...cacheWeekArray];
+  private adjustSort(weekStart: number): void {
+    if (weekStart === this._weekStart && this.isEquals(this._weekDays, this._weekDaysOld)) return;
 
-    } else if (this._weekStart === 0) {
-      this.displayWeekArray = [...this._weekArray];
+    if (weekStart === 1) {
+      const cacheWeekArray = [...this._weekDays];
+      cacheWeekArray.push(cacheWeekArray.shift()!);
+      this.displayWeekDays = [...cacheWeekArray];
+
+    } else if (weekStart === 0) {
+      this.displayWeekDays = [...this._weekDays];
+    }
+    else {
+      return;
+    }
+    this._weekDaysOld = Array.from(this._weekDays);
+    this._weekStart = weekStart;
+  }
+
+  private isEquals(a: Array<any>, b: Array<any>): boolean {
+    try {
+      return JSON.stringify(a) === JSON.stringify(b);
+    } catch (error) {
+      return false;
     }
   }
 }

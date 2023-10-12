@@ -24,11 +24,11 @@ export class CalendarMonthComponent implements ControlValueAccessor, AfterViewIn
   @Input() pickMode: PickModeType = 'SINGLE';
   @Input() id: any;
   @Input() readonly = false;
-  @Input() color: string = defaultValues.COLOR;
-  @Output()  private change: EventEmitter<ICalendarDay[]> = new EventEmitter();
-  @Output()  private select: EventEmitter<ICalendarDay> = new EventEmitter();
-  @Output()  private selectStart: EventEmitter<ICalendarDay> = new EventEmitter();
-  @Output()  private selectEnd: EventEmitter<ICalendarDay> = new EventEmitter();
+  @Input() color: string | undefined = defaultValues.COLOR;
+  @Output() private onChange: EventEmitter<ICalendarDay[]> = new EventEmitter();
+  @Output() private onSelect: EventEmitter<ICalendarDay> = new EventEmitter();
+  @Output() private onSelectStart: EventEmitter<ICalendarDay> = new EventEmitter();
+  @Output() private onSelectEnd: EventEmitter<ICalendarDay> = new EventEmitter();
 
   private _date: Array<ICalendarDay | null> = [null, null];
   private _isInit = false;
@@ -41,7 +41,9 @@ export class CalendarMonthComponent implements ControlValueAccessor, AfterViewIn
     return this.pickMode === pickModes.RANGE;
   }
 
-  constructor(public ref: ChangeDetectorRef) { }
+  constructor(public ref: ChangeDetectorRef) {
+    // console.log("CalendarMonthComponent.constructor");
+  }
 
   ngAfterViewInit(): void {
     this._isInit = true;
@@ -66,7 +68,6 @@ export class CalendarMonthComponent implements ControlValueAccessor, AfterViewIn
   }
 
   trackByTime(index: number, item: ICalendarOriginal): number {
-    console.log('trackByTime', index, item);
     return item ? item.time : index;
   }
 
@@ -131,41 +132,41 @@ export class CalendarMonthComponent implements ControlValueAccessor, AfterViewIn
     if (this.readonly) { return; }
 
     item.selected = true;
-    this.select.emit(item);
+    this.onSelect.emit(item);
 
     if (this.pickMode === pickModes.SINGLE) {
       this._date[0] = item;
-      this.change.emit(this._date as ICalendarDay[]);
+      this.onChange.emit(this._date as ICalendarDay[]);
       return;
     }
 
     if (this.pickMode === pickModes.RANGE) {
       if (this._date[0] === null) {
         this._date[0] = item;
-        this.selectStart.emit(item);
+        this.onSelectStart.emit(item);
       } else if (this._date[1] === null) {
         if (this._date[0].time < item.time) {
           this._date[1] = item;
-          this.selectEnd.emit(item);
+          this.onSelectEnd.emit(item);
         } else {
           this._date[1] = this._date[0];
-          this.selectEnd.emit(this._date[0]);
+          this.onSelectEnd.emit(this._date[0]);
           this._date[0] = item;
-          this.selectStart.emit(item);
+          this.onSelectStart.emit(item);
         }
       } else if (this._date[0].time > item.time) {
         this._date[0] = item;
-        this.selectStart.emit(item);
+        this.onSelectStart.emit(item);
       } else if (this._date[1].time < item.time) {
         this._date[1] = item;
-        this.selectEnd.emit(item);
+        this.onSelectEnd.emit(item);
       } else {
         this._date[0] = item;
-        this.selectStart.emit(item);
+        this.onSelectStart.emit(item);
         this._date[1] = null;
       }
 
-      this.change.emit(this._date as ICalendarDay[]);
+      this.onChange.emit(this._date as ICalendarDay[]);
       return;
     }
 
@@ -177,7 +178,7 @@ export class CalendarMonthComponent implements ControlValueAccessor, AfterViewIn
       } else {
         this._date.splice(index, 1);
       }
-      this.change.emit(this._date.filter(e => e !== null) as ICalendarDay[]);
+      this.onChange.emit(this._date.filter(e => e !== null) as ICalendarDay[]);
     }
   }
 }

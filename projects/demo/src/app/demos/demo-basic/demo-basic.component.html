@@ -3,18 +3,39 @@
 
 
 <p style="text-align: center;">
-  SeletedDate: {{ date }}
+  SelectedDates: {{ date | json }}
 </p>
 
 <ion-grid fixed>
   <ion-row>
     <ion-col size="12" size-sm="7">
-      <ion-calendar [(ngModel)]="date"
-                    (onChange)="onChange($event)"
-                    [options]="options"
-                    type="string"
-                    [format]="format">
-      </ion-calendar>
+      <div class="mirror">
+
+        <ion-calendar #calendar
+                      [(ngModel)]="date"
+                      (onChange)="onChange($event)"
+                      (onMonthChange)="onMonthChange($event)"
+                      (onWeekChange)="onWeekChange($event)"
+                      (onSelect)="onSelect($event)"
+                      (onSelectEnd)="onSelectEnd($event)"
+                      (onSelectStart)="onSelectStart($event)"
+                      [options]="options"
+                      type="string"
+                      [format]="format"
+                      [readonly]="readonly">
+        </ion-calendar>
+
+      </div>
+      <!-- <pre [innerHTML]="options | jsonpretty:[true, 3]"></pre> -->
+      <ion-row>
+        <ion-col size="7">
+          <pre>{{ options | jsonpretty}}</pre>
+        </ion-col>
+        <ion-col>
+          <pre>{{ events | jsonpretty }}</pre>
+        </ion-col>
+      </ion-row>
+
     </ion-col>
 
     <ion-col size="12" size-sm="5">
@@ -24,20 +45,36 @@
           <ion-button (click)="setDateToday()">
             set date today
           </ion-button>
+          <ion-button (click)="selectedDates()">
+            selected dates
+          </ion-button>
+        </ion-item>
+        <ion-item>
+          <ion-button (click)="setLocaleBR()">
+            set locale BR
+          </ion-button>
+          <ion-button (click)="setLocaleCN()">
+            set locale CN
+          </ion-button>
         </ion-item>
         <ion-item>
           <ion-input label="format" placeholder="date format" [(ngModel)]="format"></ion-input>
         </ion-item>
         <ion-item>
-          <ion-checkbox [(ngModel)]="_formatMonthPicker"
-            (ngModelChange)="onChangeMonthPickerFormat($event)">
-            Format MonthPicker
+          <ion-checkbox [(ngModel)]="readonly" [checked]="readonly">
+            readonly
           </ion-checkbox>
         </ion-item>
         <ion-item>
-          <ion-checkbox [(ngModel)]="_formatWeekDays"
+          <ion-checkbox [(ngModel)]="formatMonthPicker"
+            (ngModelChange)="onChangemonthsTitle($event)">
+            Custom MonthPicker
+          </ion-checkbox>
+        </ion-item>
+        <ion-item>
+          <ion-checkbox [(ngModel)]="formatWeekDays"
             (ngModelChange)="onChangeWeekDays($event)">
-            Format WeekDays
+            Custom WeekDays
           </ion-checkbox>
         </ion-item>
         <ion-item>
@@ -109,12 +146,10 @@
           <ion-radio-group [(ngModel)]="optModel.displayMode" (ngModelChange)="onChangeDisplayMode($event)" slot="end">
             <ion-row>
               <ion-item lines="none">
-                <ion-label>month &nbsp;</ion-label>
-                <ion-radio value="month"></ion-radio>
+                <ion-radio value="month" aria-label="month">month</ion-radio>
               </ion-item>
               <ion-item lines="none">
-                <ion-label>week &nbsp;</ion-label>
-                <ion-radio value="week"></ion-radio>
+                <ion-radio value="week" aria-label="week">week</ion-radio>
               </ion-item>
             </ion-row>
           </ion-radio-group>

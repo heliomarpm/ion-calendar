@@ -1,7 +1,8 @@
-import { Component, OnInit } from '@angular/core';
-import { ModalController } from '@ionic/angular';
+import { Component, OnInit, ViewChild } from '@angular/core';
+import { ModalController, ToastController } from '@ionic/angular';
+import * as luxon from 'luxon';
 
-import { ICalendarComponentOptions } from '@heliomarpm/ion-calendar';
+import { CalendarComponent, ICalendarComponentOptions, ICalendarLocale } from '@heliomarpm/ion-calendar';
 
 @Component({
   selector: 'app-demo-basic',
@@ -9,11 +10,19 @@ import { ICalendarComponentOptions } from '@heliomarpm/ion-calendar';
   styleUrls: ['./demo-basic.component.scss'],
 })
 export class DemoBasicComponent {
-  _formatMonthPicker: boolean = false;
-  _formatWeekDays: boolean = false;
+  @ViewChild('calendar', { read: CalendarComponent })
+  calendarRef!: CalendarComponent;
+
+  events!: {};
+  LOCALE_BR = "pt-Br";
+  LOCALE_CN = "zh-cn";
+
+  formatMonthPicker: boolean = false;
+  formatWeekDays: boolean = false;
 
   date!: string | Date | number;
   format = 'yyyy-MM-dd';
+  readonly = false;
 
   optModel: ICalendarComponentOptions = {
     from: new Date().getTime(),
@@ -31,7 +40,8 @@ export class DemoBasicComponent {
     // to: new Date(2023,10,1),
   };
 
-  constructor(public modalCtrl: ModalController) {
+  constructor(
+    private toastCtrl: ToastController) {
     this.setDateToday()
   }
 
@@ -40,9 +50,114 @@ export class DemoBasicComponent {
     this.format = 'yyyy-MM-dd';
     this.date = today.toISOString().substring(0, 10);
   }
+  async selectedDates() {
+    const dates = this.calendarRef.selectedDates;
+    console.log('view date', dates);
 
-  onChange($event: any) {
-    console.log($event);
+    const toast = await this.toastCtrl.create({
+      message: `view date: ${JSON.stringify(dates, null, 2)}`,
+      duration: 2000,
+    });
+    toast.present();
+  }
+
+  async _toastWrap(event: string, payload: {}) {
+    const toast = await this.toastCtrl.create({
+      message: `${event}: ${JSON.stringify(payload, null, 2)}`,
+      duration: 2000,
+    });
+    toast.present();
+  }
+
+  setLocaleBR() {
+    // luxon.Settings.defaultLocale = this.locale;
+    // // const monthsTitle = luxon.Info.months('short');
+    // const weekdays = luxon.Info.weekdays('short').map(d => d.replace('.', ''));
+
+    // if (weekdays[0] == 'seg') {
+    //   const lastElement = weekdays.pop()!;
+    //   weekdays.unshift(lastElement);
+    // }
+    const locale: ICalendarLocale = {
+      locale: this.LOCALE_BR,
+      weekdays: 'initial',
+      // startWeek: 'sunday'
+    };
+
+    this.options = {
+      ...this.options,
+      // monthsTitle,
+      // weekdays,
+      locale
+    };
+
+  }
+  setLocaleCN() {
+    // luxon.Settings.defaultLocale = this.locale;
+    // // const monthsTitle = luxon.Info.months('short');
+    // const weekdays = luxon.Info.weekdays('short').map(d => d.replace('.', ''));
+
+    // if (weekdays[0] == 'seg') {
+    //   const lastElement = weekdays.pop()!;
+    //   weekdays.unshift(lastElement);
+    // }
+
+    const locale: ICalendarLocale = {
+      locale: this.LOCALE_CN,
+      weekdays: 'short',
+      // startWeek: 'sunday'
+    };
+
+    this.options = {
+      ...this.options,
+      // monthsTitle,
+      // weekdays,
+      locale,
+    };
+
+  }
+
+  onChange(event: any) {
+    console.log('onChange', event);
+    this.events = {
+      ...this.events,
+      onChange: { event },
+    };
+  }
+  onMonthChange(event: any) {
+    console.log('onMonthChange', event);
+    this.events = {
+      ...this.events,
+      onMonthChange: { event },
+    };
+  }
+  onWeekChange(event: any) {
+    console.log('onWeekChange', event);
+    this.events = {
+      ...this.events,
+      onWeekChange: { event },
+    };
+  }
+  onSelect(event: any) {
+    console.log('onSelect', event);
+    this.events = {
+      ...this.events,
+      onSelect: { event },
+    };
+  }
+  onSelectStart(event: any) {
+    console.log('onSelectStart', event);
+    this.events = {
+      ...this.events,
+      onSelectStart: { event },
+    };
+  }
+  onSelectEnd(event: any) {
+    console.log('onSelectEnd', event);
+    this.events = {
+      ...this.events,
+      onSelectEnd: { event },
+    };
   }
 
   onChangePickMode(pickMode: string) {
@@ -143,32 +258,36 @@ export class DemoBasicComponent {
     };
   }
 
-  onChangeMonthPickerFormat(change: boolean) {
+  onChangemonthsTitle(change: boolean) {
     if (change) {
       this.options = {
         ...this.options,
-        monthPickerFormat: ["JAN", "FEV", "MAR", "ABR", "MAI", "JUN", "JUL", "AGO", "SET", "OUT", "NOV", "DEZ"]
+        monthsTitle: ["Jan", "Fev", "Mar", "Abr", "Mai", "Jun", "Jul", "Ago", "Set", "Out", "Nov", "Dez"]
       }
     }
     else {
+      delete this.options.monthsTitle;
       this.options = {
-        ...this.options,
-        monthPickerFormat: []
+        ...this.options
       }
-
     }
   }
+
   onChangeWeekDays(change: boolean) {
     if (change) {
+      const weekdays = this.options.weekStart ?? 0 == 0
+        ? ['Dom', 'Seg', 'Ter', 'Qua', 'Qui', 'Sex', 'Sáb']
+        : ['Seg', 'Ter', 'Qua', 'Qui', 'Sex', 'Sáb', 'Dom'];
+
       this.options = {
         ...this.options,
-        weekdays: ['D', 'S', 'T', 'Q', 'Q', 'S', 'S'],
+        weekdays
       }
     }
     else {
+      delete this.options.weekdays;
       this.options = {
-        ...this.options,
-        weekdays: ['S', 'M', 'T', 'W', 'T', 'F', 'S'],
+        ...this.options
       }
 
     }

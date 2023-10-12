@@ -7,6 +7,11 @@ import { Component } from '@angular/core';
 })
 export class HomePage {
 
-  constructor() {}
+  constructor() { }
+
+  toggleTheme(event: any) {
+    const dark = event.detail.checked || false;
+    document.body.setAttribute('color-theme', (dark ? 'dark' : 'light'));
+  }
 
 }

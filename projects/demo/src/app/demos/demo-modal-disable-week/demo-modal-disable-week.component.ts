@@ -15,9 +15,10 @@ export class DemoModalDisableWeekComponent {
 
   async openCalendar() {
     const options: ICalendarModalOptions = {
-      title: 'DISABLE-WEEK',
+      title: 'DISABLE DAYS (S, W, S)',
       defaultDate: this.date,
-      disableWeeks: [0, 6],
+      disableWeeks: [0, 3, 6],
+      color: 'danger'
     };
 
     const myCalendar = await this.modalCtrl.create({

@@ -1,7 +1,7 @@
 import { Component, EventEmitter, Input, Output } from '@angular/core';
 import { ICalendarMonth } from '../../models';
 import defaultValues from '../../types';
-
+import { DateTimeHelper } from '../../helpers';
 
 @Component({
   selector: 'ion-month-picker',
@@ -9,34 +9,29 @@ import defaultValues from '../../types';
   styleUrls: ['./month-picker.component.scss']
 })
 export class MonthPickerComponent {
-  @Input()
-  month!: ICalendarMonth;
-
-  @Input()
-  color = defaultValues.COLOR;
-
-  @Output()
-  select: EventEmitter<number> = new EventEmitter();
-
   _thisMonth = new Date();
-  _monthFormat = defaultValues.MONTH_FORMAT;
-
+  _monthsTitle = DateTimeHelper.monthsShortTitle();
   MONTH_FORMAT = 'MMMM';
 
-  @Input()
-  set monthFormat(value: string[]) {
+  @Input() month!: ICalendarMonth;
+  @Input() color = defaultValues.COLOR;
+  @Output() onSelect: EventEmitter<number> = new EventEmitter();
+
+  @Input() set monthsTitle(value: string[]) {
     if (Array.isArray(value) && value.length === 12) {
-      this._monthFormat = value;
+      this._monthsTitle = value;
     }
   }
-  get monthFormat(): string[] {
-    return this._monthFormat;
+  get monthsTitle(): string[] {
+    return this._monthsTitle;
   }
 
-  constructor() { }
+  constructor() {
+    // console.log("MonthPickerComponent.constructor");
+  }
 
   _onSelect(month: number): void {
-    this.select.emit(month);
+    this.onSelect.emit(month);
   }
 
   getDate(month: number) {

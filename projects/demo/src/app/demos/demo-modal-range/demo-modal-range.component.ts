@@ -25,6 +25,7 @@ export class DemoModalRangeComponent {
       title: 'RANGE',
       defaultDateRange: this.dateRange,
       clearLabel: 'CLEAR',
+      color: 'dark'
     };
 
     const myCalendar = await this.modalCtrl.create({

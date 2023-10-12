@@ -7,17 +7,16 @@ import { HomePage } from './home.page';
 import { HomePageRoutingModule } from './home-routing.module';
 
 import { DemosModule } from '../demos/demos.module';
-import { IonCalendarModule } from '@heliomarpm/ion-calendar';
+
 
 @NgModule({
-  declarations: [HomePage],
   imports: [
     CommonModule,
     FormsModule,
     IonicModule,
     HomePageRoutingModule,
-    DemosModule,
-    IonCalendarModule
-  ]
+    DemosModule
+  ],
+  declarations: [HomePage]
 })
-export class HomePageModule { }
+export class HomePageModule {}

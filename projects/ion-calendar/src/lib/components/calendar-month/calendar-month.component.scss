@@ -1,37 +1,19 @@
-$colors: (
-  primary: var(--ion-color-primary, #343434),
-  secondary: var(--ion-color-secondary, #565656),
-  tertiary: var(--ion-color-tertiary, #454552),
-  success: var(--ion-color-success, #2dd36f),
-  warning: var(--ion-color-warning, #ffc409),
-  danger: var(--ion-color-danger, #e72626),
-  dark: var(--ion-color-dark, #222428),
-  medium: var(--ion-color-medium, #92949c),
-  light: var(--ion-color-light, #f4f5f8),
-  transparent: transparent
-);
-
-@function bindColors($color-value) {
-  $value: map-get($colors, $color-value);
-
-  @if $value {
-    @return $value;
-  }
-
-  @else {
-    @return $color-value;
-  }
-}
-
+@import '../index.scss';
 
 @mixin set-styles($background-color: primary, $color) {
   button.days-btn small {
     color: bindColors($background-color);
   }
+
   .days {
-    .last-month-day p,
-    .next-month-day p {
-      color: rgba(0, 0, 0, 0.25);
+
+    .last-month-day,
+    .next-month-day {
+      p {
+        // color: rgba(0, 0, 0, 0.25);
+        color: var(--color, #000);
+        opacity: 0.3;
+      }
     }
 
     .today p {
@@ -40,9 +22,9 @@ $colors: (
 
     .today,
     .marked {
-      p{
-        color: bindColors($background-color);
-      }
+      color: bindColors($background-color);
+      border: 1px solid bindColors($background-color);
+
       &.on-selected p {
         color: $color;
       }
@@ -54,9 +36,11 @@ $colors: (
 
       p {
         color: $color;
+        opacity: 1;
       }
     }
   }
+
   .startSelection,
   .endSelection {
     position: relative;
@@ -70,8 +54,9 @@ $colors: (
     &:before {
       background-color: bindColors($background-color);
     }
+
     &:after {
-      background-color: #fff;
+      background-color: var(--background-color);
       opacity: 0.25;
     }
 
@@ -82,16 +67,34 @@ $colors: (
       content: '';
       position: absolute;
       top: 0;
-      right: 0;
+      // right: 0;
       display: block;
     }
   }
-  .endSelection button.days-btn p {
-    color: #fff;
+
+  .startSelection {
+
+    &:before,
+    &:after {
+      right: 0;
+    }
   }
+
+  .endSelection {
+
+    &:before,
+    &:after {
+      left: 0;
+    }
+  }
+
+  // .endSelection button.days-btn p {
+  //   color: #fff;
+  // }
   .startSelection.endSelection:after {
     background-color: transparent;
   }
+
   .between {
     button.days-btn {
       background-color: bindColors($background-color);
@@ -100,7 +103,7 @@ $colors: (
       position: relative;
 
       p {
-          color: $color;
+        color: $color;
       }
 
       &:after {
@@ -112,7 +115,7 @@ $colors: (
         left: 0;
         right: 0;
         display: block;
-        background-color: white;
+        // background-color: var(--backgroud-color);
         opacity: 0.25;
       }
     }
@@ -134,81 +137,88 @@ $colors: (
   }
 
   .days {
-    width: 14%;
     float: left;
     text-align: center;
+    width: 14%;
     height: 36px;
     margin-bottom: 5px;
-  }
 
-  .days .marked p {
-    font-weight: 500;
-  }
+    .marked p {
+      font-weight: bold;
+    }
 
-  .days .on-selected {
-    border: none;
-  }
+    .on-selected {
+      border: none;
 
-  .days .on-selected p {
-    font-size: 1.3em;
+      p {
+        font-weight: bold;
+      }
+    }
   }
 
   button.days-btn {
-    border-radius: 36px;
-    width: 36px;
     display: block;
     margin: 0 auto;
     padding: 0;
+    width: 36px;
     height: 36px;
+    color: var(--color);
+    border-radius: 50%;
     background-color: transparent;
     position: relative;
     z-index: 2;
     outline: 0;
-  }
 
-  button.days-btn p {
-    margin: 0;
-    font-size: 1.2em;
-    color: #333;
-    text-align: center;
-  }
+    .today {
+      border: 1px solid #000;
+    }
 
-  button.days-btn[disabled] p {
-    color: rgba(0, 0, 0, 0.25);
-  }
+    p {
+      margin: 0;
+      font-size: 1.2em;
+      // color: #333;
+      text-align: center;
+    }
 
-  button.days-btn.on-selected small {
-    transition: bottom 0.3s;
-    bottom: -14px;
-  }
+    &[disabled] p {
+      // color: rgba(0, 0, 0, 0.3);
+      color: var(--color, #000);
+      opacity: 0.3;
+    }
 
-  button.days-btn small {
-    overflow: hidden;
-    display: block;
-    left: 0;
-    right: 0;
-    bottom: -5px;
-    position: absolute;
-    z-index: 1;
-    text-align: center;
-    font-weight: 200;
-  }
+    &.on-selected small {
+      transition: bottom 0.3s;
+      bottom: -14px;
+    }
 
-  button.days-btn.is-last,
-  .days.startSelection:nth-child(7n):before,
-  .days.between:nth-child(7n) button.days-btn,
-  .startSelection.is-last-wrap::before,
-  .startSelection.is-last-wrap::after {
-    border-radius: 0 36px 36px 0;
-  }
+    small {
+      overflow: hidden;
+      display: block;
+      left: 0;
+      right: 0;
+      bottom: -5px;
+      position: absolute;
+      z-index: 1;
+      text-align: center;
+      font-weight: 200;
+    }
 
-  button.days-btn.is-first,
-  .days.endSeection:nth-child(7n + 1):before,
-  .days.between:nth-child(7n + 1) button.days-btn,
-  .days.between.is-first-wrap button.days-btn.is-first,
-  .endSelection.is-first-wrap::before,
-  .endSelection.is-first-wrap::after {
-    border-radius: 36px 0 0 36px;
+    &.is-last,
+    .days.startSelection:nth-child(7n):before,
+    .days.between:nth-child(7n) button.days-btn,
+    .startSelection.is-last-wrap::before,
+    .startSelection.is-last-wrap::after {
+      border-radius: 0 36px 36px 0;
+    }
+
+    &.is-first,
+    .days.endSelection:nth-child(7n + 1):before,
+    .days.between:nth-child(7n + 1) button.days-btn,
+    .days.between.is-first-wrap button.days-btn.is-first,
+    .endSelection.is-first-wrap::before,
+    .endSelection.is-first-wrap::after {
+      border-radius: 36px 0 0 36px;
+    }
   }
 
   button.days-btn.is-first.on-selected,
@@ -251,6 +261,7 @@ $colors: (
       --ion-color-primary: transparent;
     }
   }
+
   .secondary {
     @include set-styles(secondary, #fff);
 
@@ -258,6 +269,7 @@ $colors: (
       --ion-color-secondary: transparent;
     }
   }
+
   .tertiary {
     @include set-styles(tertiary, #fff);
 
@@ -265,6 +277,7 @@ $colors: (
       --ion-color-tertiary: transparent;
     }
   }
+
   .success {
     @include set-styles(success, #fff);
 
@@ -272,6 +285,7 @@ $colors: (
       --ion-color-success: transparent;
     }
   }
+
   .warning {
     @include set-styles(warning, #000);
 
@@ -279,6 +293,7 @@ $colors: (
       --ion-color-warning: transparent;
     }
   }
+
   .danger {
     @include set-styles(danger, #fff);
 
@@ -286,6 +301,7 @@ $colors: (
       --ion-color-danger: transparent;
     }
   }
+
   .dark {
     @include set-styles(dark, #fff);
 
@@ -293,6 +309,7 @@ $colors: (
       --ion-color-dark: transparent;
     }
   }
+
   .medium {
     @include set-styles(medium, #fff);
 
@@ -300,6 +317,7 @@ $colors: (
       --ion-color-medium: transparent;
     }
   }
+
   .light {
     @include set-styles(light, #000);
 

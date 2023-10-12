@@ -11,7 +11,8 @@
     "paths": {
       "ion-calendar": [
         "dist/ion-calendar"
-      ]
+      ],
+      "@heliomarpm/ion-calendar": ["projects/ion-calendar/src/lib/*"]
     },
     "noImplicitReturns": true,
     "noFallthroughCasesInSwitch": true,

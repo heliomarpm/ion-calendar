@@ -1,15 +1,21 @@
 import { DateType, PickModeType, DisplayModeType } from "../types";
 import { IDayConfig } from "./IDayConfig";
 
+export interface ICalendarLocale {
+  locale: string,
+  weekdays: 'initial' | 'short',
+  // startWeek?: 'sunday' | 'monday',
+}
 export interface ICalendarOptions {
+  locale?: ICalendarLocale;
   from?: Date | number;
   to?: Date | number;
   pickMode?: PickModeType;
-  weekStart?: number;
   disableWeeks?: Array<number>;
+  weekStart?: number;
   weekdays?: Array<string>;
   monthFormat?: string;
-  yearFormat?: string;
+  // yearFormat?: string;
   color?: string;
   defaultTitle?: string;
   defaultSubtitle?: string;
@@ -46,6 +52,6 @@ export interface ICalendarComponentOptions extends ICalendarOptions {
   showToggleButtons?: boolean;
   showMonthPicker?: boolean;
   showYearPicker?: boolean;
-  monthPickerFormat?: string[];
+  monthsTitle?: string[];
 }
 

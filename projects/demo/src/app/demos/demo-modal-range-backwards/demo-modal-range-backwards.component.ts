@@ -23,7 +23,7 @@ export class DemoModalRangeBackwardsComponent  {
   async openCalendar() {
     const options: ICalendarModalOptions = {
       pickMode: 'range',
-      title: 'RANGE',
+      title: 'RANGE - BACKWARDS',
       defaultDateRange: this.dateRange,
       canBackwardsSelected: true,
     };

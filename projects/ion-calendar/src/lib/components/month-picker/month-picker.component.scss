@@ -1,27 +1,4 @@
-$colors: (
-  primary: var(--ion-color-primary, #343434),
-  secondary: var(--ion-color-secondary, #565656),
-  tertiary: var(--ion-color-tertiary, #454552),
-  success: var(--ion-color-success, #2dd36f),
-  warning: var(--ion-color-warning, #ffc409),
-  danger: var(--ion-color-danger, #e72626),
-  dark: var(--ion-color-dark, #222428),
-  medium: var(--ion-color-medium, #92949c),
-  light: var(--ion-color-light, #f4f5f8),
-  transparent: transparent
-);
-
-@function bindColors($color-value) {
-  $value: map-get($colors, $color-value);
-
-  @if $value {
-    @return $value;
-  }
-
-  @else {
-    @return $color-value;
-  }
-}
+@import '../index.scss';
 
 @mixin month-picker($background-color: primary, $color) {
   .month-packer-item {
@@ -53,12 +30,12 @@ $colors: (
     padding: 5px;
 
     button {
-      border-radius: 32px;
+      border-radius: 36px;
       width: 100%;
       height: 100%;
       font-size: 0.9em;
       background-color: transparent;
-      color: #122;
+      color: var(--color);
     }
   }
 

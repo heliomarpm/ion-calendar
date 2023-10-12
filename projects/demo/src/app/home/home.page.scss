@@ -1,27 +1,32 @@
-#container {
-  text-align: center;
-
-  position: absolute;
-  left: 0;
-  right: 0;
-  top: 50%;
-  transform: translateY(-50%);
+ion-toolbar {
+  ion-toggle {
+    margin-right: 20px
+  }
 }
 
-#container strong {
-  font-size: 20px;
-  line-height: 26px;
+.my-class {
+  .toolbar-background-md,
+  .toolbar-background-ios,
+  ion-calendar-week .week-title {
+    background-color: #424242;
+  }
+  .month-box {
+    background: #343434;
+    border-bottom: none;
+    h4 {
+      color: #fff;
+    }
+    button.days-btn > p {
+      color: #fff;
+    }
+  }
 }
 
-#container p {
-  font-size: 16px;
-  line-height: 22px;
-
-  color: #8c8c8c;
-
-  margin: 0;
-}
-
-#container a {
-  text-decoration: none;
+.my-cal {
+  button.days-btn.my-day {
+    small {
+      color: #fff;
+      background-color: red;
+    }
+  }
 }

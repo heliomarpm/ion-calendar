@@ -1,7 +1,7 @@
 <!-- && month.original.year === _thisMonth.getFullYear()" -->
 <div [class]="'month-picker ' + color">
   <div class="month-packer-item"
-    *ngFor="let m of _monthFormat; let idx = index"
+    *ngFor="let m of _monthsTitle; let idx = index"
     [class.this-month]=" idx === _thisMonth.getMonth()"
     [class.active]=" idx === monthSelected">
 

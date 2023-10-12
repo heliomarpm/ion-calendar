@@ -11,19 +11,24 @@ import { CalendarModalComponent, ICalendarModalOptions } from '@heliomarpm/ion-c
 })
 export class DemoModalLocaleComponent {
   date: Date = new Date();
+  weekDays: string[] = [];
 
-  constructor(public modalCtrl: ModalController) {
-    //moment.locale('zh-cn');
-    luxon.Settings.defaultLocale = 'zh-cn';
-  }
+  constructor(public modalCtrl: ModalController) { }
 
   async openCalendar() {
     const options: ICalendarModalOptions = {
-      title: 'LOCALE',
+      title: 'Locale: pt-BR | monthFormat: MMMM, yy',
       defaultDate: this.date,
-      monthFormat: 'yyyy 年 MM 月',
-      weekdays: luxon.Info.weekdays('short').map(d => d.replace('.', '')), //moment.weekdaysShort(),
-      weekStart: 1,
+      monthFormat: 'MMMM, yy',
+      // weekdays: this.weekDays,
+      weekStart: 0,
+      doneLabel: "Confirmar",
+      closeLabel: "Cancelar",
+      locale: {
+        locale: 'pt-Br',
+        weekdays: 'initial',
+        // startWeek: 'sunday'
+      },
     };
 
     const myCalendar = await this.modalCtrl.create({

@@ -40,11 +40,11 @@ export class DemoMethodsComponent  {
 
   getCalendarViewDate() {
     console.log(this.calendarRef);
-    this._toastWrap('view date', this.calendarRef.getViewDate());
-    console.log('view date', this.calendarRef.getViewDate());
+    // this._toastWrap('view date', this.calendarRef.getViewDate());
+    // console.log('view date', this.calendarRef.getViewDate());
   }
 
   serCalendarViewDate() {
-    this.calendarRef.setViewDate('2018-02-01');
+    //this.calendarRef.setViewDate('2018-02-01');
   }
 }

@@ -1,3 +1,7 @@
+import { Info as luxonInfo } from 'luxon';
+import { ICalendarLocale } from '../models';
+import { DateTimeHelper } from '../helpers';
+
 export type DateType = Date | string | number | null;
 export type CalendarComponentPayloadType = string | number | Date | {};
 export type CalendarComponentType = 'string' | 'js-date' | 'luxon' | 'time' | 'object';
@@ -25,13 +29,19 @@ export const displayModes = {
 export type DisplayModeType = typeof displayModes[keyof typeof displayModes]
 
 const defaultValues = {
-  DATE_FORMAT: 'yyyy-MM-dd',
   COLOR: 'primary',
-  WEEKS_FORMAT: ['S', 'M', 'T', 'W', 'T', 'F', 'S'],
-  MONTH_FORMAT: ['JAN', 'FEB', 'MAR', 'APR', 'MAY', 'JUN', 'JUL', 'AUG', 'SEP', 'OCT', 'NOV', 'DEC'],
-  YEAR_FORMAT: 'yyyy'
+  DATE_FORMAT: 'yyyy-MM-dd',
+  LOCALE: { locale: 'en', weekdays: 'initial', startWeek: 'sunday' } as ICalendarLocale,
+  YEAR_FORMAT: 'yyyy',
+  // MONTHS_TITLE: (locale: string = 'en') => {
+  //   return DateTimeHelper.monthsShortTitle(locale);
+  // },
+  // WEEKDAYS_TITLE: (locale: ICalendarLocale = { locale: 'en', weekdays: 'initial', startWeek: 'sunday' }) => {
+  //   return DateTimeHelper.weekDays(locale);
+  // },
+  // MONTHS_TITLE: luxonInfo.months('short', {locale: 'en'}).map(m => m.substring(0, 3).toUpperCase()), //['JAN', 'FEB', 'MAR', 'APR', 'MAY', 'JUN', 'JUL', 'AUG', 'SEP', 'OCT', 'NOV', 'DEC'],
+  // WEEKS_TITLE: luxonInfo.weekdays('short', {locale: 'en'}).map(d => d.substring(0, 1).toUpperCase()),
+  // WEEKS_TITLE: ['S', 'M', 'T', 'W', 'T', 'F', 'S'],
 };
 
 export default defaultValues;
-
-

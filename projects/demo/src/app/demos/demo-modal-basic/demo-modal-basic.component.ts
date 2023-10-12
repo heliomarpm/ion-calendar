@@ -33,7 +33,7 @@ export class DemoModalBasicComponent {
     if (role === 'done') {
       this.date = date.dateObj;
     }
-    console.log(date);
+    console.log('date:', JSON.stringify(date));
     console.log('role', role);
   }
 }

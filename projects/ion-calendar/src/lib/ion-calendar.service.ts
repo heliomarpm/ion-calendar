@@ -1,8 +1,10 @@
 import { Inject, Injectable, Optional } from '@angular/core';
-import { ICalendarDay, ICalendarModalOptions, ICalendarMonth, ICalendarOriginal, ICalendarResult, IDayConfig } from './models';
+import { ICalendarComponentOptions, ICalendarDay, ICalendarLocale, ICalendarModalOptions, ICalendarMonth, ICalendarOriginal, ICalendarResult, IDayConfig } from './models';
 import defaultValues, { displayModes, pickModes } from './types';
 import { DateTimeHelper } from './helpers';
 import { DEFAULT_CALENDAR_OPTIONS } from './calendar-options.provider';
+
+import { DateTime } from 'luxon';
 
 const isBoolean = (input: any) => input === true || input === false;
 
@@ -25,7 +27,10 @@ export class IonCalendarService {
     const _disableWeeks: number[] = [];
     const _daysConfig: IDayConfig[] = [];
 
+    const _locale: ICalendarLocale = calendarOptions.locale || defaultValues.LOCALE;
+
     const {
+      locale = _locale,
       from = new Date(),
       to = undefined,
       weekStart = 0,
@@ -35,7 +40,7 @@ export class IonCalendarService {
       closeLabel = 'CANCEL',
       doneLabel = 'DONE',
       monthFormat = 'MMM yyyy',
-      yearFormat = 'yyyy',
+      // yearFormat = 'yyyy',
       title = 'CALENDAR',
       defaultTitle = '',
       defaultSubtitle = '',
@@ -45,7 +50,7 @@ export class IonCalendarService {
       doneIcon = false,
       pickMode = pickModes.SINGLE,
       color = defaultValues.COLOR,
-      weekdays = defaultValues.WEEKS_FORMAT,
+      weekdays = DateTimeHelper.weekDays(_locale),
       daysConfig = _daysConfig,
       disableWeeks = _disableWeeks,
       showAdjacentMonthDay = true,
@@ -60,6 +65,7 @@ export class IonCalendarService {
 
     return {
       id,
+      locale,
       from: fromDate,
       to: toDate,
       pickMode,
@@ -74,7 +80,7 @@ export class IonCalendarService {
       canBackwardsSelected,
       disableWeeks,
       monthFormat,
-      yearFormat,
+      // yearFormat,
       title,
       weekdays,
       daysConfig,
@@ -115,8 +121,15 @@ export class IonCalendarService {
     };
   }
 
-  private findDayConfig(day: any, opt: ICalendarModalOptions): IDayConfig | null {
-    return opt.daysConfig?.find(n => day.isSame(n.date, 'day')) || null;
+  private findDayConfig(day: DateTime, opt: ICalendarModalOptions): IDayConfig | null {
+    const { daysConfig } = opt;
+
+    const dayConfig = daysConfig?.find((config) => {
+      const dateTime = DateTimeHelper.parse(config.date)
+      return day.hasSame(dateTime, 'day');
+    }) || null;
+
+    return dayConfig;
   }
 
   /**
@@ -140,7 +153,7 @@ export class IonCalendarService {
     }
     else {
       // If no specific disable configuration, check if the day is in the list of disabled weekdays
-      disable = opt.disableWeeks?.indexOf(date.weekday) !== -1;
+      disable = opt.disableWeeks?.indexOf(DateTimeHelper.weekday(date)) !== -1;
 
       if (!disable) {
         const dateFrom = opt.from === undefined ? undefined : DateTimeHelper.parse(opt.from).startOf("day");
@@ -189,7 +202,7 @@ export class IonCalendarService {
     };
   }
 
-  createCalendarMonthOfWeek(original: ICalendarOriginal, opt: ICalendarModalOptions): ICalendarMonth {
+  private createCalendarMonthOfWeek(original: ICalendarOriginal, opt: ICalendarModalOptions): ICalendarMonth {
     const weeks = opt.weeks ?? 1;
     const days: Array<ICalendarDay> = new Array(6).fill(null);
 
@@ -384,13 +397,15 @@ export class IonCalendarService {
    * @return {Array<ICalendarMonth>} - An array of CalendarMonth objects.
    */
   createMonthsByPeriod(startTime: number, monthsNum: number, opt: ICalendarModalOptions): Array<ICalendarMonth> {
-    return Array.from({ length: monthsNum }, (_, i) => {
+    const result = Array.from({ length: monthsNum }, (_, i) => {
       const time = DateTimeHelper.parse(startTime).startOf('month').plus({ months: i }).valueOf();
       const originalCalendar = this.createOriginalCalendar(time);
       const calendar = this.createCalendarMonth(originalCalendar, opt);
 
       return calendar;
     });
+
+    return result;
   }
 
   /**
@@ -412,7 +427,8 @@ export class IonCalendarService {
   }
 
   wrapResult(original: ICalendarDay[], pickMode: string) {
-    let result: any;
+    let result: ICalendarResult | ICalendarResult[] | { from: ICalendarResult, to: ICalendarResult } | ICalendarDay[];
+
     switch (pickMode) {
       case pickModes.SINGLE:
         result = this.multiFormat(original[0].time);
