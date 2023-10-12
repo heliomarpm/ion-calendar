@@ -23,8 +23,8 @@ jobs:
         uses: actions/setup-node@v3
         with:
           node-version: '>=16.8.0'
-          registry-url: https://npm.pkg.github.com/
-          scope: "@heliomarpm"
+          # registry-url: https://npm.pkg.github.com/
+          # scope: "@heliomarpm"
 
       - name: Install dependencies
         run: npm ci
