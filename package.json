@@ -1,6 +1,6 @@
 {
-  "name": "ion-calendar",
-  "version": "0.0.0",
+  "name": "@heliomarpm/ion-calendar",
+  "version": "7.16.0",
   "scripts": {
     "ng": "ng",
     "prepare": "npm run build && cd dist/ion-calendar && npm link && cd ../../projects/demo && npm link @heliomarpm/ion-calendar",
@@ -9,7 +9,8 @@
     "package": "npm run build && cd dist/ion-calendar && npm pack",
     "start": "ng serve -o",
     "watch": "ng build --watch --configuration development",
-    "test": "ng test"
+    "test": "ng test",
+    "upversion": "node upversion.js"
   },
   "private": false,
   "dependencies": {
