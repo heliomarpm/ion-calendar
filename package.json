@@ -13,6 +13,19 @@
 		"upversion": "node upversion.js"
 	},
 	"private": false,
+  "keywords": [
+    "ionic6",
+    "ionic7",
+    "ion-calendar",
+    "ion2-calendar",
+    "ion7-calendar",
+    "calendar",
+    "month-calendar",
+    "datepicker",
+    "datepicker-component",
+    "date-range",
+    "date-multi"
+  ],
 	"dependencies": {
 		"@angular/animations": "^16.2.0",
 		"@angular/common": "^16.2.0",

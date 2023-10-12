@@ -24,7 +24,8 @@ jobs:
         with:
           node-version: '>=16.8.0'
           # registry-url: https://npm.pkg.github.com/
-          # scope: "@heliomarpm"
+          registry-url: https://registry.npmjs.org/
+          scope: "@heliomarpm"
 
       - name: Install dependencies
         run: npm ci
