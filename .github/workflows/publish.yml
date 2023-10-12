@@ -7,7 +7,7 @@ on:
   push:
     tags: ["*"]
     paths:
-      - 'package.json'
+      - 'projects/ion-calendar/package.json'
 
 jobs:
   publish:
@@ -35,15 +35,15 @@ jobs:
       - name: Build
         run: npm run build
 
-      - name: Publish
-        run: |
-          cd dist/ion-calendar
-          npm publish --access=public
-        env:
-          NODE_AUTH_TOKEN: ${{secrets.NPM_TOKEN}}
+      # - name: Publish
+      #   run: |
+      #     cd dist/ion-calendar
+      #     npm publish --access=public
+      #   env:
+      #     NODE_AUTH_TOKEN: ${{secrets.NPM_TOKEN}}
 
-      # - name: Publish Lib
-      #   uses: JS-DevTools/npm-publish@v2
-      #   with:
-      #     token: ${{ secrets.NPM_TOKEN }}
-      #     strategy: all
+      - name: Publish Lib
+        uses: JS-DevTools/npm-publish@v2
+        with:
+          token: ${{ secrets.NPM_TOKEN }}
+          strategy: all
