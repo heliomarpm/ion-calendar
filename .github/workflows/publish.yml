@@ -1,8 +1,7 @@
-# name: Publish
+name: Publish
 # on:
 #   release:
 #     types: [created]
-name: Publish
 on:
   push:
     tags: ["*"]
@@ -31,7 +30,7 @@ jobs:
         run: npm ci
 
       # - name: Tests
-      #   run: npm run test
+      #   run: npm test
 
       - name: Build
         run: npm run build
