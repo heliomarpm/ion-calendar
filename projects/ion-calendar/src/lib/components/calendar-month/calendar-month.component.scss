@@ -17,11 +17,16 @@ ion-note {
 
     .last-month-day,
     .next-month-day {
-      p {
-        // color: rgba(0, 0, 0, 0.25);
-        color: var(--color, #000);
-        opacity: 0.3;
+      color: var(--color, #000);
+
+      &[disabled] p {
+        opacity: .165;
       }
+
+      p {
+        opacity: .35;
+      }
+
     }
 
     .today p {
@@ -191,7 +196,7 @@ ion-note {
     &[disabled] p {
       // color: rgba(0, 0, 0, 0.3);
       color: var(--color, #000);
-      opacity: 0.3;
+      opacity: 0.165;
     }
 
     &.on-selected ion-note {

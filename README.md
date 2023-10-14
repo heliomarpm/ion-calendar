@@ -234,8 +234,8 @@ export class HomePage {
 | weekStart             | number                  | `0`                                   | set week start day `0` of sundaty, `1` of monday
 | IDayConfig            | Array<**_IDayConfig_**> | `[]`                                  | days configuration 
 | displayMode           | string                  | `month`                               | 'month', 'week' 
-| showAdjacentMonthDay  | boolean                 | `true`                                | show days of other months if `displayMode:month`
-| showMonthSubtitle     | boolean                 | `false`                               | show the month in the subtitle if `displayMode:week`
+| showAdjacentMonthDay  | boolean                 | `true`                                | show days of adjacent months when `displayMode: 'month'`
+| showMonthAdjacentDays | boolean                 | `false`                               | show the month on days adjacent to the selected month when `displayMode: 'week'`
 | weeks                 | number                  | `1`                                   | number of week to show in week display mode 
 | locale                | ICalendarLocale         | {locale: 'en', weekdays: 'initial' }  | change calendar locale and set default name to weeks
 

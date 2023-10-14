@@ -196,11 +196,6 @@ export class CalendarComponent implements ControlValueAccessor, OnInit {
     let newWeek = this.calSvc.multiFormat(nextTime);
     const oldWeek = this.calSvc.multiFormat(this.monthOpt.original.time);
 
-    if (oldWeek.month != newWeek.month && !this.def.continuous) {
-      nextTime = DateTime.fromMillis(nextTime).set({ day: 1 }).valueOf();
-      newWeek = this.calSvc.multiFormat(nextTime);
-    }
-
     this.monthOpt = this.createWeek(nextTime);
     this.onWeekChange.emit({ oldWeek: oldWeek, newWeek: this.calSvc.multiFormat(this.monthOpt.original.time), });
 
@@ -214,7 +209,7 @@ export class CalendarComponent implements ControlValueAccessor, OnInit {
     if (!this.def.to || this.view !== 'days') return true;
 
     const toDate = DateTimeHelper.parse(this.def.to);
-    return this.monthOpt.original.lastDay < toDate.toMillis();
+    return this.monthOpt.original.lastDayOfMonth < toDate.toMillis();
   }
 
   private backMonth(): void {
@@ -230,26 +225,6 @@ export class CalendarComponent implements ControlValueAccessor, OnInit {
     let backTime = DateTime.fromMillis(this.monthOpt.original.time).minus({ weeks: this.def.weeks }).valueOf();
     let newWeek = this.calSvc.multiFormat(backTime);
     const oldWeek = this.calSvc.multiFormat(this.monthOpt.original.time);
-
-    if (oldWeek.month != newWeek.month && !this.def.continuous) {
-      const start = new Date(this.monthOpt.original.time);
-      let dayToSubstrac = start.getDay();
-      if (this.options.weekStart === 1) {
-        dayToSubstrac--;
-        if (dayToSubstrac < 0) {
-          dayToSubstrac = 6;
-        }
-      }
-
-      const firstDayMonth = new Date(start.getFullYear(), start.getMonth(), 1).getTime();
-      let momentBackTime = DateTime.fromMillis(firstDayMonth);
-      if (start.getDate() - dayToSubstrac <= 1) {
-        momentBackTime = momentBackTime.minus({ days: 1 });
-      }
-      backTime = momentBackTime.valueOf();
-
-      newWeek = this.calSvc.multiFormat(backTime);
-    }
 
     this.onWeekChange.emit({ oldWeek: oldWeek, newWeek: newWeek, });
 
@@ -449,7 +424,7 @@ export class CalendarComponent implements ControlValueAccessor, OnInit {
     }
   }
 
-  writeValue(obj: any): void {
+  writeValue(obj: CalendarComponentOnChangeType): void {
     this._writeValue(obj);
     if (obj) {
       if (this.calendarMonthValue[0]) {
@@ -463,11 +438,11 @@ export class CalendarComponent implements ControlValueAccessor, OnInit {
     }
   }
 
-  registerOnChange(fn: () => {}): void {
+  registerOnChange(fn: Function): void {
     this._onChanged = fn;
   }
 
-  registerOnTouched(fn: () => {}): void {
+  registerOnTouched(fn: Function): void {
     this._onTouched = fn;
   }
 

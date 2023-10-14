@@ -228,10 +228,10 @@ export class DemoBasicComponent {
   }
 
 
-  onChangeWeekStart(weekStart: string) {
+  onChangeWeekStart(weekStart: 0 | 1) {
     this.options = {
       ...this.options,
-      weekStart: parseInt(weekStart, 10),
+      weekStart: weekStart,
     };
   }
 
@@ -251,13 +251,6 @@ export class DemoBasicComponent {
     }
   }
 
-  onChangeContinuous(continuous: boolean) {
-    this.options = {
-      ...this.options,
-      continuous
-    };
-  }
-
   onChangeShowAdjacentMonthDay(showAdjacentMonthDay: boolean) {
     this.options = {
       ...this.options,
@@ -265,10 +258,10 @@ export class DemoBasicComponent {
     };
   }
 
-  onChangeShowMonthSubtitle(showMonthSubtitle: boolean) {
+  onChangeShowMonthAdjacentDays(showMonthAdjacentDays: boolean) {
     this.options = {
       ...this.options,
-      showMonthSubtitle
+      showMonthAdjacentDays
     };
   }
 

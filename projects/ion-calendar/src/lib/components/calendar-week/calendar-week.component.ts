@@ -36,19 +36,17 @@ export class CalendarWeekComponent {
   }
 
   private adjustSort(weekStart: number): void {
-    if (weekStart === this._weekStart && this.isEquals(this._weekDays, this._weekDaysOld)) return;
+    if (weekStart == this._weekStart && this.isEquals(this._weekDays, this._weekDaysOld)) return;
 
-    if (weekStart === 1) {
+    if (weekStart == 1) {
       const cacheWeekArray = [...this._weekDays];
       cacheWeekArray.push(cacheWeekArray.shift()!);
       this.displayWeekDays = [...cacheWeekArray];
 
-    } else if (weekStart === 0) {
+    } else {
       this.displayWeekDays = [...this._weekDays];
     }
-    else {
-      return;
-    }
+
     this._weekDaysOld = Array.from(this._weekDays);
     this._weekStart = weekStart;
   }

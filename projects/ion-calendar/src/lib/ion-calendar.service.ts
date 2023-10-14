@@ -6,8 +6,6 @@ import { DEFAULT_CALENDAR_OPTIONS } from './calendar-options.provider';
 
 import { DateTime } from 'luxon';
 
-const isBoolean = (input: any) => input === true || input === false;
-
 @Injectable({
   providedIn: 'root'
 })
@@ -56,7 +54,7 @@ export class IonCalendarService {
       clearLabel = null,
       displayMode = defaultValues.DISPLAY_MODE,
       showAdjacentMonthDay = true,
-      showMonthSubtitle = false,
+      showMonthAdjacentDays = false,
       weeks = 1
     } = { ...this.defaultOpts, ...calendarOptions };
 
@@ -94,10 +92,9 @@ export class IonCalendarService {
       defaultDateRange: calendarOptions.defaultDateRange || null,
       clearLabel,
       showAdjacentMonthDay,
-      showMonthSubtitle,
+      showMonthAdjacentDays,
       displayMode,
-      weeks,
-      continuous: true
+      weeks
     };
   }
 
@@ -109,22 +106,22 @@ export class IonCalendarService {
     const firstWeek = new Date(year, month, 1).getDay();
     // const howManyDays = moment(time).daysInMonth();
 
-    const howManyDays = luxon.daysInMonth!;
-    const lastDay = luxon.endOf("day").valueOf();
+    const daysInMonth: number = luxon.daysInMonth!;
+    const lastDayOfMonth = luxon.endOf("month").valueOf();
 
     return {
       date,
       year,
       month,
       firstWeekDay: firstWeek,
-      howManyDays,
+      daysInMonth,
       time: new Date(year, month, (timeWithDay) ? date.getDate() : 1).getTime(),
-      lastDay
+      lastDayOfMonth
     };
   }
 
-  private findDayConfig(day: DateTime, opt: ICalendarModalOptions): IDayConfig | null {
-    const { daysConfig } = opt;
+  private findDayConfig(day: DateTime, options: ICalendarModalOptions): IDayConfig | null {
+    const { daysConfig } = options;
 
     const dayConfig = daysConfig?.find((config) => {
       const dateTime = DateTimeHelper.parse(config.date)
@@ -138,55 +135,46 @@ export class IonCalendarService {
    * Create a calendar day object based on the given time, options, and month.
    *
    * @param {number} time - The time in milliseconds.
-   * @param {ICalendarModalOptions} opt - The calendar modal options.
+   * @param {ICalendarModalOptions} options - The calendar modal options.
    * @param {number} month - The month number.
    * @return {ICalendarDay} The created calendar day object.
    */
-  createCalendarDay(time: number, opt: ICalendarModalOptions, month?: number): ICalendarDay {
+  createCalendarDay(time: number, options: ICalendarModalOptions, month?: number): ICalendarDay {
     const date = DateTimeHelper.parse(time).startOf("day");
     const isToday = DateTimeHelper.now().hasSame(date, 'day')
-    const dayConfig = this.findDayConfig(date, opt);
+    const dayConfig = this.findDayConfig(date, options);
 
     let disable = false;
 
     // Check if there is a specific disable configuration for the day
-    if (dayConfig && isBoolean(dayConfig.disable)) {
+    if (dayConfig && dayConfig.disable !== undefined) {
       disable = dayConfig.disable!;
     }
     else {
       // If no specific disable configuration, check if the day is in the list of disabled weekdays
-      disable = opt.disableWeeks?.indexOf(DateTimeHelper.weekday(date)) !== -1;
+      const dayOfWeek = DateTimeHelper.weekday(date);
+      disable = options.disableWeeks?.includes(dayOfWeek) || false;
 
       if (!disable) {
-        const dateFrom = opt.from === undefined ? undefined : DateTimeHelper.parse(opt.from).startOf("day");
-        const dateTo = opt.to === undefined ? undefined : DateTimeHelper.parse(opt.to).startOf("day");
+        const dateFrom = options.from === undefined ? undefined : DateTimeHelper.parse(options.from).startOf("day");
+        const dateTo = options.to === undefined ? undefined : DateTimeHelper.parse(options.to).startOf("day");
 
-        // Check if the date is between the specified range
-        if (!(dateFrom === undefined && dateTo === undefined)) {
-
-          let isBetween = true;
-          if (!opt.canBackwardsSelected) {
-            if (dateFrom !== undefined && dateTo !== undefined) {
-              // isBetween = Interval.fromDateTimes(dateFrom, dateTo).contains(date);
-              isBetween = date >= dateFrom && date <= dateTo;  //hack
-            }
-            else if (dateFrom !== undefined && dateTo === undefined) {
-              isBetween = date >= dateFrom;
-            }
-            else if (dateFrom === undefined && dateTo !== undefined) {
-              isBetween = date <= dateTo;
-            }
+        if (!options.canBackwardsSelected) {
+          // Check if the date is between the specified range
+          if (dateFrom !== undefined && dateTo !== undefined) {
+            disable = !(date >= dateFrom && date <= dateTo);
+          } else if (dateFrom !== undefined) {
+            disable = date < dateFrom;
+          } else if (dateTo !== undefined) {
+            disable = date > dateTo;
           }
-
-          // Set the disable flag based on whether the date is between the range
-          disable = !isBetween;
         }
       }
     }
 
     // Determine the title and subtitle for the calendar day
-    const title = dayConfig?.title || opt.defaultTitle || new Date(time).getDate().toString();
-    const subTitle = dayConfig?.subTitle || opt.defaultSubtitle || '';
+    const title = dayConfig?.title || options.defaultTitle || new Date(time).getDate().toString();
+    const subTitle = dayConfig?.subTitle || options.defaultSubtitle || '';
 
     return {
       time,
@@ -204,63 +192,69 @@ export class IonCalendarService {
     };
   }
 
+  /**
+   * Creates a calendar month of a given week.
+   *
+   * @param {ICalendarOriginal} original - The original calendar data.
+   * @param {ICalendarModalOptions} options - The calendar modal options.
+   * @returns {ICalendarMonth} The calendar month of the given week.
+   */
   private createCalendarMonthOfWeek(original: ICalendarOriginal, options: ICalendarModalOptions): ICalendarMonth {
-    const { weeks = 1, weekStart, showAdjacentMonthDay, showMonthSubtitle, displayMode } = options;
-    const { date, year, month, howManyDays } = original;
+    const { weeks = 1, weekStart, showAdjacentMonthDay, showMonthAdjacentDays, displayMode } = options;
+    const { date, year, month } = original;
     const days: ICalendarDay[] = new Array(6).fill(null);
 
-    options.continuous = true; //@obsolete
-
-    const calculateStartDay = (currentDate: Date): number => {
-      const dayOfWeek = currentDate.getDay();
-      const result = currentDate.getDate() - (weekStart === 0 ? dayOfWeek : dayOfWeek - 1);
-      return result >= 0 ? result : 6;
+    const calculateStartDay = (originalDate: Date): number => {
+      const dayOfWeek = originalDate.getDay();
+      return originalDate.getDate() - (weekStart === 0 ? dayOfWeek : dayOfWeek - 1);
     };
 
-    const createDay = (dateTime: number, month: number = DateTimeHelper.parse(original.time).month): ICalendarDay => {
-      if (displayMode == displayModes.week && showMonthSubtitle &&
-        DateTimeHelper.parse(dateTime).month !== month) {
-        let optClone: ICalendarModalOptions = JSON.parse(JSON.stringify(options));
 
-        let dayConfig: IDayConfig | null = null;
-        if (optClone.daysConfig !== null && optClone.daysConfig!.length > 0) {
-          dayConfig = this.findDayConfig(DateTimeHelper.parse(dateTime), optClone);
-        }
+    const createDay = (currentTime: number): ICalendarDay => {
+      const month = DateTimeHelper.parse(original.time).month;
+      const dateTime = DateTimeHelper.parse(currentTime);
+      const isDifferentMonth = dateTime.month !== month;
+
+      // Show months in weekdays adjecent of selected month
+      if (displayMode === displayModes.week && showMonthAdjacentDays && isDifferentMonth) {
+        const optClone: ICalendarModalOptions = JSON.parse(JSON.stringify(options));
+        const dayConfig: IDayConfig | null = this.findDayConfig(dateTime, optClone);
 
         if (dayConfig === null) {
-          if (optClone.daysConfig === null) optClone.daysConfig = []
-          optClone.daysConfig!.push({ date: DateTimeHelper.parse(dateTime).toJSDate(),  subTitle: DateTimeHelper.parse(dateTime).monthShort! });
+          if (!optClone.daysConfig) optClone.daysConfig = [];
+          optClone.daysConfig.push({ date: dateTime.toJSDate(), subTitle: dateTime.monthShort! });
         }
 
-        return this.createCalendarDay(dateTime, optClone, month);
+        return this.createCalendarDay(currentTime, optClone, month);
       }
-      return this.createCalendarDay(dateTime, options, month);
+
+      return this.createCalendarDay(currentTime, options, month);
     };
 
-    let startDay = calculateStartDay(date);
+
+    const startDay = calculateStartDay(date);
     let startIndex = 0;
 
-    for (let i = startIndex; i < 7 * weeks && (options.continuous || startDay + (i - startIndex) <= howManyDays); i++) {
+    for (let i = startIndex; i < 7 * weeks; i++) {
       const itemTime = new Date(year, month, startDay + (i - startIndex)).getTime();
       days[i] = createDay(itemTime);
     }
 
     if (displayMode === displayModes.month && showAdjacentMonthDay) {
       const dayExists = days.map(day => !!day);
-      // const thisMonth = DateTimeHelper.parse(original.time).month;
 
       let startOffsetIndex = dayExists.indexOf(true) - 1;
       let endOffsetIndex = dayExists.lastIndexOf(true) + 1;
 
       for (startOffsetIndex; startOffsetIndex >= 0; startOffsetIndex--) {
         const dayBefore = DateTimeHelper.parse(days[startOffsetIndex + 1].time).minus({ days: 1 });
-        days[startOffsetIndex] = createDay(dayBefore.valueOf());//, thisMonth);
+        days[startOffsetIndex] = createDay(dayBefore.valueOf());
       }
 
       if (!(dayExists.length % 7 === 0 && dayExists[dayExists.length - 1])) {
         for (endOffsetIndex; endOffsetIndex < days.length + (endOffsetIndex % 7); endOffsetIndex++) {
           const dayAfter = DateTimeHelper.parse(days[endOffsetIndex - 1].time).plus({ days: 1 });
-          days[endOffsetIndex] = createDay(dayAfter.valueOf());//, thisMonth);
+          days[endOffsetIndex] = createDay(dayAfter.valueOf());
         }
       }
     }
@@ -270,14 +264,14 @@ export class IonCalendarService {
 
   createCalendarMonth(original: ICalendarOriginal, opt: ICalendarModalOptions): ICalendarMonth {
     const days: Array<ICalendarDay> = new Array(6).fill(null);
-    const len = original.howManyDays;
+    const daysInMonth = original.daysInMonth;
 
-    for (let i = original.firstWeekDay; i < len + original.firstWeekDay; i++) {
+    for (let i = original.firstWeekDay; i < daysInMonth + original.firstWeekDay; i++) {
       const itemTime = new Date(original.year, original.month, i - original.firstWeekDay + 1).getTime();
       days[i] = this.createCalendarDay(itemTime, opt);
     }
 
-    if (opt.weekStart === 1) {
+    if (opt.weekStart == 1) {
       if (days[0] === null) {
         days.shift();
       } else {

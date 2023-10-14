@@ -1,6 +1,5 @@
 import { Component } from '@angular/core';
 import { ModalController } from '@ionic/angular';
-import * as luxon from 'luxon';
 
 import { CalendarModalComponent, ICalendarModalOptions } from '@heliomarpm/ion-calendar';
 

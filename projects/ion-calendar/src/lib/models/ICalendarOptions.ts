@@ -12,7 +12,7 @@ export interface ICalendarOptions {
   to?: Date | number;
   pickMode?: PickModeType;
   disableWeeks?: Array<number>;
-  weekStart?: number;
+  weekStart?: 0 | 1;
   weekdays?: Array<string>;
   monthFormat?: string;
   color?: ColorType;
@@ -22,9 +22,8 @@ export interface ICalendarOptions {
   daysConfig?: Array<IDayConfig>;
   displayMode?: DisplayModeType;
   showAdjacentMonthDay?: boolean;
-  showMonthSubtitle?: boolean;
+  showMonthAdjacentDays?: boolean;
   weeks?: number;
-  continuous?: boolean;
 }
 
 export interface ICalendarModalOptions extends ICalendarOptions {

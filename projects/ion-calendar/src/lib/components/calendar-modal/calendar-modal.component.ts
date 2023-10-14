@@ -1,13 +1,5 @@
 import {
-  Component,
-  ViewChild,
-  ElementRef,
-  ChangeDetectorRef,
-  Renderer2,
-  OnInit,
-  Input,
-  AfterViewInit,
-  HostBinding,
+  Component, ViewChild, ElementRef, ChangeDetectorRef, Renderer2, OnInit, Input, AfterViewInit
 } from '@angular/core';
 import { NavParams, ModalController, IonContent } from '@ionic/angular';
 
@@ -54,7 +46,7 @@ export class CalendarModalComponent implements OnInit, AfterViewInit {
     public calSvc: IonCalendarService
   ) {
     // console.log("CalendarModalComponent.constructor");
-   }
+  }
 
   ngOnInit(): void {
     this.init();
