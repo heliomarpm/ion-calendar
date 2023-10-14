@@ -36,7 +36,8 @@
       (onSelectStart)="onSelectStart.emit($event)"
       (onSelectEnd)="onSelectEnd.emit($event)"
       [pickMode]="def.pickMode||'single'"
-      [color]="def.color!">
+      [color]="def.color"
+      [colorSubtitle]="def.colorSubtitle">
   </ion-calendar-month>
 </ng-template>
 

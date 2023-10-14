@@ -53,6 +53,10 @@
       @include week-toolbar(light);
     }
 
+    &.custom {
+      @include week-toolbar(custom);
+    }
+
     &.transparent {
       @include week-toolbar(transparent);
     }

@@ -29,6 +29,7 @@ export class DemoModalLocaleComponent {
         weekdays: 'initial',
         // startWeek: 'sunday'
       },
+      color: "success"
     };
 
     const myCalendar = await this.modalCtrl.create({

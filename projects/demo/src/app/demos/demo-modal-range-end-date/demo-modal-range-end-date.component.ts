@@ -22,6 +22,7 @@ export class DemoModalRangeEndDateComponent {
       pickMode: 'range',
       title: 'RANGE - END DATE',
       defaultDateRange: this.dateRange,
+      color: "secondary"
     };
 
     const myCalendar = await this.modalCtrl.create({

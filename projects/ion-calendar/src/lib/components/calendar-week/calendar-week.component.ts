@@ -1,5 +1,5 @@
 import { Component, Input } from '@angular/core';
-import defaultValues from '../../types';
+import defaultValues, { ColorType } from '../../types';
 import { DateTimeHelper } from '../../helpers';
 
 
@@ -16,8 +16,7 @@ export class CalendarWeekComponent {
 
   public displayWeekDays: string[] = this._weekDays;
 
-  @Input()
-  color: string | undefined = defaultValues.COLOR;
+  @Input() color: ColorType | undefined = defaultValues.COLOR as ColorType;
 
   constructor() {
     // console.log("CalendarWeekComponent.constructor");

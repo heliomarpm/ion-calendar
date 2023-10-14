@@ -42,18 +42,18 @@
       <ion-list>
 
         <ion-item>
-          <ion-button (click)="setDateToday()">
+          <ion-button (click)="setDateToday()" color="dark">
             set date today
           </ion-button>
-          <ion-button (click)="selectedDates()">
+          <ion-button (click)="selectedDates()" color="dark">
             selected dates
           </ion-button>
         </ion-item>
         <ion-item>
-          <ion-button (click)="setLocaleBR()">
+          <ion-button (click)="setLocaleBR()" color="dark">
             set locale BR
           </ion-button>
-          <ion-button (click)="setLocaleCN()">
+          <ion-button (click)="setLocaleCN()" color="dark">
             set locale CN
           </ion-button>
         </ion-item>
@@ -101,6 +101,22 @@
             <ion-select-option value="dark">dark</ion-select-option>
             <ion-select-option value="medium">medium</ion-select-option>
             <ion-select-option value="light">light</ion-select-option>
+            <ion-select-option value="custom">custom</ion-select-option>
+          </ion-select>
+        </ion-item>
+        <ion-item>
+          <ion-select label="colorSubtitle" [(ngModel)]="optModel.colorSubtitle" (ngModelChange)="onChangeColorsSubtitle($event)">
+            <ion-select-option value="">default</ion-select-option>
+            <ion-select-option value="primary">primary</ion-select-option>
+            <ion-select-option value="secondary">secondary</ion-select-option>
+            <ion-select-option value="tertiary">tertiary</ion-select-option>
+            <ion-select-option value="success">success</ion-select-option>
+            <ion-select-option value="warning">warning</ion-select-option>
+            <ion-select-option value="danger">danger</ion-select-option>
+            <ion-select-option value="dark">dark</ion-select-option>
+            <ion-select-option value="medium">medium</ion-select-option>
+            <ion-select-option value="light">light</ion-select-option>
+            <ion-select-option value="custom">custom</ion-select-option>
           </ion-select>
         </ion-item>
         <ion-item>
@@ -137,11 +153,6 @@
           </ion-checkbox>
         </ion-item>
         <ion-item>
-          <ion-checkbox [(ngModel)]="optModel.showAdjacentMonthDay" (ngModelChange)="onChangeShowAdjacentMonthDay($event)">
-            showAdjacentMonthDay
-          </ion-checkbox>
-        </ion-item>
-        <ion-item>
           <label>displayMode</label>
           <ion-radio-group [(ngModel)]="optModel.displayMode" (ngModelChange)="onChangeDisplayMode($event)" slot="end">
             <ion-row>
@@ -153,6 +164,20 @@
               </ion-item>
             </ion-row>
           </ion-radio-group>
+        </ion-item>
+        <ion-item>
+          <ion-checkbox [(ngModel)]="optModel.showAdjacentMonthDay"
+                        (ngModelChange)="onChangeShowAdjacentMonthDay($event)"
+                        [disabled]="optModel.displayMode === 'week'">
+            showAdjacentMonthDay
+          </ion-checkbox>
+        </ion-item>
+        <ion-item>
+          <ion-checkbox [(ngModel)]="optModel.showMonthSubtitle"
+                        (ngModelChange)="onChangeShowMonthSubtitle($event)"
+                        [disabled]="optModel.displayMode !== 'week'">
+            showAdjacentMonthDay
+          </ion-checkbox>
         </ion-item>
         <ion-item>
           <!-- <ion-label position="floating">weeks</ion-label> -->

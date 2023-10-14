@@ -22,7 +22,8 @@ export class DemoModalMultiComponent {
       pickMode: 'multi',
       title: 'MULTI',
       defaultDates: this.dates,
-      clearLabel: 'CLEAR'
+      clearLabel: 'CLEAR',
+      color: 'tertiary'
     };
 
     const myCalendar = await this.modalCtrl.create({

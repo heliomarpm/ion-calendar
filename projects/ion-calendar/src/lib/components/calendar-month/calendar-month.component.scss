@@ -1,8 +1,16 @@
 @import '../index.scss';
 
-@mixin set-styles($background-color: primary, $color) {
-  button.days-btn small {
-    color: bindColors($background-color);
+ion-note {
+  font-size: smaller;
+}
+
+@mixin set-styles($background-color: primary, $text-color: null) {
+  // button.days-btn ion-note {
+  //   color: bindColors($background-color);
+  // }
+  $color: $text-color;
+  @if not $color {
+    $color: map-get($textcolor, $background-color);
   }
 
   .days {
@@ -56,7 +64,7 @@
     }
 
     &:after {
-      background-color: var(--background-color);
+      background-color: $color;
       opacity: 0.25;
     }
 
@@ -115,7 +123,8 @@
         left: 0;
         right: 0;
         display: block;
-        // background-color: var(--backgroud-color);
+        // background-color: white;
+        background-color: $color;
         opacity: 0.25;
       }
     }
@@ -186,12 +195,12 @@
       opacity: 0.3;
     }
 
-    &.on-selected small {
+    &.on-selected ion-note {
       transition: bottom 0.3s;
       bottom: -14px;
     }
 
-    small {
+    ion-note {
       overflow: hidden;
       display: block;
       left: 0;
@@ -255,7 +264,7 @@
   }
 
   .primary {
-    @include set-styles(primary, #fff);
+    @include set-styles(primary);
 
     .startSelection.endSelection::before {
       --ion-color-primary: transparent;
@@ -263,7 +272,7 @@
   }
 
   .secondary {
-    @include set-styles(secondary, #fff);
+    @include set-styles(secondary);
 
     .startSelection.endSelection::before {
       --ion-color-secondary: transparent;
@@ -271,7 +280,7 @@
   }
 
   .tertiary {
-    @include set-styles(tertiary, #fff);
+    @include set-styles(tertiary);
 
     .startSelection.endSelection::before {
       --ion-color-tertiary: transparent;
@@ -279,7 +288,7 @@
   }
 
   .success {
-    @include set-styles(success, #fff);
+    @include set-styles(success);
 
     .startSelection.endSelection::before {
       --ion-color-success: transparent;
@@ -287,7 +296,7 @@
   }
 
   .warning {
-    @include set-styles(warning, #000);
+    @include set-styles(warning);
 
     .startSelection.endSelection::before {
       --ion-color-warning: transparent;
@@ -295,7 +304,7 @@
   }
 
   .danger {
-    @include set-styles(danger, #fff);
+    @include set-styles(danger);
 
     .startSelection.endSelection::before {
       --ion-color-danger: transparent;
@@ -303,7 +312,7 @@
   }
 
   .dark {
-    @include set-styles(dark, #fff);
+    @include set-styles(dark);
 
     .startSelection.endSelection::before {
       --ion-color-dark: transparent;
@@ -311,7 +320,7 @@
   }
 
   .medium {
-    @include set-styles(medium, #fff);
+    @include set-styles(medium);
 
     .startSelection.endSelection::before {
       --ion-color-medium: transparent;
@@ -319,10 +328,18 @@
   }
 
   .light {
-    @include set-styles(light, #000);
+    @include set-styles(light);
 
     .startSelection.endSelection::before {
       --ion-color-light: transparent;
+    }
+  }
+
+  .custom {
+    @include set-styles(custom);
+
+    .startSelection.endSelection::before {
+      --ion-color-custom: transparent;
     }
   }
 }

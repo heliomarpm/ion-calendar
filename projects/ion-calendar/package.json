@@ -1,41 +1,41 @@
 {
-  "name": "@heliomarpm/ion-calendar",
-  "version": "7.16.1",
-  "description": "A date picker super component for ionic6+",
-  "author": "Heliomar P. Marques",
-  "license": "MIT",
-  "bugs": {
-    "url": "https://github.com/heliomarpm/ion-calendar/issues"
-  },
-  "homepage": "https://github.com/heliomarpm/ion-calendar#readme",
-  "repository": {
-    "type": "git",
-    "url": "git+https://github.com/heliomarpm/ion-calendar.git"
-  },
-  "keywords": [
-    "ionic6",
-    "ionic7",
-    "ion-calendar",
-    "ion2-calendar",
-    "ion7-calendar",
-    "calendar",
-    "month-calendar",
-    "datepicker",
-    "datepicker-component",
-    "date-range",
-    "date-multi"
-  ],
-  "peerDependencies": {
-    "@angular/common": "^16.2.0",
-    "@angular/core": "^16.2.0",
-    "luxon": "^3.4.3"
-  },
-  "dependencies": {
-    "tslib": "^2.3.0"
-  },
-  "sideEffects": false,
-  "devDependencies": {
-    "@ionic/angular": "^6.0.0",
-    "@types/luxon": "^3.3.2"
-  }
+	"name": "@heliomarpm/ion-calendar",
+	"version": "7.16.2",
+	"description": "A date picker super component for ionic6+",
+	"author": "Heliomar P. Marques",
+	"license": "MIT",
+	"bugs": {
+		"url": "https://github.com/heliomarpm/ion-calendar/issues"
+	},
+	"homepage": "https://github.com/heliomarpm/ion-calendar#readme",
+	"repository": {
+		"type": "git",
+		"url": "git+https://github.com/heliomarpm/ion-calendar.git"
+	},
+	"keywords": [
+		"ionic6",
+		"ionic7",
+		"ion-calendar",
+		"ion2-calendar",
+		"ion7-calendar",
+		"calendar",
+		"month-calendar",
+		"datepicker",
+		"datepicker-component",
+		"date-range",
+		"date-multi"
+	],
+	"peerDependencies": {
+		"@angular/common": "^16.2.0",
+		"@angular/core": "^16.2.0",
+		"luxon": "^3.4.3"
+	},
+	"dependencies": {
+		"tslib": "^2.3.0"
+	},
+	"sideEffects": false,
+	"devDependencies": {
+		"@ionic/angular": "^6.0.0",
+		"@types/luxon": "^3.3.2"
+	}
 }

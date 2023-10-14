@@ -15,7 +15,7 @@
             		[disabled]="day.disable"
             		[attr.aria-label]="getDayLabel(day) | date:DAY_DATE_FORMAT">
               <p>{{ day.title }}</p>
-              <small *ngIf="day.subTitle">{{ day?.subTitle }}</small>
+              <ion-note *ngIf="day.subTitle" [color]="colorSubtitle">{{ day?.subTitle }}</ion-note>
             </button>
           </ng-container>
         </div>
@@ -45,7 +45,7 @@
             		[class.on-selected]="isSelected(day.time)"
             		[disabled]="day.disable">
               <p>{{ day.title }}</p>
-              <small *ngIf="day.subTitle">{{ day?.subTitle }}</small>
+              <ion-note *ngIf="day.subTitle" [color]="colorSubtitle">{{ day?.subTitle }}</ion-note>
             </button>
           </ng-container>
 

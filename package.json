@@ -1,6 +1,6 @@
 {
-	"name": "@heliomarpm/ion-calendar",
-	"version": "7.16.1",
+	"name": "ion-calendar",
+	"version": "7.16.2",
 	"scripts": {
 		"ng": "ng",
 		"prepare": "npm run build && cd dist/ion-calendar && npm link && cd ../../projects/demo && npm link @heliomarpm/ion-calendar",
@@ -13,19 +13,6 @@
 		"upversion": "node upversion.js"
 	},
 	"private": false,
-  "keywords": [
-    "ionic6",
-    "ionic7",
-    "ion-calendar",
-    "ion2-calendar",
-    "ion7-calendar",
-    "calendar",
-    "month-calendar",
-    "datepicker",
-    "datepicker-component",
-    "date-range",
-    "date-multi"
-  ],
 	"dependencies": {
 		"@angular/animations": "^16.2.0",
 		"@angular/common": "^16.2.0",

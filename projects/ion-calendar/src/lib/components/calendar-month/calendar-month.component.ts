@@ -1,7 +1,7 @@
 import { Component, ChangeDetectorRef, Input, Output, EventEmitter, forwardRef, AfterViewInit } from '@angular/core';
 import { ControlValueAccessor, NG_VALUE_ACCESSOR } from '@angular/forms';
 import { ICalendarDay, ICalendarMonth, ICalendarOriginal } from '../../models';
-import defaultValues, { PickModeType, pickModes } from '../../types';
+import defaultValues, { ColorType, PickModeType, pickModes } from '../../types';
 
 export const MONTH_VALUE_ACCESSOR: any = {
   provide: NG_VALUE_ACCESSOR,
@@ -21,10 +21,11 @@ export const MONTH_VALUE_ACCESSOR: any = {
 })
 export class CalendarMonthComponent implements ControlValueAccessor, AfterViewInit {
   @Input() month!: ICalendarMonth;
-  @Input() pickMode: PickModeType = 'SINGLE';
+  @Input() pickMode: PickModeType = defaultValues.PICK_MODE as PickModeType;
   @Input() id: any;
   @Input() readonly = false;
-  @Input() color: string | undefined = defaultValues.COLOR;
+  @Input() color: ColorType | undefined = defaultValues.COLOR as ColorType;
+  @Input() colorSubtitle: ColorType | undefined = undefined;
   @Output() private onChange: EventEmitter<ICalendarDay[]> = new EventEmitter();
   @Output() private onSelect: EventEmitter<ICalendarDay> = new EventEmitter();
   @Output() private onSelectStart: EventEmitter<ICalendarDay> = new EventEmitter();
@@ -38,7 +39,7 @@ export class CalendarMonthComponent implements ControlValueAccessor, AfterViewIn
   readonly DAY_DATE_FORMAT = 'MMMM dd, yyyy';
 
   get isRange(): boolean {
-    return this.pickMode === pickModes.RANGE;
+    return this.pickMode === pickModes.range;
   }
 
   constructor(public ref: ChangeDetectorRef) {
@@ -74,7 +75,7 @@ export class CalendarMonthComponent implements ControlValueAccessor, AfterViewIn
   isEndSelection(day: ICalendarDay): boolean {
     if (!day) { return false; }
 
-    if (this.pickMode !== pickModes.RANGE || !this._isInit || this._date[1] === null) {
+    if (this.pickMode !== pickModes.range || !this._isInit || this._date[1] === null) {
       return false;
     }
 
@@ -88,7 +89,7 @@ export class CalendarMonthComponent implements ControlValueAccessor, AfterViewIn
   isBetween(day: ICalendarDay): boolean {
     if (!day) { return false; }
 
-    if (this.pickMode !== pickModes.RANGE || !this._isInit) {
+    if (this.pickMode !== pickModes.range || !this._isInit) {
       return false;
     }
 
@@ -104,7 +105,7 @@ export class CalendarMonthComponent implements ControlValueAccessor, AfterViewIn
 
   isStartSelection(day: ICalendarDay): boolean {
     if (!day) { return false; }
-    if (this.pickMode !== pickModes.RANGE || !this._isInit || this._date[0] === null) {
+    if (this.pickMode !== pickModes.range || !this._isInit || this._date[0] === null) {
       return false;
     }
 
@@ -113,7 +114,7 @@ export class CalendarMonthComponent implements ControlValueAccessor, AfterViewIn
 
   isSelected(time: number): boolean {
     if (Array.isArray(this._date)) {
-      if (this.pickMode !== pickModes.MULTI) {
+      if (this.pickMode !== pickModes.multi) {
         if (this._date[0] !== null) {
           return time === this._date[0].time;
         }
@@ -134,13 +135,13 @@ export class CalendarMonthComponent implements ControlValueAccessor, AfterViewIn
     item.selected = true;
     this.onSelect.emit(item);
 
-    if (this.pickMode === pickModes.SINGLE) {
+    if (this.pickMode === pickModes.single) {
       this._date[0] = item;
       this.onChange.emit(this._date as ICalendarDay[]);
       return;
     }
 
-    if (this.pickMode === pickModes.RANGE) {
+    if (this.pickMode === pickModes.range) {
       if (this._date[0] === null) {
         this._date[0] = item;
         this.onSelectStart.emit(item);
@@ -170,7 +171,7 @@ export class CalendarMonthComponent implements ControlValueAccessor, AfterViewIn
       return;
     }
 
-    if (this.pickMode === pickModes.MULTI) {
+    if (this.pickMode === pickModes.multi) {
       const index = this._date.findIndex(e => e !== null && e.time === item.time);
 
       if (index === -1) {

@@ -1,6 +1,6 @@
 @import '../index.scss';
 
-@mixin year-picker($background-color: primary, $color) {
+@mixin year-picker($background-color: primary, $color:null) {
   .year-packer-item {
     &.this-year button {
       border: 1px solid bindColors($background-color);
@@ -9,20 +9,19 @@
     &.active {
       button {
         background-color: bindColors($background-color);
-        color: $color;
+        @if $color {
+          color: $color;
+        }
+        @else {
+          color: map-get($textcolor, $background-color)
+        }
       }
     }
   }
 }
 
 :host {
-  .year-picker {
-    margin: 20px 0;
-    display: inline-block;
-    width: 100%;
-  }
-
-  .year-packer-item {
+ .year-packer-item {
     width: 20%;
     box-sizing: border-box;
     float: left;
@@ -39,43 +38,52 @@
     }
   }
 
-  .year-picker.primary {
-    @include year-picker(primary, #fff);
+  .year-picker {
+    margin: 20px 0;
+    display: inline-block;
+    width: 100%;
+
+  &.primary {
+    @include year-picker(primary);
   }
 
-  .year-picker.secondary {
-    @include year-picker(secondary, #fff);
+  &.secondary {
+    @include year-picker(secondary);
   }
 
-  .year-picker.tertiary {
-    @include year-picker(tertiary, #fff);
+  &.tertiary {
+    @include year-picker(tertiary);
   }
 
-  .year-picker.success {
-    @include year-picker(success, #fff);
+  &.success {
+    @include year-picker(success);
   }
 
-  .year-picker.warning {
-    @include year-picker(warning, #000);
+  &.warning {
+    @include year-picker(warning);
   }
 
-  .year-picker.danger {
-    @include year-picker(danger, #fff);
+  &.danger {
+    @include year-picker(danger);
   }
 
-  .year-picker.dark {
-    @include year-picker(dark, #fff);
+  &.dark {
+    @include year-picker(dark);
   }
 
-  .year-picker.medium {
-    @include year-picker(medium, #fff);
+  &.medium {
+    @include year-picker(medium);
   }
 
-  .year-picker.light {
-    @include year-picker(light, #000);
+  &.light {
+    @include year-picker(light);
+  }
+  &.custom {
+    @include year-picker(custom);
   }
 
-  .year-picker.transparent {
-    @include year-picker(transparent, #000);
+  &.transparent {
+    @include year-picker(transparent);
   }
+}
 }

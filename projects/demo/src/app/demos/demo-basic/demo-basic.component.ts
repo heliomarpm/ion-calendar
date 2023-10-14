@@ -2,6 +2,7 @@ import { Component, ViewChild } from '@angular/core';
 import { ToastController } from '@ionic/angular';
 
 import { CalendarComponent, ICalendarComponentOptions, ICalendarLocale } from '@heliomarpm/ion-calendar';
+import { ColorType, PickModeType } from '@heliomarpm/ion-calendar/lib/types';
 
 @Component({
   selector: 'app-demo-basic',
@@ -159,7 +160,7 @@ export class DemoBasicComponent {
     };
   }
 
-  onChangePickMode(pickMode: string) {
+  onChangePickMode(pickMode: PickModeType) {
     this.options = {
       ...this.options,
       pickMode,
@@ -185,10 +186,17 @@ export class DemoBasicComponent {
   }
 
 
-  onChangeColors(color: string) {
+  onChangeColors(color: ColorType) {
     this.options = {
       ...this.options,
       color,
+    };
+  }
+
+  onChangeColorsSubtitle(colorSubtitle: ColorType) {
+    this.options = {
+      ...this.options,
+      colorSubtitle,
     };
   }
 
@@ -254,6 +262,13 @@ export class DemoBasicComponent {
     this.options = {
       ...this.options,
       showAdjacentMonthDay
+    };
+  }
+
+  onChangeShowMonthSubtitle(showMonthSubtitle: boolean) {
+    this.options = {
+      ...this.options,
+      showMonthSubtitle
     };
   }
 

@@ -1,4 +1,4 @@
-import { DateType, PickModeType, DisplayModeType } from "../types";
+import { DateType, PickModeType, DisplayModeType, ColorType } from "../types";
 import { IDayConfig } from "./IDayConfig";
 
 export interface ICalendarLocale {
@@ -15,16 +15,14 @@ export interface ICalendarOptions {
   weekStart?: number;
   weekdays?: Array<string>;
   monthFormat?: string;
-  // yearFormat?: string;
-  color?: string;
+  color?: ColorType;
+  colorSubtitle?: ColorType;
   defaultTitle?: string;
   defaultSubtitle?: string;
   daysConfig?: Array<IDayConfig>;
-  /**
-   * show last month & next month days fill six weeks
-   */
-  showAdjacentMonthDay?: boolean;
   displayMode?: DisplayModeType;
+  showAdjacentMonthDay?: boolean;
+  showMonthSubtitle?: boolean;
   weeks?: number;
   continuous?: boolean;
 }

@@ -13,11 +13,11 @@ export class DemoModalRangeComponent {
     from: Date;
     to: Date;
   } = {
-    from: new Date(),
-    to: new Date(Date.now() + 24 * 60 * 60 * 1000 * 5),
-  };
+      from: new Date(),
+      to: new Date(Date.now() + 24 * 60 * 60 * 1000 * 5),
+    };
 
-  constructor(public modalCtrl: ModalController) {}
+  constructor(public modalCtrl: ModalController) { }
 
   async openCalendar() {
     const options: ICalendarModalOptions = {

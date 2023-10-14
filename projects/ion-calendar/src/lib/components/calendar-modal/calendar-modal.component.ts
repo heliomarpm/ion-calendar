@@ -30,7 +30,7 @@ export class CalendarModalComponent implements OnInit, AfterViewInit {
   // private step!: number;
   private showYearPicker!: boolean;
   private year!: number;
-  private years!: Array<number>;
+  // private years!: Array<number>;
   private _scrollLock = true;
   private actualFirstTime!: number;
 
@@ -40,8 +40,8 @@ export class CalendarModalComponent implements OnInit, AfterViewInit {
   @ViewChild('months')
   private monthElement!: ElementRef;
 
-  @HostBinding('class.ion-page')
-  private ionPage = true;
+  // @HostBinding('class.ion-page')
+  // private ionPage = true;
 
   @Input() options!: ICalendarModalOptions;
 
@@ -94,12 +94,12 @@ export class CalendarModalComponent implements OnInit, AfterViewInit {
   private initDefaultDate(): void {
     const { pickMode, defaultDate, defaultDateRange, defaultDates } = this.def;
     switch (pickMode) {
-      case pickModes.SINGLE:
+      case pickModes.single:
         if (defaultDate) {
           this.datesTemp[0] = this.calSvc.createCalendarDay(this._getDayTime(defaultDate), this.def);
         }
         break;
-      case pickModes.RANGE:
+      case pickModes.range:
         if (defaultDateRange) {
           if (defaultDateRange.from) {
             this.datesTemp[0] = this.calSvc.createCalendarDay(this._getDayTime(defaultDateRange.from), this.def);
@@ -109,7 +109,7 @@ export class CalendarModalComponent implements OnInit, AfterViewInit {
           }
         }
         break;
-      case pickModes.MULTI:
+      case pickModes.multi:
         if (defaultDates && defaultDates.length) {
           this.datesTemp = defaultDates.map(e => this.calSvc.createCalendarDay(this._getDayTime(e), this.def));
         }
@@ -134,7 +134,7 @@ export class CalendarModalComponent implements OnInit, AfterViewInit {
     this.datesTemp = data;
     this.ref.detectChanges();
 
-    if (pickMode !== pickModes.MULTI && autoDone && this.canDone()) {
+    if (pickMode !== pickModes.multi && autoDone && this.canDone()) {
       this.done();
     }
 
@@ -158,11 +158,11 @@ export class CalendarModalComponent implements OnInit, AfterViewInit {
     const { pickMode } = this.def;
 
     switch (pickMode) {
-      case pickModes.SINGLE:
+      case pickModes.single:
         return !!(this.datesTemp[0] && this.datesTemp[0].time);
-      case pickModes.RANGE:
+      case pickModes.range:
         return !!(this.datesTemp[0] && this.datesTemp[1]) && !!(this.datesTemp[0].time && this.datesTemp[1].time);
-      case pickModes.MULTI:
+      case pickModes.multi:
         return this.datesTemp.length > 0 && this.datesTemp.every(e => !!e && !!e.time);
       default:
         return false;

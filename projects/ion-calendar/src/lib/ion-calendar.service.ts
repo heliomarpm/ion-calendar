@@ -1,6 +1,6 @@
 import { Inject, Injectable, Optional } from '@angular/core';
 import { ICalendarDay, ICalendarLocale, ICalendarModalOptions, ICalendarMonth, ICalendarOriginal, ICalendarResult, IDayConfig } from './models';
-import defaultValues, { displayModes, pickModes } from './types';
+import defaultValues, { PickModeType, displayModes, pickModes } from './types';
 import { DateTimeHelper } from './helpers';
 import { DEFAULT_CALENDAR_OPTIONS } from './calendar-options.provider';
 
@@ -40,7 +40,6 @@ export class IonCalendarService {
       closeLabel = 'CANCEL',
       doneLabel = 'DONE',
       monthFormat = 'MMM yyyy',
-      // yearFormat = 'yyyy',
       title = 'CALENDAR',
       defaultTitle = '',
       defaultSubtitle = '',
@@ -48,16 +47,17 @@ export class IonCalendarService {
       canBackwardsSelected = false,
       closeIcon = false,
       doneIcon = false,
-      pickMode = pickModes.SINGLE,
+      pickMode = defaultValues.PICK_MODE,
       color = defaultValues.COLOR,
+      colorSubtitle = undefined,
       weekdays = DateTimeHelper.weekDays(_locale),
       daysConfig = _daysConfig,
       disableWeeks = _disableWeeks,
-      showAdjacentMonthDay = true,
       clearLabel = null,
-      displayMode = displayModes.MONTH,
-      weeks = 1,
-      continuous = true //false
+      displayMode = defaultValues.DISPLAY_MODE,
+      showAdjacentMonthDay = true,
+      showMonthSubtitle = false,
+      weeks = 1
     } = { ...this.defaultOpts, ...calendarOptions };
 
     const fromDate = DateTimeHelper.isDate(from) ? from : new Date();
@@ -71,6 +71,7 @@ export class IonCalendarService {
       pickMode,
       autoDone,
       color,
+      colorSubtitle,
       cssClass,
       weekStart,
       closeLabel,
@@ -91,11 +92,12 @@ export class IonCalendarService {
       defaultDate: calendarOptions.defaultDate || null,
       defaultDates: calendarOptions.defaultDates || null,
       defaultDateRange: calendarOptions.defaultDateRange || null,
-      showAdjacentMonthDay,
       clearLabel,
+      showAdjacentMonthDay,
+      showMonthSubtitle,
       displayMode,
       weeks,
-      continuous
+      continuous: true
     };
   }
 
@@ -202,120 +204,68 @@ export class IonCalendarService {
     };
   }
 
-  private createCalendarMonthOfWeek(original: ICalendarOriginal, opt: ICalendarModalOptions): ICalendarMonth {
-    const weeks = opt.weeks ?? 1;
-    const days: Array<ICalendarDay> = new Array(6).fill(null);
+  private createCalendarMonthOfWeek(original: ICalendarOriginal, options: ICalendarModalOptions): ICalendarMonth {
+    const { weeks = 1, weekStart, showAdjacentMonthDay, showMonthSubtitle, displayMode } = options;
+    const { date, year, month, howManyDays } = original;
+    const days: ICalendarDay[] = new Array(6).fill(null);
 
-    let originalDate = original.date;
-    let startWeek: number;
-    let startDay: number;
+    options.continuous = true; //@obsolete
+
+    const calculateStartDay = (currentDate: Date): number => {
+      const dayOfWeek = currentDate.getDay();
+      const result = currentDate.getDate() - (weekStart === 0 ? dayOfWeek : dayOfWeek - 1);
+      return result >= 0 ? result : 6;
+    };
+
+    const createDay = (dateTime: number, month: number = DateTimeHelper.parse(original.time).month): ICalendarDay => {
+      if (displayMode == displayModes.week && showMonthSubtitle &&
+        DateTimeHelper.parse(dateTime).month !== month) {
+        let optClone: ICalendarModalOptions = JSON.parse(JSON.stringify(options));
+
+        let dayConfig: IDayConfig | null = null;
+        if (optClone.daysConfig !== null && optClone.daysConfig!.length > 0) {
+          dayConfig = this.findDayConfig(DateTimeHelper.parse(dateTime), optClone);
+        }
+
+        if (dayConfig === null) {
+          if (optClone.daysConfig === null) optClone.daysConfig = []
+          optClone.daysConfig!.push({ date: DateTimeHelper.parse(dateTime).toJSDate(),  subTitle: DateTimeHelper.parse(dateTime).monthShort! });
+        }
+
+        return this.createCalendarDay(dateTime, optClone, month);
+      }
+      return this.createCalendarDay(dateTime, options, month);
+    };
+
+    let startDay = calculateStartDay(date);
     let startIndex = 0;
 
-    // opt.continuous = true //@obsolete
-    // if (opt.continuous) {
-      if (originalDate.getDay() === 0) {
-        startWeek = (opt.weekStart === 0) ? 0 : 1;
-        startDay = originalDate.getDate() - (opt.weekStart === 0 ? 0 : 6);
-      } else {
-        startWeek = (opt.weekStart === 0) ? 0 : 1;
-        startDay = originalDate.getDate() - (opt.weekStart === 0 ? originalDate.getDay() : originalDate.getDay() - 1);
-      }
-    // } else {
-    //   if (originalDate.getDay() === 0) {
-
-    //     startWeek = opt.weekStart === 0 ? 0 : (originalDate.getDate() - 6 > 1) ? 1 : original.firstWeekDay;
-    //     startWeek = original.firstWeekDay < 0 ? 6 : original.firstWeekDay - 1;
-
-    //     if (opt.weekStart === 0) {
-    //       startWeek = 0;
-    //       startDay = originalDate.getDate();
-    //     } else {
-    //       if (originalDate.getDate() - 6 > 1) {
-    //         startWeek = 1;
-    //         startDay = originalDate.getDate() - 6;
-    //       } else {
-    //         startWeek = original.firstWeekDay;
-    //         startDay = 1;
-    //         startIndex = startWeek - 1;
-    //         if (startIndex < 0) {
-    //           startIndex = 6;
-    //         }
-    //       }
-    //     }
-    //     if (opt.weekStart === 0) {
-    //       startWeek = original.firstWeekDay < 0 ? 6 : original.firstWeekDay - 1;
-    //       startDay = original.firstWeekDay < 0 ? 1 : originalDate.getDate() - 6;
-    //       startIndex = original.firstWeekDay < 0 ? 6 : original.firstWeekDay - 1;
-    //     } else {
-    //       startWeek = 1;
-    //       startDay = originalDate.getDate() - 6;
-    //     }
-    //   } else {
-    //     if (opt.weekStart === 0) {
-    //       if (originalDate.getDate() - originalDate.getDay() > 1) {
-    //         startWeek = 0;
-    //         startDay = originalDate.getDate() - originalDate.getDay();
-    //       } else {
-    //         startWeek = original.firstWeekDay;
-    //         startDay = 1;
-    //         startIndex = startWeek;
-    //       }
-    //     } else {
-    //       if (originalDate.getDate() - (originalDate.getDay() - 1) > 1) {
-    //         startWeek = 1;
-    //         startDay = originalDate.getDate() - (originalDate.getDay() - 1);
-    //       } else {
-    //         startWeek = original.firstWeekDay;
-    //         startDay = 1;
-    //         startIndex = startWeek - 1;
-    //       }
-    //     }
-    //   }
-    // }
-
-    for (let i = startIndex; i < 7 * weeks && (opt.continuous || startDay + (i - startIndex) <= original.howManyDays); i++) {
-      let itemTime = new Date(original.year, original.month, startDay + (i - startIndex)).getTime();
-      days[i] = this.createCalendarDay(itemTime, opt);
+    for (let i = startIndex; i < 7 * weeks && (options.continuous || startDay + (i - startIndex) <= howManyDays); i++) {
+      const itemTime = new Date(year, month, startDay + (i - startIndex)).getTime();
+      days[i] = createDay(itemTime);
     }
 
-    while (!opt.continuous && days.length <= 7 * (weeks - 1) && startDay != 1) {
-      days.unshift(...new Array(7).fill(null));
-      let i = 6;
-      while (i >= 0 && startDay != 1) {
-        startDay--;
-        let itemTime = new Date(original.year, original.month, startDay).getTime();
-        days[i] = this.createCalendarDay(itemTime, opt);
-        i--;
-      }
-      original.date.setDate(startDay);
-      original.time = new Date(original.date).getTime();
-    }
+    if (displayMode === displayModes.month && showAdjacentMonthDay) {
+      const dayExists = days.map(day => !!day);
+      // const thisMonth = DateTimeHelper.parse(original.time).month;
 
-    if (opt.showAdjacentMonthDay) {
-      const _booleanMap = days.map(e => !!e);
-      // const thisMonth = moment(original.time).month();
-      const thisMonth = DateTimeHelper.parse(original.time).month;
-      let startOffsetIndex = _booleanMap.indexOf(true) - 1;
-      let endOffsetIndex = _booleanMap.lastIndexOf(true) + 1;
+      let startOffsetIndex = dayExists.indexOf(true) - 1;
+      let endOffsetIndex = dayExists.lastIndexOf(true) + 1;
+
       for (startOffsetIndex; startOffsetIndex >= 0; startOffsetIndex--) {
-        // const dayBefore = moment(days[startOffsetIndex + 1].time).clone().subtract(1, 'd');
         const dayBefore = DateTimeHelper.parse(days[startOffsetIndex + 1].time).minus({ days: 1 });
-        days[startOffsetIndex] = this.createCalendarDay(dayBefore.valueOf(), opt, thisMonth);
+        days[startOffsetIndex] = createDay(dayBefore.valueOf());//, thisMonth);
       }
 
-      if (!(_booleanMap.length % 7 === 0 && _booleanMap[_booleanMap.length - 1])) {
+      if (!(dayExists.length % 7 === 0 && dayExists[dayExists.length - 1])) {
         for (endOffsetIndex; endOffsetIndex < days.length + (endOffsetIndex % 7); endOffsetIndex++) {
-          // const dayAfter = moment(days[endOffsetIndex - 1].time).clone().add(1, 'd');
           const dayAfter = DateTimeHelper.parse(days[endOffsetIndex - 1].time).plus({ days: 1 });
-          days[endOffsetIndex] = this.createCalendarDay(dayAfter.valueOf(), opt, thisMonth);
+          days[endOffsetIndex] = createDay(dayAfter.valueOf());//, thisMonth);
         }
       }
     }
 
-    return {
-      days,
-      original: original,
-    };
+    return { days, original };
   }
 
   createCalendarMonth(original: ICalendarOriginal, opt: ICalendarModalOptions): ICalendarMonth {
@@ -425,20 +375,20 @@ export class IonCalendarService {
     });
   }
 
-  wrapResult(original: ICalendarDay[], pickMode: string) {
+  wrapResult(original: ICalendarDay[], pickMode: PickModeType) {
     let result: ICalendarResult | ICalendarResult[] | { from: ICalendarResult, to: ICalendarResult } | ICalendarDay[];
 
     switch (pickMode) {
-      case pickModes.SINGLE:
+      case pickModes.single:
         result = this.multiFormat(original[0].time);
         break;
-      case pickModes.RANGE:
+      case pickModes.range:
         result = {
           from: this.multiFormat(original[0].time),
           to: this.multiFormat((original[1] || original[0]).time),
         };
         break;
-      case pickModes.MULTI:
+      case pickModes.multi:
         result = original.map(e => this.multiFormat(e.time));
         break;
       default:

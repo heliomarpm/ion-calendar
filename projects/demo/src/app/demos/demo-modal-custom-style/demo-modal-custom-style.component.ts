@@ -18,7 +18,7 @@ export class DemoModalCustomStyleComponent {
       title: 'CUSTOM STYLE',
       defaultDate: this.date,
       cssClass: 'my-class',
-      color: 'success',
+      color: 'custom',
       doneIcon: true,
       closeIcon: true,
     };

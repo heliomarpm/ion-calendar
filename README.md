@@ -91,7 +91,7 @@ import { IonCalendarModule } from '@heliomarpm/ion-calendar';
   imports: [
     ...,
     IonicModule.forRoot(),
-    // See IICalendarComponentOptions for options
+    // See ICalendarComponentOptions for options
     IonCalendarModule.forRoot({
       doneLabel: 'Confirm',
       closeIcon: true
@@ -219,7 +219,8 @@ export class HomePage {
 | - | - | - | -
 | from                  | Date                    | `new Date()`                          | start date
 | to                    | Date                    | 0 (Infinite)                          | end date 
-| color                 | string                  | `'primary'`                           | 'primary', 'secondary', 'danger', 'light', 'dark'
+| color                 | string                  | `'primary'`                           | 'primary', 'secondary','tertiary', 'success', 'warning', 'danger', 'dark', 'medium', 'light', 'custom', 'transparent'
+| colorSubtitle         | string                  | `undefined`                           | 'primary', 'secondary','tertiary', 'success', 'warning', 'danger', 'dark', 'medium', 'light', 'custom', 'transparent'
 | pickMode              | string                  | `single`                              | 'multi', 'range', 'single' 
 | showToggleButtons     | boolean                 | `true`                                | show toggle buttons 
 | monthsTitle           | Array<string>           | `['JAN', 'FEB', ..., 'NOV', 'DEC']`   | month picker format 
@@ -232,8 +233,9 @@ export class HomePage {
 | weekdays              | Array<string>           | `['S', 'M', 'T', 'W', 'T', 'F', 'S']` | weeks text
 | weekStart             | number                  | `0`                                   | set week start day `0` of sundaty, `1` of monday
 | IDayConfig            | Array<**_IDayConfig_**> | `[]`                                  | days configuration 
-| showAdjacentMonthDay  | boolean                 | `true`                                | show days of other months
 | displayMode           | string                  | `month`                               | 'month', 'week' 
+| showAdjacentMonthDay  | boolean                 | `true`                                | show days of other months if `displayMode:month`
+| showMonthSubtitle     | boolean                 | `false`                               | show the month in the subtitle if `displayMode:week`
 | weeks                 | number                  | `1`                                   | number of week to show in week display mode 
 | locale                | ICalendarLocale         | {locale: 'en', weekdays: 'initial' }  | change calendar locale and set default name to weeks
 

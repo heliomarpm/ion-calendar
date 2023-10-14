@@ -26,6 +26,7 @@ export class DemoModalRangeBackwardsComponent  {
       title: 'RANGE - BACKWARDS',
       defaultDateRange: this.dateRange,
       canBackwardsSelected: true,
+      color: "medium",
     };
 
     const myCalendar = await this.modalCtrl.create({

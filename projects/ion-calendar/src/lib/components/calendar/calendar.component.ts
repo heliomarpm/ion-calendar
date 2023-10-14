@@ -6,7 +6,7 @@ import { DateTimeHelper } from '../../helpers';
 
 import { IonCalendarService } from '../../ion-calendar.service';
 import { ICalendarComponentMonthChange, ICalendarComponentOptions, ICalendarComponentWeekChange, ICalendarDay, ICalendarModalOptions, ICalendarMonth } from '../../models';
-import defaultValues, { CalendarComponentPayloadType, CalendarComponentType, pickModes } from '../../types';
+import defaultValues, { CalendarComponentPayloadType, CalendarComponentType, ColorType, pickModes } from '../../types';
 
 export const ION_CAL_VALUE_ACCESSOR: Provider = {
   provide: NG_VALUE_ACCESSOR,
@@ -72,7 +72,7 @@ export class CalendarComponent implements ControlValueAccessor, OnInit {
   // set locale(locale: string) {
   //   luxonSettings.defaultLocale = locale;
   // }
-  @Input() color: string | undefined = undefined;
+  @Input() color: ColorType | undefined = undefined;
   @Input() format: string = defaultValues.DATE_FORMAT;
   @Input() type: CalendarComponentType = 'string';
   @Input() readonly = false;
@@ -307,14 +307,14 @@ export class CalendarComponent implements ControlValueAccessor, OnInit {
     this.yearStep = 0;
 
     switch (this.def.pickMode) {
-      case pickModes.SINGLE:
+      case pickModes.single:
         const date = this._handleType(eCD[0].time);
         this.selectedDates = DateTimeHelper.parse(date.valueOf()).toJSDate();
         this._onChanged(date);
         this.onChange.emit(date);
         break;
 
-      case pickModes.RANGE:
+      case pickModes.range:
         if (eCD[0] && eCD[1]) {
           const rangeDate = {
             from: this._handleType(eCD[0].time),
@@ -331,7 +331,7 @@ export class CalendarComponent implements ControlValueAccessor, OnInit {
         }
         break;
 
-      case pickModes.MULTI:
+      case pickModes.multi:
         const dates = [];
         this.selectedDates = Array<Date>();
 
@@ -435,21 +435,17 @@ export class CalendarComponent implements ControlValueAccessor, OnInit {
     // const date = moment(value);
     const date = DateTimeHelper.parse(value);
     switch (this.type) {
-      case 'string':
-        // return date.format(this.format);
-        return date.toFormat(this.format.replace(/Y/g, 'y'));
-      case 'js-date':
-        // return date.toDate();
-        return date.toJSDate();
-      // case 'moment':
-      case 'luxon':
-        return date;
       case 'time':
         return date.valueOf();
+      case 'js-date':
+        return date.toJSDate();
       case 'object':
         return date.toObject();
-      default:
+      case 'luxon':
         return date;
+      case 'string':
+      default:
+        return date.toFormat(this.format.replace(/Y/g, 'y'));
     }
   }
 

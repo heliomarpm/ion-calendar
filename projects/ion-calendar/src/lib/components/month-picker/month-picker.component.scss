@@ -1,6 +1,6 @@
 @import '../index.scss';
 
-@mixin month-picker($background-color: primary, $color) {
+@mixin month-picker($background-color: primary, $color: null) {
   .month-packer-item {
     &.this-month button {
       border: 1px solid bindColors($background-color);
@@ -9,19 +9,18 @@
     &.active {
       button {
         background-color: bindColors($background-color);
-        color: $color;
+        @if $color {
+          color: $color;
+        }
+        @else {
+          color: map-get($textcolor, $background-color)
+        }
       }
     }
   }
 }
 
 :host {
-  .month-picker {
-    margin: 20px 0;
-    display: inline-block;
-    width: 100%;
-  }
-
   .month-packer-item {
     width: 25%;
     box-sizing: border-box;
@@ -39,43 +38,53 @@
     }
   }
 
-  .month-picker.primary {
-    @include month-picker(primary, #fff);
-  }
+  .month-picker {
+    margin: 20px 0;
+    display: inline-block;
+    width: 100%;
 
-  .month-picker.secondary {
-    @include month-picker(secondary, #fff);
-  }
+    &.primary {
+      @include month-picker(primary, var(--ion-color-primary-contrast));
+    }
 
-  .month-picker.tertiary {
-    @include month-picker(tertiary, #fff);
-  }
+    &.secondary {
+      @include month-picker(secondary, var(--ion-color-secondary-contrast));
+    }
 
-  .month-picker.success {
-    @include month-picker(success, #fff);
-  }
+    &.tertiary {
+      @include month-picker(tertiary, var(--ion-color-tertiary-contrast));
+    }
 
-  .month-picker.warning {
-    @include month-picker(warning, #000);
-  }
+    &.success {
+      @include month-picker(success, var(--ion-color-success-contrast));
+    }
 
-  .month-picker.danger {
-    @include month-picker(danger, #fff);
-  }
+    &.warning {
+      @include month-picker(warning, var(--ion-color-warning-contrast));
+    }
 
-  .month-picker.dark {
-    @include month-picker(dark, #fff);
-  }
+    &.danger {
+      @include month-picker(danger, var(--ion-color-danger-contrast));
+    }
 
-  .month-picker.medium {
-    @include month-picker(medium, #fff);
-  }
+    &.dark {
+      @include month-picker(dark, var(--ion-color-dark-contrast));
+    }
 
-  .month-picker.light {
-    @include month-picker(light, #000);
-  }
+    &.medium {
+      @include month-picker(medium, var(--ion-color-medium-contrast));
+    }
 
-  .month-picker.transparent {
-    @include month-picker(transparent, #000);
+    &.light {
+      @include month-picker(light, var(--ion-color-light-contrast));
+    }
+
+    &.custom {
+      @include month-picker(custom, var(--ion-color-custom-contrast));
+    }
+
+    &.transparent {
+      @include month-picker(transparent, #000);
+    }
   }
 }

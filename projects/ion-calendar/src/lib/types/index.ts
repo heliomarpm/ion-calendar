@@ -4,32 +4,38 @@ export type DateType = Date | string | number | null;
 export type CalendarComponentPayloadType = string | number | Date | {};
 export type CalendarComponentType = 'string' | 'js-date' | 'luxon' | 'time' | 'object';
 
-export enum Colors {
-  PRIMARY = 'primary',
-  SECONDARY = 'secondary',
-  DANGER = 'danger',
-  LIGHT = 'light',
-  DARK = 'dark'
-}
+// export enum Colors {
+//   PRIMARY = 'primary',
+//   SECONDARY = 'secondary',
+//   DANGER = 'danger',
+//   LIGHT = 'light',
+//   DARK = 'dark'
+// }
+
+export type ColorType = 'primary' | 'secondary' | 'tertiary' | 'success' | 'warning' | 'danger' | 'dark' | 'medium' | 'light' | 'custom' | 'transparent' | '';
 
 export const pickModes = {
-  SINGLE: 'single',
-  RANGE: 'range',
-  MULTI: 'multi'
+  single: 'single',
+  range: 'range',
+  multi: 'multi'
 };
-// export type PickModeType = keyof typeof pickModes[][number];
-export type PickModeType = typeof pickModes[keyof typeof pickModes]
+export type PickModeType = keyof typeof pickModes[][number];
+// export type PickModeType = 'single' | 'range' | 'multi';
 
 export const displayModes = {
-  MONTH: 'month',
-  WEEK: 'week',
+  month: 'month',
+  week: 'week',
 }
-export type DisplayModeType = typeof displayModes[keyof typeof displayModes]
+export type DisplayModeType = keyof typeof displayModes[][number];
+// export type DisplayModeType = typeof displayModes[keyof typeof displayModes]
+
 
 const defaultValues = {
   COLOR: 'primary',
+  PICK_MODE: pickModes.single,
+  DISPLAY_MODE: displayModes.month,
   DATE_FORMAT: 'yyyy-MM-dd',
-  LOCALE: { locale: 'en', weekdays: 'initial', startWeek: 'sunday' } as ICalendarLocale,
+  LOCALE: { locale: 'en', weekdays: 'initial' } as ICalendarLocale,
   YEAR_FORMAT: 'yyyy',
   // MONTHS_TITLE: (locale: string = 'en') => {
   //   return DateTimeHelper.monthsShortTitle(locale);

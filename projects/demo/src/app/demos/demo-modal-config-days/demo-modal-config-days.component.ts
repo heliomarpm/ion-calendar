@@ -66,7 +66,8 @@ export class DemoModalConfigDaysComponent {
       title: 'CONFIG DAYS',
       defaultDate: this.date,
       defaultScrollTo: this.date,
-      color: 'warning'
+      color: 'warning',
+      colorSubtitle: 'warning'
     };
 
     const myCalendar = await this.modalCtrl.create({
