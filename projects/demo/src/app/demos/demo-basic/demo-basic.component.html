@@ -61,19 +61,19 @@
           <ion-input label="format" placeholder="date format" [(ngModel)]="format"></ion-input>
         </ion-item>
         <ion-item>
-          <ion-checkbox [(ngModel)]="readonly" [checked]="readonly">
+          <ion-checkbox title="readonly" [(ngModel)]="readonly" [checked]="readonly" >
             readonly
           </ion-checkbox>
         </ion-item>
         <ion-item>
-          <ion-checkbox [(ngModel)]="formatMonthPicker"
-            (ngModelChange)="onChangemonthsTitle($event)">
+          <ion-checkbox title="Custom MonthPicker"
+                        [(ngModel)]="formatMonthPicker" (ngModelChange)="onChangemonthsTitle($event)">
             Custom MonthPicker
           </ion-checkbox>
         </ion-item>
         <ion-item>
-          <ion-checkbox [(ngModel)]="formatWeekDays"
-            (ngModelChange)="onChangeWeekDays($event)">
+          <ion-checkbox title="Custom WeekDays"
+                        [(ngModel)]="formatWeekDays" (ngModelChange)="onChangeWeekDays($event)">
             Custom WeekDays
           </ion-checkbox>
         </ion-item>
@@ -125,7 +125,7 @@
             <ion-select-option value="0">0</ion-select-option>
             <ion-select-option value="1">1</ion-select-option>
             <ion-select-option value="2">2</ion-select-option>
-            <ion-select-option value="2">3</ion-select-option>
+            <ion-select-option value="3">3</ion-select-option>
             <ion-select-option value="4">4</ion-select-option>
             <ion-select-option value="5">5</ion-select-option>
             <ion-select-option value="6">6</ion-select-option>
@@ -176,7 +176,7 @@
           <ion-checkbox [(ngModel)]="optModel.showMonthSubtitle"
                         (ngModelChange)="onChangeShowMonthSubtitle($event)"
                         [disabled]="optModel.displayMode !== 'week'">
-            showAdjacentMonthDay
+            showMonthSubtitle
           </ion-checkbox>
         </ion-item>
         <ion-item>

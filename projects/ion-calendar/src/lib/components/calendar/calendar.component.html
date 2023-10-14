@@ -26,11 +26,11 @@
   <ion-calendar-week color="transparent" [weekDays]="def.weekdays" [weekStart]="def.weekStart??0">
   </ion-calendar-week>
 
+  <!-- (swipe)="onSwipe($event)" -->
   <ion-calendar-month class="component-mode"
       [(ngModel)]="calendarMonthValue"
       [month]="monthOpt"
       [readonly]="readonly"
-      (swipe)="onSwipe($event)"
       (onChange)="onChanged($event)"
       (onSelect)="onSelect.emit($event)"
       (onSelectStart)="onSelectStart.emit($event)"

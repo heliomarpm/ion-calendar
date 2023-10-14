@@ -1,8 +1,11 @@
-import { ICalendarLocale } from '../models';
+import { DateObjectUnits, DateTime } from 'luxon';
+import { ICalendarDay, ICalendarLocale } from '../models';
 
 export type DateType = Date | string | number | null;
-export type CalendarComponentPayloadType = string | number | Date | {};
 export type CalendarComponentType = 'string' | 'js-date' | 'luxon' | 'time' | 'object';
+export type CalendarComponentPayloadType = string | number | Date | DateTime | DateObjectUnits ;
+export type CalendarComponentPayloadRangeType = { from: CalendarComponentPayloadType, to: CalendarComponentPayloadType };
+export type CalendarComponentOnChangeType = CalendarComponentPayloadType | CalendarComponentPayloadType[] | CalendarComponentPayloadRangeType
 
 // export enum Colors {
 //   PRIMARY = 'primary',

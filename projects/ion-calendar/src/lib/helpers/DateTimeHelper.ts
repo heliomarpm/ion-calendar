@@ -41,18 +41,18 @@ class DateTimeHelper {
     return false;
   }
 
-    /**
-   * Calculates the first and last day of the week for a given date.
-   *
-   * @param {Date} date - The date for which to calculate the first and last day of the week.
-   * @return {{firstDay: Date, lastDay: Date}} - An object containing the first and last day of the week.
-   *
-   * @example
-   * const today = new Date();
-   * const weekRange = getFirstAndLastDayOfWeek(today);
-   * console.log(weekRange.firstDay.toDateString()); // Output: Sun Oct 08 2023
-   * console.log(weekRange.lastDay.toDateString()); // Output: Sat Oct 14 2023
-   */
+  /**
+  * Calculates the first and last day of the week for a given date.
+  *
+  * @param {Date} date - The date for which to calculate the first and last day of the week.
+  * @return {{firstDay: Date, lastDay: Date}} - An object containing the first and last day of the week.
+  *
+  * @example
+  * const today = new Date();
+  * const weekRange = getFirstAndLastDayOfWeek(today);
+  * console.log(weekRange.firstDay.toDateString()); // Output: Sun Oct 08 2023
+  * console.log(weekRange.lastDay.toDateString()); // Output: Sat Oct 14 2023
+  */
   static getFirstAndLastDayOfWeek(date: Date): { firstDay: Date, lastDay: Date } {
     const currentDay = date.getDay(); // Dia da semana (0 - Domingo, 1 - Segunda, ..., 6 - Sábado)
     const diff = currentDay - 0; // 0 representa o Domingo
@@ -80,7 +80,6 @@ class DateTimeHelper {
     const firstDay = this.getFirstAndLastDayOfWeek(today.toJSDate()).firstDay.getDay();
 
     if (firstDay < Number(today.startOf('week').toFormat('dd'))) {
-    // if (s ?? 'sunday' === 'sunday') {
       weeksDay.unshift(weeksDay.pop()!);
     }
     return weeksDay;

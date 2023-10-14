@@ -6,7 +6,7 @@ import { DateTimeHelper } from '../../helpers';
 
 import { IonCalendarService } from '../../ion-calendar.service';
 import { ICalendarComponentMonthChange, ICalendarComponentOptions, ICalendarComponentWeekChange, ICalendarDay, ICalendarModalOptions, ICalendarMonth } from '../../models';
-import defaultValues, { CalendarComponentPayloadType, CalendarComponentType, ColorType, pickModes } from '../../types';
+import defaultValues, { CalendarComponentOnChangeType, CalendarComponentPayloadRangeType, CalendarComponentPayloadType, CalendarComponentType, ColorType, pickModes } from '../../types';
 
 export const ION_CAL_VALUE_ACCESSOR: Provider = {
   provide: NG_VALUE_ACCESSOR,
@@ -77,12 +77,12 @@ export class CalendarComponent implements ControlValueAccessor, OnInit {
   @Input() type: CalendarComponentType = 'string';
   @Input() readonly = false;
 
-  @Output() onChange: EventEmitter<CalendarComponentPayloadType | any> = new EventEmitter();
-  @Output() onMonthChange: EventEmitter<ICalendarComponentMonthChange | any> = new EventEmitter();
-  @Output() onWeekChange: EventEmitter<ICalendarComponentWeekChange | any> = new EventEmitter();
-  @Output() onSelect: EventEmitter<ICalendarDay | any> = new EventEmitter();
-  @Output() onSelectStart: EventEmitter<ICalendarDay | any> = new EventEmitter();
-  @Output() onSelectEnd: EventEmitter<ICalendarDay | any> = new EventEmitter();
+  @Output() onChange: EventEmitter<CalendarComponentOnChangeType> = new EventEmitter();
+  @Output() onMonthChange: EventEmitter<ICalendarComponentMonthChange> = new EventEmitter();
+  @Output() onWeekChange: EventEmitter<ICalendarComponentWeekChange> = new EventEmitter();
+  @Output() onSelect: EventEmitter<ICalendarDay> = new EventEmitter();
+  @Output() onSelectStart: EventEmitter<ICalendarDay> = new EventEmitter();
+  @Output() onSelectEnd: EventEmitter<ICalendarDay> = new EventEmitter();
 
   // private readonly MONTH_DATE_FORMAT = 'MMMM yyyy';
   constructor(public calSvc: IonCalendarService) {
@@ -192,14 +192,11 @@ export class CalendarComponent implements ControlValueAccessor, OnInit {
   }
 
   private nextWeek() {
-    let oldWeek = this.calSvc.multiFormat(this.monthOpt.original.time);
-    // let nextTime = moment(this.monthOpt.original.time).add(this.def.weeks, 'weeks').valueOf();
     let nextTime = DateTime.fromMillis(this.monthOpt.original.time).plus({ weeks: this.def.weeks }).valueOf();
     let newWeek = this.calSvc.multiFormat(nextTime);
+    const oldWeek = this.calSvc.multiFormat(this.monthOpt.original.time);
 
     if (oldWeek.month != newWeek.month && !this.def.continuous) {
-      // let _start = new Date(nextTime);
-      // nextTime = new Date(_start.getFullYear(), _start.getMonth(), 1).getTime();
       nextTime = DateTime.fromMillis(nextTime).set({ day: 1 }).valueOf();
       newWeek = this.calSvc.multiFormat(nextTime);
     }
@@ -215,18 +212,12 @@ export class CalendarComponent implements ControlValueAccessor, OnInit {
 
   canNext(): boolean {
     if (!this.def.to || this.view !== 'days') return true;
-    // if (!this.def.to) return true;
-
-    // return this.monthOpt.original.time < moment(this.def.to).valueOf();
-    // const toMillis = (this.def.to instanceof Date) ? this.def.to.getTime() : this.def.to;
-    // return this.monthOpt.original.time < DateTime.fromMillis(toMillis).toMillis();
 
     const toDate = DateTimeHelper.parse(this.def.to);
     return this.monthOpt.original.lastDay < toDate.toMillis();
   }
 
   private backMonth(): void {
-    // const backTime = moment(this.monthOpt.original.time).subtract(1, 'months').valueOf();
     const backTime = DateTime.fromMillis(this.monthOpt.original.time).minus({ months: 1 }).valueOf();
     this.onMonthChange.emit({
       oldMonth: this.calSvc.multiFormat(this.monthOpt.original.time),
@@ -236,14 +227,13 @@ export class CalendarComponent implements ControlValueAccessor, OnInit {
   }
 
   private backWeek(): void {
-    // let backTime = moment(this.monthOpt.original.time).subtract(this.def.weeks, 'weeks').valueOf();
     let backTime = DateTime.fromMillis(this.monthOpt.original.time).minus({ weeks: this.def.weeks }).valueOf();
-    let oldWeek = this.calSvc.multiFormat(this.monthOpt.original.time);
     let newWeek = this.calSvc.multiFormat(backTime);
+    const oldWeek = this.calSvc.multiFormat(this.monthOpt.original.time);
 
     if (oldWeek.month != newWeek.month && !this.def.continuous) {
-      let _start = new Date(this.monthOpt.original.time);
-      let dayToSubstrac = _start.getDay();
+      const start = new Date(this.monthOpt.original.time);
+      let dayToSubstrac = start.getDay();
       if (this.options.weekStart === 1) {
         dayToSubstrac--;
         if (dayToSubstrac < 0) {
@@ -251,36 +241,35 @@ export class CalendarComponent implements ControlValueAccessor, OnInit {
         }
       }
 
-      let firstDayMonth = new Date(_start.getFullYear(), _start.getMonth(), 1).getTime();
-      // let momentBackTime = moment(firstDayMonth);
+      const firstDayMonth = new Date(start.getFullYear(), start.getMonth(), 1).getTime();
       let momentBackTime = DateTime.fromMillis(firstDayMonth);
-      if (_start.getDate() - dayToSubstrac <= 1) {
-        // momentBackTime = momentBackTime.subtract(1, 'd');
+      if (start.getDate() - dayToSubstrac <= 1) {
         momentBackTime = momentBackTime.minus({ days: 1 });
       }
       backTime = momentBackTime.valueOf();
 
       newWeek = this.calSvc.multiFormat(backTime);
     }
+
     this.onWeekChange.emit({ oldWeek: oldWeek, newWeek: newWeek, });
+
     if (oldWeek.month != newWeek.month) {
       this.onMonthChange.emit({ oldMonth: oldWeek, newMonth: newWeek, });
     }
+
     this.monthOpt = this.createWeek(backTime);
   }
 
   canPrev(): boolean {
-    // if (!this._d.from || this._view !== 'days') { return true; }
     if (!this.def.from || this.view !== 'days') return true;
-    // return this.monthOpt.original.time >  moment(this.def.from).valueOf();
+
     const fromDate = DateTimeHelper.parse(this.def.from);
     return this.monthOpt.original.time > fromDate.valueOf();
   }
 
-  onMonthSelect(month: number | any): void {
+  onMonthSelect(month: number): void {
     this.view = 'days';
 
-    // const newMonth = moment(this.monthOpt.original.time).month(month).valueOf();
     const newMonth = DateTimeHelper.parse(this.monthOpt.original.time).set({ month }).valueOf();
     this.onMonthChange.emit({
       oldMonth: this.calSvc.multiFormat(this.monthOpt.original.time),
@@ -289,10 +278,9 @@ export class CalendarComponent implements ControlValueAccessor, OnInit {
     this.createWeekOrMonth(newMonth);
   }
 
-  public onYearSelect(year: number | any): void {
+  public onYearSelect(year: number): void {
     this.view = 'month';
 
-    // const newYear = moment(this.monthOpt.original.time).year(year).valueOf();
     const newYear = DateTimeHelper.parse(this.monthOpt.original.time).set({ year }).valueOf();
     this.onMonthChange.emit({
       oldMonth: this.calSvc.multiFormat(this.monthOpt.original.time),
@@ -301,64 +289,77 @@ export class CalendarComponent implements ControlValueAccessor, OnInit {
     this.monthOpt = this.createMonth(newYear);
   }
 
-  protected onChanged($event: ICalendarDay[] | any): void {
+  protected onChanged($event: ICalendarDay[]): void {
     const eCD: ICalendarDay[] = $event;
 
     this.yearStep = 0;
 
+    const emitOnChange = (date: CalendarComponentOnChangeType) => {
+      this._onChanged(date);
+      this.onChange.emit(date);
+    }
+
     switch (this.def.pickMode) {
       case pickModes.single:
-        const date = this._handleType(eCD[0].time);
-        this.selectedDates = DateTimeHelper.parse(date.valueOf()).toJSDate();
-        this._onChanged(date);
-        this.onChange.emit(date);
+        const time = eCD[0].time;
+        const date = this._handleType(time);
+
+        this.selectedDates = DateTimeHelper.parse(time).toJSDate();
+        emitOnChange(date);
         break;
 
       case pickModes.range:
         if (eCD[0] && eCD[1]) {
-          const rangeDate = {
-            from: this._handleType(eCD[0].time),
-            to: this._handleType(eCD[1].time),
+          const timeFrom = eCD[0].time;
+          const timeTo = eCD[1].time;
+
+          const rangeDate: CalendarComponentPayloadRangeType = {
+            from: this._handleType(timeFrom),
+            to: this._handleType(timeTo),
           };
 
           this.selectedDates = Array<Date>(
-            DateTimeHelper.parse(rangeDate.from.valueOf()).toJSDate(),
-            DateTimeHelper.parse(rangeDate.to.valueOf()).toJSDate()
+            DateTimeHelper.parse(timeFrom).toJSDate(),
+            DateTimeHelper.parse(timeTo).toJSDate()
           );
 
-          this._onChanged(rangeDate);
-          this.onChange.emit(rangeDate);
+          emitOnChange(rangeDate);
         }
         break;
 
       case pickModes.multi:
-        const dates = [];
-        this.selectedDates = Array<Date>();
+        const emitChangeForMulti = (days: ICalendarDay[]): Array<Date> => {
+          const dates: Array<Date> = [];
 
-        for (let i = 0; i < eCD.length; i++) {
-          if (eCD[i] && eCD[i].time) {
-            const payload = this._handleType(eCD[i].time);
-            dates.push(payload);
-            this.selectedDates.push(DateTimeHelper.parse(payload.valueOf()).toJSDate());
+          const payloads: Array<CalendarComponentPayloadType> = [];
+          for (let i = 0; i < days.length; i++) {
+            if (days[i] && days[i].time) {
+              const time = days[i].time;
+              const payload = this._handleType(time);
+              payloads.push(payload);
+              dates.push(DateTimeHelper.parse(time).toJSDate());
+            }
           }
-        }
 
-        this._onChanged(dates);
-        this.onChange.emit(dates);
+          emitOnChange(payloads);
+          return dates
+        }
+        this.selectedDates = emitChangeForMulti(eCD);
         break;
 
       default:
     }
   }
 
-  protected onSwipe($event: any): void {
-    const isNext = $event.deltaX < 0;
-    if (isNext && this.canNext()) {
-      this.nextMonth();
-    } else if (!isNext && this.canPrev()) {
-      this.backMonth();
-    }
-  }
+  // onSwipe($event: any): void {
+  //   console.log('onSwipe', $event); // TODO remove debug
+  //   const isNext = $event.deltaX < 0;
+  //   if (isNext && this.canNext()) {
+  //     this.nextMonth();
+  //   } else if (!isNext && this.canPrev()) {
+  //     this.backMonth();
+  //   }
+  // }
 
   private _onChanged: Function = () => { };
   private _onTouched: Function = () => { };
@@ -379,14 +380,13 @@ export class CalendarComponent implements ControlValueAccessor, OnInit {
     return date.valueOf();
   }
 
-  monthFormat(date: number | any): string {
+  monthFormat(date: number): string {
     if (!this.def.monthFormat) return '';
     // return moment(date).format(this.def.monthFormat.replace(/y/g, 'Y'));
     return DateTimeHelper.parse(date).toFormat(this.def.monthFormat.replace(/Y/g, 'y'), { locale: this._options.locale?.locale });
   }
 
   private initOpt(): void {
-
     this.showToggleButtons = this._options.showToggleButtons ?? true;
     this.showMonthPicker = this._options.showMonthPicker ?? true;
 
@@ -471,21 +471,23 @@ export class CalendarComponent implements ControlValueAccessor, OnInit {
     this._onTouched = fn;
   }
 
-  private _writeValue(value: any): void {
+  private _writeValue(value: CalendarComponentOnChangeType): void {
     if (!value) {
       this.calendarMonthValue = [null, null];
       return;
     }
 
+    this.onChange.emit(value);
+
     switch (this.def.pickMode) {
       case 'single':
-        this.calendarMonthValue[0] = this._createCalendarDay(value);
+        this.calendarMonthValue[0] = this._createCalendarDay(value as CalendarComponentPayloadType);
         break;
 
       case 'range':
-        this.calendarMonthValue[0] = value.from ? this._createCalendarDay(value.from) : null;
-        this.calendarMonthValue[1] = value.to ? this._createCalendarDay(value.to) : null;
-
+        const { from, to } = value as CalendarComponentPayloadRangeType;
+        this.calendarMonthValue[0] = from ? this._createCalendarDay(from) : null;
+        this.calendarMonthValue[1] = to ? this._createCalendarDay(to) : null;
         break;
 
       case 'multi':
