@@ -144,7 +144,7 @@ export class IonCalendarService {
     const isToday = DateTimeHelper.now().hasSame(date, 'day')
     const dayConfig = this.findDayConfig(date, options);
 
-    var { title, subTitle, disable } = this.getCalendarDayAttributes(date, dayConfig, options);
+    const { title, subTitle, disable } = this.getCalendarDayAttributes(date, dayConfig, options);
 
     return {
       time,
@@ -184,21 +184,20 @@ export class IonCalendarService {
       const dayOfWeek = DateTimeHelper.weekday(date);
       disable = options.disableWeeks?.includes(dayOfWeek) || false;
 
-      if (!disable) {
+      if (!disable && !options.canBackwardsSelected) {
         const dateFrom = options.from === undefined ? undefined : DateTimeHelper.parse(options.from).startOf("day");
         const dateTo = options.to === undefined ? undefined : DateTimeHelper.parse(options.to).startOf("day");
 
-        if (!options.canBackwardsSelected) {
-          // Check if the date is between the specified range
-          if (dateFrom !== undefined && dateTo !== undefined) {
-            disable = !(date >= dateFrom && date <= dateTo);
-          } else if (dateFrom !== undefined) {
-            disable = date < dateFrom;
-          } else if (dateTo !== undefined) {
-            disable = date > dateTo;
-          }
+        // Check if the date is between the specified range
+        if (dateFrom !== undefined && dateTo !== undefined) {
+          disable = !(date >= dateFrom && date <= dateTo);
+        } else if (dateFrom !== undefined) {
+          disable = date < dateFrom;
+        } else if (dateTo !== undefined) {
+          disable = date > dateTo;
         }
       }
+      
     }
 
     // Determine the title and subtitle for the calendar day

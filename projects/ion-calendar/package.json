@@ -1,6 +1,6 @@
 {
 	"name": "@heliomarpm/ion-calendar",
-	"version": "7.16.2",
+	"version": "7.16.3",
 	"description": "A date picker super component for ionic6+",
 	"author": "Heliomar P. Marques",
 	"license": "MIT",

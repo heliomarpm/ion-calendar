@@ -1,6 +1,6 @@
 {
 	"name": "ion-calendar",
-	"version": "7.16.2",
+	"version": "7.16.3",
 	"scripts": {
 		"ng": "ng",
 		"prepare": "npm run build && cd dist/ion-calendar && npm link && cd ../../projects/demo && npm link @heliomarpm/ion-calendar",
