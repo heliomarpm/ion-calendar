@@ -4,11 +4,11 @@ import { ModalController } from '@ionic/angular';
 import { CalendarModalComponent, ICalendarModalOptions } from '@heliomarpm/ion-calendar';
 
 @Component({
-  selector: 'app-demo-modal-range-end-date',
-  templateUrl: './demo-modal-range-end-date.component.html',
-  styleUrls: ['./demo-modal-range-end-date.component.scss'],
+  selector: 'app-demo-modal-range-noend-date',
+  templateUrl: './demo-modal-range-noend-date.component.html',
+  styleUrls: ['./demo-modal-range-noend-date.component.scss'],
 })
-export class DemoModalRangeEndDateComponent {
+export class DemoModalRangeNoEndDateComponent {
   dateRange: {
     from: Date;
   } = {
@@ -20,9 +20,9 @@ export class DemoModalRangeEndDateComponent {
   async openCalendar() {
     const options: ICalendarModalOptions = {
       pickMode: 'range',
-      title: 'RANGE - END DATE',
+      title: 'RANGE - NO DEFINED END DATE',
       defaultDateRange: this.dateRange,
-      color: "secondary"
+      color: "medium"
     };
 
     const myCalendar = await this.modalCtrl.create({

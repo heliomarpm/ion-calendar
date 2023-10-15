@@ -223,7 +223,7 @@ export class DemoBasicComponent {
   onChangeShowYearPicker(showYearPicker: boolean) {
     this.options = {
       ...this.options,
-      showYearPicker,
+      showYearPicker
     };
   }
 

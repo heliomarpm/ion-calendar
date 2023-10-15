@@ -16,7 +16,7 @@ import { DemoModalLocaleComponent } from './demo-modal-locale/demo-modal-locale.
 import { DemoModalMultiComponent } from './demo-modal-multi/demo-modal-multi.component';
 import { DemoModalRangeComponent } from './demo-modal-range/demo-modal-range.component';
 import { DemoModalRangeBackwardsComponent } from './demo-modal-range-backwards/demo-modal-range-backwards.component';
-import { DemoModalRangeEndDateComponent } from './demo-modal-range-end-date/demo-modal-range-end-date.component';
+import { DemoModalRangeNoEndDateComponent } from './demo-modal-range-noend-date/demo-modal-range-noend-date.component';
 
 import { PipesModule } from '../pipes/pipes.module';
 
@@ -33,7 +33,7 @@ const COMPONENTS = [
   DemoModalMultiComponent,
   DemoModalRangeComponent,
   DemoModalRangeBackwardsComponent,
-  DemoModalRangeEndDateComponent,
+  DemoModalRangeNoEndDateComponent,
 ];
 
 

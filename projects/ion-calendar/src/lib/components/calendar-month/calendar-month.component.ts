@@ -75,7 +75,7 @@ export class CalendarMonthComponent implements ControlValueAccessor, AfterViewIn
   isEndSelection(day: ICalendarDay): boolean {
     if (!day) { return false; }
 
-    if (this.pickMode !== pickModes.range || !this._isInit || this._date[1] === null) {
+    if (this.pickMode !== pickModes.range || !this._isInit || !this._date[1]) {
       return false;
     }
 
@@ -93,7 +93,7 @@ export class CalendarMonthComponent implements ControlValueAccessor, AfterViewIn
       return false;
     }
 
-    if (this._date[0] === null || this._date[1] === null) {
+    if (!this._date[0] || !this._date[1]) {
       return false;
     }
 
@@ -105,11 +105,11 @@ export class CalendarMonthComponent implements ControlValueAccessor, AfterViewIn
 
   isStartSelection(day: ICalendarDay): boolean {
     if (!day) { return false; }
-    if (this.pickMode !== pickModes.range || !this._isInit || this._date[0] === null) {
+    if (this.pickMode !== pickModes.range || !this._isInit || !this._date[0]) {
       return false;
     }
 
-    return this._date[0].time === day.time && this._date[1] !== null;
+    return this._date[0].time === day.time && !!this._date[1];
   }
 
   isSelected(time: number): boolean {
@@ -135,51 +135,64 @@ export class CalendarMonthComponent implements ControlValueAccessor, AfterViewIn
     item.selected = true;
     this.onSelect.emit(item);
 
-    if (this.pickMode === pickModes.single) {
-      this._date[0] = item;
-      this.onChange.emit(this._date as ICalendarDay[]);
-      return;
+    switch (this.pickMode) {
+      case pickModes.range:
+        this.handleSelectedRangeMode(item);
+        break;
+      case pickModes.multi:
+        this.handleSelectedMultiMode(item);
+        break;
+      case pickModes.single:
+      default:
+        this.handleSelectedSingleMode(item);
+        break;
     }
 
-    if (this.pickMode === pickModes.range) {
-      if (this._date[0] === null) {
-        this._date[0] = item;
-        this.onSelectStart.emit(item);
-      } else if (this._date[1] === null) {
-        if (this._date[0].time < item.time) {
-          this._date[1] = item;
-          this.onSelectEnd.emit(item);
-        } else {
-          this._date[1] = this._date[0];
-          this.onSelectEnd.emit(this._date[0]);
-          this._date[0] = item;
-          this.onSelectStart.emit(item);
-        }
-      } else if (this._date[0].time > item.time) {
-        this._date[0] = item;
-        this.onSelectStart.emit(item);
-      } else if (this._date[1].time < item.time) {
+  }
+
+  private handleSelectedSingleMode(item: ICalendarDay): void {
+    this._date[0] = item;
+    this.onChange.emit(this._date as ICalendarDay[]);
+  }
+
+  private handleSelectedRangeMode(item: ICalendarDay): void {
+    if (!this._date[0]) {
+      this._date[0] = item;
+      this.onSelectStart.emit(item);
+    } else if (!this._date[1]) {
+      if (this._date[0].time < item.time) {
         this._date[1] = item;
         this.onSelectEnd.emit(item);
       } else {
+        this._date[1] = this._date[0];
+        this.onSelectEnd.emit(this._date[0]);
         this._date[0] = item;
         this.onSelectStart.emit(item);
-        this._date[1] = null;
       }
-
-      this.onChange.emit(this._date as ICalendarDay[]);
-      return;
+    } else if (this._date[0].time > item.time) {
+      this._date[0] = item;
+      this.onSelectStart.emit(item);
+    } else if (this._date[1].time < item.time) {
+      this._date[1] = item;
+      this.onSelectEnd.emit(item);
+    } else {
+      this._date[0] = item;
+      this.onSelectStart.emit(item);
+      this._date[1] = null;
     }
 
-    if (this.pickMode === pickModes.multi) {
-      const index = this._date.findIndex(e => e !== null && e.time === item.time);
+    this.onChange.emit(this._date as ICalendarDay[]);
+  }
 
-      if (index === -1) {
-        this._date.push(item);
-      } else {
-        this._date.splice(index, 1);
-      }
-      this.onChange.emit(this._date.filter(e => e !== null) as ICalendarDay[]);
+  private handleSelectedMultiMode(item: ICalendarDay): void {
+    const index = this._date.findIndex(e => !!e && e.time === item.time);
+
+    if (index === -1) {
+      this._date.push(item);
+    } else {
+      this._date.splice(index, 1);
     }
+
+    this.onChange.emit(this._date.filter(e => !!e) as ICalendarDay[]);
   }
 }

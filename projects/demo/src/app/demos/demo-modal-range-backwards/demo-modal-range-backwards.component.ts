@@ -15,7 +15,7 @@ export class DemoModalRangeBackwardsComponent  {
     to: Date;
   } = {
     from: new Date(),
-    to: new Date(Date.now() + 24 * 60 * 60 * 1000 * 5),
+    to: new Date(Date.now() + 24 * 60 * 60 * 1000 * 5), //+ 5 dias no futuro
   };
 
   constructor(public modalCtrl: ModalController) {}
@@ -25,8 +25,9 @@ export class DemoModalRangeBackwardsComponent  {
       pickMode: 'range',
       title: 'RANGE - BACKWARDS',
       defaultDateRange: this.dateRange,
+      clearLabel: 'CLEAR',
       canBackwardsSelected: true,
-      color: "medium",
+      color: "secondary",
     };
 
     const myCalendar = await this.modalCtrl.create({

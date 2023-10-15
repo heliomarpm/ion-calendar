@@ -17,7 +17,7 @@ const NUM_OF_MONTHS_TO_CREATE = 3;
 })
 export class CalendarModalComponent implements OnInit, AfterViewInit {
   def!: ICalendarModalOptions;
-  datesTemp: Array<ICalendarDay | null> = [null, null];
+  datesTemp: Array<ICalendarDay | null> = [null];
   calendarMonths!: Array<ICalendarMonth>;
   // private step!: number;
   private showYearPicker!: boolean;
@@ -120,7 +120,7 @@ export class CalendarModalComponent implements OnInit, AfterViewInit {
     }
   }
 
-  protected onChange(data: any): void {
+  protected onChange(data: ICalendarDay[]): void {
     const { pickMode, autoDone } = this.def;
 
     this.datesTemp = data;
@@ -151,11 +151,11 @@ export class CalendarModalComponent implements OnInit, AfterViewInit {
 
     switch (pickMode) {
       case pickModes.single:
-        return !!(this.datesTemp[0] && this.datesTemp[0].time);
+        return !!this.datesTemp[0]?.time;
       case pickModes.range:
-        return !!(this.datesTemp[0] && this.datesTemp[1]) && !!(this.datesTemp[0].time && this.datesTemp[1].time);
+        return !!(this.datesTemp[0]?.time && this.datesTemp[1]?.time);
       case pickModes.multi:
-        return this.datesTemp.length > 0 && this.datesTemp.every(e => !!e && !!e.time);
+        return this.datesTemp.length > 0 && this.datesTemp.every(e => !!e?.time);
       default:
         return false;
     }

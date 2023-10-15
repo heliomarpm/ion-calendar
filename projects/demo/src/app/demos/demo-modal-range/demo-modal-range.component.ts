@@ -14,7 +14,7 @@ export class DemoModalRangeComponent {
     to: Date;
   } = {
       from: new Date(),
-      to: new Date(Date.now() + 24 * 60 * 60 * 1000 * 5),
+      to: new Date(Date.now() + 24 * 60 * 60 * 1000 * 5), //+ 5 dias no futuro
     };
 
   constructor(public modalCtrl: ModalController) { }
@@ -22,7 +22,7 @@ export class DemoModalRangeComponent {
   async openCalendar() {
     const options: ICalendarModalOptions = {
       pickMode: 'range',
-      title: 'RANGE',
+      title: 'RANGE - DEFINED END DATE',
       defaultDateRange: this.dateRange,
       clearLabel: 'CLEAR',
       color: 'dark'

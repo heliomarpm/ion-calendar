@@ -144,10 +144,39 @@ export class IonCalendarService {
     const isToday = DateTimeHelper.now().hasSame(date, 'day')
     const dayConfig = this.findDayConfig(date, options);
 
+    var { title, subTitle, disable } = this.getCalendarDayAttributes(date, dayConfig, options);
+
+    return {
+      time,
+      isToday,
+      selected: false,
+      marked: dayConfig?.marked ?? false,
+      isLastMonth: month ? date.month < month : false,
+      isNextMonth: month ? date.month > month : false,
+      isFirst: date.day === 1,
+      isLast: date.day === date.daysInMonth,
+      cssClass: dayConfig?.cssClass ?? '',
+      title,
+      subTitle,
+      disable,
+    };
+  }
+
+  /**
+   * Gets the attributes of a calendar day based on the given date, day configuration, and options.
+   *
+   * @param {DateTime} date - The date of the calendar day.
+   * @param {IDayConfig | null} dayConfig - The configuration for the day (optional).
+   * @param {ICalendarModalOptions} options - The options for the calendar modal.
+   * @return {{ disable: boolean; title: string; subTitle: string; }} The attributes of the calendar day.
+   */
+  private getCalendarDayAttributes(date: DateTime, dayConfig: IDayConfig | null, options: ICalendarModalOptions)
+    : { disable: boolean; title: string; subTitle: string; } {
+
     let disable = false;
 
     // Check if there is a specific disable configuration for the day
-    if (dayConfig && dayConfig.disable !== undefined) {
+    if (dayConfig?.disable !== undefined) {
       disable = dayConfig.disable!;
     }
     else {
@@ -173,23 +202,9 @@ export class IonCalendarService {
     }
 
     // Determine the title and subtitle for the calendar day
-    const title = dayConfig?.title || options.defaultTitle || new Date(time).getDate().toString();
+    const title = dayConfig?.title || options.defaultTitle || date.day.toString();
     const subTitle = dayConfig?.subTitle || options.defaultSubtitle || '';
-
-    return {
-      time,
-      isToday,
-      title,
-      subTitle,
-      selected: false,
-      isLastMonth: month ? date.month < month : false,
-      isNextMonth: month ? date.month > month : false,
-      marked: dayConfig?.marked ?? false,
-      cssClass: dayConfig?.cssClass ?? '',
-      disable,
-      isFirst: date.day === 1, //date.date() === 1,
-      isLast: date.day === date.daysInMonth//date.date() === date.daysInMonth(),
-    };
+    return { title, subTitle, disable };
   }
 
   /**
@@ -220,7 +235,7 @@ export class IonCalendarService {
         const optClone: ICalendarModalOptions = JSON.parse(JSON.stringify(options));
         const dayConfig: IDayConfig | null = this.findDayConfig(dateTime, optClone);
 
-        if (dayConfig === null) {
+        if (!dayConfig) {
           if (!optClone.daysConfig) optClone.daysConfig = [];
           optClone.daysConfig.push({ date: dateTime.toJSDate(), subTitle: dateTime.monthShort! });
         }
@@ -233,7 +248,7 @@ export class IonCalendarService {
 
 
     const startDay = calculateStartDay(date);
-    let startIndex = 0;
+    const startIndex = 0;
 
     for (let i = startIndex; i < 7 * weeks; i++) {
       const itemTime = new Date(year, month, startDay + (i - startIndex)).getTime();
@@ -272,7 +287,7 @@ export class IonCalendarService {
     }
 
     if (opt.weekStart == 1) {
-      if (days[0] === null) {
+      if (!days[0]) {
         days.shift();
       } else {
         days.unshift(...new Array(6).fill(null));
@@ -320,7 +335,7 @@ export class IonCalendarService {
    * @return {Array<ICalendarMonth>} The array of CalendarMonth objects.
    */
   createWeeksByPeriod(startTime: number, opt: ICalendarModalOptions): Array<ICalendarMonth> {
-    let result: Array<ICalendarMonth> = [];
+    const result: Array<ICalendarMonth> = [];
 
     const time = DateTimeHelper.parse(startTime).valueOf();
     const originalCalendar = this.createOriginalCalendar(time, true);

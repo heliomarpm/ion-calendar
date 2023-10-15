@@ -173,10 +173,10 @@
           </ion-checkbox>
         </ion-item>
         <ion-item>
-          <ion-checkbox [(ngModel)]="optModel.showMonthSubtitle"
-                        (ngModelChange)="onChangeShowMonthSubtitle($event)"
+          <ion-checkbox [(ngModel)]="optModel.showMonthAdjacentDays"
+                        (ngModelChange)="onChangeShowMonthAdjacentDays($event)"
                         [disabled]="optModel.displayMode !== 'week'">
-            showMonthSubtitle
+            showMonthAdjacentDays
           </ion-checkbox>
         </ion-item>
         <ion-item>

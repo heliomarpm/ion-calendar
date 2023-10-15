@@ -1,19 +1,19 @@
 import { ComponentFixture, TestBed, waitForAsync } from '@angular/core/testing';
 import { IonicModule } from '@ionic/angular';
 
-import { DemoModalRangeEndDateComponent } from './demo-modal-range-end-date.component';
+import { DemoModalRangeNoEndDateComponent } from './demo-modal-range-noend-date.component';
 
 describe('DemoModalRangeEndDateComponent', () => {
-  let component: DemoModalRangeEndDateComponent;
-  let fixture: ComponentFixture<DemoModalRangeEndDateComponent>;
+  let component: DemoModalRangeNoEndDateComponent;
+  let fixture: ComponentFixture<DemoModalRangeNoEndDateComponent>;
 
   beforeEach(waitForAsync(() => {
     TestBed.configureTestingModule({
-      declarations: [ DemoModalRangeEndDateComponent ],
+      declarations: [ DemoModalRangeNoEndDateComponent ],
       imports: [IonicModule.forRoot()]
     }).compileComponents();
 
-    fixture = TestBed.createComponent(DemoModalRangeEndDateComponent);
+    fixture = TestBed.createComponent(DemoModalRangeNoEndDateComponent);
     component = fixture.componentInstance;
     fixture.detectChanges();
   }));
