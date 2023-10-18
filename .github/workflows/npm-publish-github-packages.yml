@@ -45,6 +45,7 @@ jobs:
 
       - name: Publish GPR
         run: |
+          cp README.md dist/ion-calendar
           cd dist/ion-calendar
           npm publish
         env:

@@ -1,5 +1,5 @@
-<span id="top"></span>
-<h1 align="center">
+<div id="top" style="text-align: center; align-items: center;">
+<h1>
   <br> 📅 Ionic Component IonCalendar
 
   [![DeepScan grade][url-deepscan-badge]][url-deepscan]
@@ -14,6 +14,26 @@
   ![@ionic/angular](https://img.shields.io/github/package-json/dependency-version/heliomarpm/ion-calendar/@ionic/angular)
   ![luxon](https://img.shields.io/github/package-json/dependency-version/heliomarpm/ion-calendar/luxon)
 </h1>
+
+<p>
+  <!-- PayPal -->
+  <a href="https://bit.ly/paypal-udeler" target="_blank" rel="noopener noreferrer">
+    <img alt="paypal url" src="https://img.shields.io/badge/donate%20on-paypal-1C1E26?style=for-the-badge&labelColor=1C1E26&color=0475fe"/>
+  </a>
+  <!-- Ko-fi -->
+  <a href="https://ko-fi.com/heliomarpm" target="_blank" rel="noopener noreferrer">
+    <img alt="kofi url" src="https://img.shields.io/badge/kofi-1C1E26?style=for-the-badge&labelColor=1C1E26&color=ff5f5f"/>
+  </a>
+  <!-- LiberaPay -->  
+  <a href="https://liberapay.com/heliomarpm" target="_blank" rel="noopener noreferrer">
+     <img alt="liberapay url" src="https://img.shields.io/badge/liberapay-1C1E26?style=for-the-badge&labelColor=1C1E26&color=f6c915"/>
+  </a>  
+  <!-- GitHub Sponsors -->
+  <a href="https://github.com/sponsors/heliomarpm" target="_blank" rel="noopener noreferrer">
+    <img alt="github sponsors url" src="https://img.shields.io/badge/GitHub%20-Sponsor-1C1E26?style=for-the-badge&labelColor=1C1E26&color=db61a2"/>
+  </a>
+</p>
+</div>
 
 ![screenshot](https://github.com/heliomarpm/ion-calendar/assets/13087389/8b1e79dd-b5f8-4774-aebf-7222d13f9b2f)
 ![screenshot2](https://github.com/heliomarpm/ion-calendar/assets/13087389/1bf6c1f5-7ef8-4eb0-8954-0976d00bba16)
@@ -530,7 +550,7 @@ That said, there's a bunch of ways you can contribute to this project, like by:
 
 If you appreciate that, please consider donating to the Developer.
 
-<p align="center">
+<p>
   <!-- PayPal -->
   <a href="https://bit.ly/paypal-udeler" target="_blank" rel="noopener noreferrer">
     <img alt="paypal url" src="https://img.shields.io/badge/donate%20on-paypal-1C1E26?style=for-the-badge&labelColor=1C1E26&color=0475fe"/>
