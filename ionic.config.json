@@ -1,0 +1,7 @@
+{
+  "name": "ionCalendarDev",
+  "integrations": {
+    "capacitor": {}
+  },
+  "type": "angular"
+}
