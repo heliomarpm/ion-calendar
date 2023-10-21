@@ -1,8 +1,7 @@
 :host {
   padding: 10px 20px;
   box-sizing: border-box;
-  // display: inline-block;
-  // background-color: #fff;
+  display: inline-block;
   width: 100%;
 
   .title-month {
@@ -13,7 +12,6 @@
   .title {
     padding: 0 40px 0 40px;
     overflow: hidden;
-
     flex-direction: row;
     justify-content: space-between;
     align-items: center;
@@ -33,7 +31,6 @@
       font-size: 0.9rem;
       color: var(--text-color);
     }
-
 
     .back {
       margin-left: -100%;
@@ -58,14 +55,12 @@
       // color: var(--text-color);
     }
 
-
     .switch-btn .arrow-dropdown {
       margin-left: 5px;
     }
   }
 
   .days.between {
-
     .days-btn.is-last,
     .days-btn.is-first {
       border-radius: 0;
