@@ -526,8 +526,7 @@ openCalendar() {
 
 ## Contributing
 
-Please make sure to read the [Contributing Guide](docs/CONTRIBUTING.md) before making a pull request.
-
+Please make sure to read the [Contributing Guide](https://github.com/heliomarpm/ion-calendar/blob/main/docs/CONTRIBUTING.md) before making a pull request.
 
 Thank you to all the people who already contributed to project!
 

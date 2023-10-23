@@ -1,9 +1,9 @@
 {
 	"name": "ion-calendar",
-	"version": "7.16.3",
+	"version": "7.16.4",
 	"scripts": {
 		"ng": "ng",
-		"uplink": "npm run build && cd dist/ion-calendar && npm link && cd ../../projects/demo && npm link @heliomarpm/ion-calendar",
+		"prepare": "npm run build && cd dist/ion-calendar && npm link && cd ../../projects/demo && npm link @heliomarpm/ion-calendar",
 		"build": "ng build ion-calendar",
 		"build:demo": "ng build demo",
 		"package": "npm run build && cd dist/ion-calendar && npm pack",
@@ -33,7 +33,7 @@
 		"@angular/cli": "~16.2.1",
 		"@angular/compiler-cli": "^16.2.0",
 		"@types/jasmine": "~4.3.0",
-		"@types/luxon": "^3.3.2",
+		"@types/luxon": "^3.3.3",
 		"jasmine-core": "~4.6.0",
 		"karma": "~6.4.0",
 		"karma-chrome-launcher": "~3.2.0",

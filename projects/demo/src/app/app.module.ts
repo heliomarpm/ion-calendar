@@ -11,7 +11,10 @@ import { IonCalendarModule } from '@heliomarpm/ion-calendar';
 
 @NgModule({
   declarations: [AppComponent],
-  imports: [BrowserModule, IonicModule.forRoot({mode: "ios"}), AppRoutingModule, IonCalendarModule],
+  imports: [
+    BrowserModule, IonicModule.forRoot({mode: "ios"}), AppRoutingModule,
+    IonCalendarModule //.forRoot({doneLabel: 'Confirm',closeIcon: true})
+  ],
   providers: [{ provide: RouteReuseStrategy, useClass: IonicRouteStrategy }],
   bootstrap: [AppComponent],
 })
