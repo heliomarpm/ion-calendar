@@ -1,16 +1,21 @@
 <ion-header [translucent]="true">
   <ion-toolbar>
     <ion-title>
-      Blank
+      {{title}}
     </ion-title>
+
+    <a href="https://github.com/heliomarpm/ion-calendar" slot="end" title="github" target="_blank"  rel="noreferrer noopener" >
+      <ion-icon slot="end" name="logo-github" color="dark"/>
+    </a>
     <ion-toggle slot="end" (ionChange)="toggleTheme($event)" />
+
   </ion-toolbar>
 </ion-header>
 
 <ion-content [fullscreen]="true" class="ion-padding">
   <ion-header collapse="condense">
     <ion-toolbar>
-      <ion-title size="large">Blank</ion-title>
+      <ion-title size="large">{{title}}</ion-title>
     </ion-toolbar>
   </ion-header>
 
