@@ -18,7 +18,7 @@ jobs:
       - name: Checkout
         uses: actions/checkout@v4
 
-      - name: Setup Node
+      - name: Setup Node NPM
         uses: actions/setup-node@v3
         with:
           node-version: '>=16.8.0'
@@ -29,13 +29,10 @@ jobs:
       - name: Install dependencies
         run: npm ci
 
-      # - name: Tests
-      #   run: npm test
-
       - name: Build
         run: npm run build
 
-      - name: Publish
+      - name: Publish NPM
         run: |
           cp README.md dist/ion-calendar
           cd dist/ion-calendar
@@ -48,3 +45,25 @@ jobs:
       #   with:
       #     token: ${{ secrets.NPM_TOKEN }}
       #     strategy: all
+
+
+      - name: Setup Node GPR
+        uses: actions/setup-node@v3
+        with:
+          node-version: 16
+          registry-url: https://npm.pkg.github.com/
+          scope: "@heliomarpm"
+
+      - name: Install dependencies
+        run: npm ci
+
+      - name: Build
+        run: npm run build
+
+      - name: Publish GPR
+        run: |
+          cp README.md dist/ion-calendar
+          cd dist/ion-calendar
+          npm publish
+        env:
+          NODE_AUTH_TOKEN: ${{secrets.GITHUB_TOKEN}}
