@@ -38,7 +38,7 @@
 ![screenshot](https://github.com/heliomarpm/ion-calendar/assets/13087389/8b1e79dd-b5f8-4774-aebf-7222d13f9b2f)
 ![screenshot2](https://github.com/heliomarpm/ion-calendar/assets/13087389/1bf6c1f5-7ef8-4eb0-8954-0976d00bba16)
 
-_*live demo:* [click here](https://www-yefjsqmtmv.now.sh/)_
+_*live demo:* [click here](https://ioncalendar-demo.web.app)_
 
 ## Summary
 The `@heliomarpm/ion-calendar` is a calendar component for Ionic Framework-based applications. \
