@@ -254,10 +254,10 @@ export class CalendarComponent implements ControlValueAccessor, OnInit {
 
 		switch (this.def.pickMode) {
 			case pickModes.single:
-				const time = eCD[0].time;
-				const date = this._handleType(time);
+				const dTime = eCD[0].time;
+				const date = this._handleType(dTime);
 
-				this.selectedDates = DateTimeHelper.parse(time).toJSDate();
+				this.selectedDates = DateTimeHelper.parse(dTime).toJSDate();
 				emitOnChange(date);
 				break;
 
