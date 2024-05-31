@@ -16,9 +16,13 @@
 </h1>
 
 <p>
+  <!-- PixMe -->
+  <a href="https://www.pixme.bio/heliomarpm" target="_blank" rel="noopener noreferrer">
+    <img alt="pixme url" src="https://img.shields.io/badge/donate%20on-pixme-1C1E26?style=for-the-badge&labelColor=1C1E26&color=28f4f4"/>
+  </a>
   <!-- PayPal -->
   <a href="https://bit.ly/paypal-udeler" target="_blank" rel="noopener noreferrer">
-    <img alt="paypal url" src="https://img.shields.io/badge/donate%20on-paypal-1C1E26?style=for-the-badge&labelColor=1C1E26&color=0475fe"/>
+    <img alt="paypal url" src="https://img.shields.io/badge/paypal-1C1E26?style=for-the-badge&labelColor=1C1E26&color=0475fe"/>
   </a>
   <!-- Ko-fi -->
   <a href="https://ko-fi.com/heliomarpm" target="_blank" rel="noopener noreferrer">

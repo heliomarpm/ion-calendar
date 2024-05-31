@@ -7,7 +7,7 @@ import { environment } from "../../environments/environment";
   styleUrls: ["home.page.scss"],
 })
 export class HomePage {
-  title = `@heliomar/ion-calendar - ${environment.version}`;
+  title = `@heliomarpm/ion-calendar - ${environment.version}`;
 
   constructor() { }
 

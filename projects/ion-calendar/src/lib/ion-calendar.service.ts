@@ -104,7 +104,6 @@ export class IonCalendarService {
     const year = date.getFullYear();
     const month = date.getMonth();
     const firstWeek = new Date(year, month, 1).getDay();
-    // const howManyDays = moment(time).daysInMonth();
 
     const daysInMonth: number = luxon.daysInMonth!;
     const lastDayOfMonth = luxon.endOf("month").valueOf();
@@ -197,7 +196,7 @@ export class IonCalendarService {
           disable = date > dateTo;
         }
       }
-      
+
     }
 
     // Determine the title and subtitle for the calendar day
@@ -222,7 +221,6 @@ export class IonCalendarService {
       const dayOfWeek = originalDate.getDay();
       return originalDate.getDate() - (weekStart === 0 ? dayOfWeek : dayOfWeek - 1);
     };
-
 
     const createDay = (currentTime: number): ICalendarDay => {
       const month = DateTimeHelper.parse(original.time).month;
@@ -294,26 +292,19 @@ export class IonCalendarService {
     }
 
     if (opt.showAdjacentMonthDay && !Number.isNaN(original.time)) {
-      // const thisMonth = moment(original.time).month();
       const thisMonth = DateTimeHelper.parse(original.time).month;
       const _booleanMap = days.map(e => !!e);
 
       let startOffsetIndex = _booleanMap.indexOf(true) - 1;
-      // for (startOffsetIndex; startOffsetIndex >= 0; startOffsetIndex--) {
       while (startOffsetIndex >= 0) {
-        // const dayBefore = moment(days[startOffsetIndex + 1].time).clone().subtract(1, 'd');
         const dayBefore = DateTimeHelper.parse(days[startOffsetIndex + 1].time).minus({ days: 1 });
         days[startOffsetIndex] = this.createCalendarDay(dayBefore.valueOf(), opt, thisMonth);
-        //_booleanMap[startOffsetIndex] = true;
         startOffsetIndex--;
       }
 
       if (!(_booleanMap.length % 7 === 0 && _booleanMap[_booleanMap.length - 1])) {
         let endOffsetIndex = _booleanMap.lastIndexOf(true) + 1;
-        // for (endOffsetIndex; endOffsetIndex < days.length + (endOffsetIndex % 7); endOffsetIndex++) {
         while (endOffsetIndex < days.length + (endOffsetIndex % 7)) {
-          // const dayAfter = moment(days[endOffsetIndex - 1].time).clone().add(1, 'd');
-          // const timeAfter = endOffsetIndex = 0 ? original.time : days[endOffsetIndex - 1].time;
           const timeAfter = days[endOffsetIndex - 1].time;
           const dayAfter = DateTimeHelper.parse(timeAfter).plus({ days: 1 });
           days[endOffsetIndex] = this.createCalendarDay(dayAfter.valueOf(), opt, thisMonth);
@@ -343,7 +334,6 @@ export class IonCalendarService {
 
     return result;
   }
-
 
   /**
    * Creates an array of CalendarMonth objects based on the given start time and the number of months.
@@ -406,18 +396,8 @@ export class IonCalendarService {
   }
 
   multiFormat(time: number): ICalendarResult {
-    // const _moment = moment(time);
-    // return {
-    //   time: _moment.valueOf(),
-    //   unix: _moment.unix(),
-    //   dateObj: _moment.toDate(),
-    //   string: _moment.format(defaults.DATE_FORMAT),
-    //   years: _moment.year(),
-    //   months: _moment.month() + 1,
-    //   date: _moment.date(),
-    // };
-
     const luxonDate = DateTimeHelper.parse(time);
+
     return {
       time: luxonDate.toMillis(),
       seconds: luxonDate.toSeconds(),

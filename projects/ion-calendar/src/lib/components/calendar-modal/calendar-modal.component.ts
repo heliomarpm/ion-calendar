@@ -19,10 +19,9 @@ export class CalendarModalComponent implements OnInit, AfterViewInit {
   def!: ICalendarModalOptions;
   datesTemp: Array<ICalendarDay | null> = [null];
   calendarMonths!: Array<ICalendarMonth>;
-  // private step!: number;
+
   private showYearPicker!: boolean;
   private year!: number;
-  // private years!: Array<number>;
   private _scrollLock = true;
   private actualFirstTime!: number;
 
@@ -102,7 +101,7 @@ export class CalendarModalComponent implements OnInit, AfterViewInit {
         }
         break;
       case pickModes.multi:
-        if (defaultDates && defaultDates.length) {
+        if (defaultDates?.length) {
           this.datesTemp = defaultDates.map(e => this.calSvc.createCalendarDay(this._getDayTime(e), this.def));
         }
         break;
@@ -172,11 +171,10 @@ export class CalendarModalComponent implements OnInit, AfterViewInit {
   nextMonth(event: any): void {
     const len = this.calendarMonths.length;
     const final = this.calendarMonths[len - 1];
-    // const nextTime = moment(final.original.time).add(1, 'M').valueOf();
+
     const nextTime = DateTimeHelper.parse(final.original.time).plus({ months: 1 }).valueOf();
     const rangeEnd = this.def.to ? DateTimeHelper.parse(this.def.to).minus({ months: 1 }) : 0;
 
-    // if (len <= 0 || (rangeEnd !== 0 && moment(final.original.time).isAfter(rangeEnd))) {
     if (len <= 0 || (rangeEnd !== 0 && DateTimeHelper.parse(final.original.time) > rangeEnd)) {
       event.target.disabled = true;
       return;
@@ -251,14 +249,6 @@ export class CalendarModalComponent implements OnInit, AfterViewInit {
    * See for more details: https://github.com/Polymer/polymer/issues/4701
    */
   async repaintDOM() {
-    // if (!this.content) return;
-
-    // const scrollElement = await this.content.getScrollElement();
-
-    // // Update scrollElem to ensure that height of the container changes as Months are appended/prepended
-    // scrollElement.style.zIndex = '2';
-    // scrollElement.style.zIndex = 'initial';
-    // Update monthsEle to ensure selected state is reflected when tapping on a day
     this.monthElement.nativeElement.style.zIndex = '2';
     this.monthElement.nativeElement.style.zIndex = 'initial';
   }
@@ -278,13 +268,11 @@ export class CalendarModalComponent implements OnInit, AfterViewInit {
   }
 
   _getDayTime(date: any): number {
-    // return moment(moment(date).format('YYYY-MM-DD')).valueOf();
     const dtFormat = DateTimeHelper.parse(date).toFormat('yyyy-MM-dd');
     return DateTimeHelper.parse(dtFormat).valueOf();
   }
 
   _monthTitle(date: any): string {
-    // return moment(date).format(this.def.monthFormat?.replace(/y/g, 'Y'));
     const dtFormat = this.def.monthFormat?.replace(/Y/g, 'y') || 'MMM yyyy';
     return DateTimeHelper.parse(date).toFormat(dtFormat, { locale: this.def.locale?.locale });
   }
