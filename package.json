@@ -27,7 +27,7 @@
     "@capacitor/haptics": "5.0.6",
     "@capacitor/keyboard": "5.0.6",
     "@capacitor/status-bar": "5.0.6",
-    "@heliomarpm/ion-calendar": "^7.16.3",
+    "@heliomarpm/ion-calendar": "^7.16.4",
     "@ionic/angular": "^7.0.0",
     "ionicons": "^7.0.0",
     "luxon": "^3.4.3",
