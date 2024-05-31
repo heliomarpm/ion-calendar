@@ -74,7 +74,7 @@ class DateTimeHelper {
 
   static weekDays(locale: ICalendarLocale = { locale: 'en', weekdays: 'initial' }) {
     const { locale: l, weekdays: w } = locale;
-    let weeksDay = Info.weekdays('short', { locale: l }).map(d => w === 'initial' ? d.substring(0, 1).toUpperCase() : d.toUpperCase());
+    const weeksDay = Info.weekdays('short', { locale: l }).map(d => w === 'initial' ? d.substring(0, 1).toUpperCase() : d.toUpperCase());
 
     const today = DateTime.now();
     const firstDay = this.getFirstAndLastDayOfWeek(today.toJSDate()).firstDay.getDay();

@@ -192,8 +192,8 @@ export class CalendarComponent implements ControlValueAccessor, OnInit {
   }
 
   private nextWeek() {
-    let nextTime = DateTime.fromMillis(this.monthOpt.original.time).plus({ weeks: this.def.weeks }).valueOf();
-    let newWeek = this.calSvc.multiFormat(nextTime);
+    const nextTime = DateTime.fromMillis(this.monthOpt.original.time).plus({ weeks: this.def.weeks }).valueOf();
+    const newWeek = this.calSvc.multiFormat(nextTime);
     const oldWeek = this.calSvc.multiFormat(this.monthOpt.original.time);
 
     this.monthOpt = this.createWeek(nextTime);
@@ -222,8 +222,8 @@ export class CalendarComponent implements ControlValueAccessor, OnInit {
   }
 
   private backWeek(): void {
-    let backTime = DateTime.fromMillis(this.monthOpt.original.time).minus({ weeks: this.def.weeks }).valueOf();
-    let newWeek = this.calSvc.multiFormat(backTime);
+    const backTime = DateTime.fromMillis(this.monthOpt.original.time).minus({ weeks: this.def.weeks }).valueOf();
+    const newWeek = this.calSvc.multiFormat(backTime);
     const oldWeek = this.calSvc.multiFormat(this.monthOpt.original.time);
 
     this.onWeekChange.emit({ oldWeek: oldWeek, newWeek: newWeek, });

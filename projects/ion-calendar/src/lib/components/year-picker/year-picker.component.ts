@@ -43,7 +43,7 @@ export class YearPickerComponent {
     const end = yearBase + 7;
 
     this._yearRanges = [];
-    for (var i = start; i <= end; i++) {
+    for (let i = start; i <= end; i++) {
       this._yearRanges.push(i);
     }
   }
