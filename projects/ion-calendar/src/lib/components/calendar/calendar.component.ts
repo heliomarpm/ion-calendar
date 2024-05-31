@@ -101,7 +101,7 @@ export class CalendarComponent implements ControlValueAccessor, OnInit {
 		}
 
 		const dates: Array<Date> = [];
-		for (let el of this.calendarMonthValue) {
+		for (const el of this.calendarMonthValue) {
 			if (el?.time) {
 				dates.push(new Date(el.time));
 			}
@@ -282,7 +282,7 @@ export class CalendarComponent implements ControlValueAccessor, OnInit {
 					const dates: Array<Date> = [];
 
 					const payloads: Array<CalendarComponentPayloadType> = [];
-					for (let day of days) {
+					for (const day of days) {
 						if (day?.time) {
 							const payload = this._handleType(day.time);
 							payloads.push(payload);
