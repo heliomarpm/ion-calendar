@@ -1,4 +1,4 @@
-<div id="top" style="text-align: center; align-items: center;">
+<div id="top" align="center" style="text-align:center;">
 <h1>
   <br> 📅 Ionic Component IonCalendar
 
