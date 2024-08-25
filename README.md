@@ -177,7 +177,7 @@ import { ICalendarComponentOptions } from '@heliomarpm/ion-calendar';
 })
 export class HomePage {
   dateRange: { from: string; to: string; };
-  type: 'string'; // 'string' | 'js-date' | 'moment' | 'time' | 'object'
+  type: 'string'; // 'string' | 'js-date' | 'luxon' | 'time' | 'object'
   optionsRange: ICalendarComponentOptions = {
     pickMode: 'range'
   };
@@ -207,7 +207,7 @@ import { ICalendarComponentOptions } from '@heliomarpm/ion-calendar';
 })
 export class HomePage {
   dateMulti: string[];
-  type: 'string'; // 'string' | 'js-date' | 'moment' | 'time' | 'object'
+  type: 'string'; // 'string' | 'js-date' | 'luxon' | 'time' | 'object'
   optionsMulti: ICalendarComponentOptions = {
     pickMode: 'multi'
   };
