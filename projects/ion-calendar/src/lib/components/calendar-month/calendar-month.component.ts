@@ -120,10 +120,10 @@ export class CalendarMonthComponent implements ControlValueAccessor, AfterViewIn
 	isSelected(time: number): boolean {
 		if (Array.isArray(this._date)) {
 			if (this.pickMode !== pickModes.multi) {
-				if (this._date[0] !== null) {
+				if (!!this._date[0]) {
 					return time === this._date[0].time;
 				}
-				if (this._date[1] !== null) {
+				if (!!this._date[1]) {
 					return time === this._date[1].time;
 				}
 			} else {
