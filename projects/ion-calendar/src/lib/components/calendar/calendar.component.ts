@@ -42,12 +42,12 @@ export class CalendarComponent implements ControlValueAccessor, OnInit {
 
 	public _monthsTitle = DateTimeHelper.monthsShortTitle();
 
-	private _showToggleButtons = true;
-	get showToggleButtons(): boolean {
-		return this._showToggleButtons;
+	private _showNavigateButtons = true;
+    get showNavigateButtons(): boolean {
+		return this._showNavigateButtons;
 	}
-	set showToggleButtons(value: boolean) {
-		this._showToggleButtons = value;
+	set showNavigateButtons(value: boolean) {
+		this._showNavigateButtons = value;
 	}
 
 	private _showMonthPicker = true;
@@ -317,7 +317,7 @@ export class CalendarComponent implements ControlValueAccessor, OnInit {
 	}
 
 	private initOpt(): void {
-		this.showToggleButtons = this._options.showToggleButtons ?? true;
+        this.showNavigateButtons = this._options.showNavigateButtons ?? true;
 		this.showMonthPicker = this._options.showMonthPicker ?? true;
 
 		if (this.view !== "days" && !this.showMonthPicker) {

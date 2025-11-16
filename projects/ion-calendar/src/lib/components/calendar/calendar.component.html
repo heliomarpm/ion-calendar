@@ -12,7 +12,7 @@
       </div>
   </ng-template>
 
-  <ng-template [ngIf]="showToggleButtons && !readonly">
+  <ng-template [ngIf]="showNavigateButtons && !readonly">
       <ion-button type="button" fill="clear" class="back" [disabled]="!canPrev()" (click)="prev()">
           <ion-icon slot="icon-only" size="small" name="chevron-back"></ion-icon>
       </ion-button>

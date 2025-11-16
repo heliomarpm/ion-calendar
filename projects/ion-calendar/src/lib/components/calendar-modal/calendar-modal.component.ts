@@ -1,7 +1,7 @@
 import {
   Component, ViewChild, ElementRef, ChangeDetectorRef, Renderer2, OnInit, Input, AfterViewInit
 } from '@angular/core';
-import { NavParams, ModalController, IonContent } from '@ionic/angular';
+import { ModalController, IonContent } from '@ionic/angular';
 
 import { IonCalendarService } from '../../ion-calendar.service';
 import { ICalendarModalOptions, ICalendarDay, ICalendarMonth } from '../../models';
@@ -39,7 +39,7 @@ export class CalendarModalComponent implements OnInit, AfterViewInit {
   constructor(
     private _renderer: Renderer2,
     public _elementRef: ElementRef,
-    public params: NavParams,
+    // public params: NavParams,
     public modalCtrl: ModalController,
     public ref: ChangeDetectorRef,
     public calSvc: IonCalendarService

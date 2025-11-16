@@ -48,7 +48,7 @@ export interface ICalendarModalOptions extends ICalendarOptions {
 }
 
 export interface ICalendarComponentOptions extends ICalendarOptions {
-	showToggleButtons?: boolean;
+	showNavigateButtons?: boolean;
 	showMonthPicker?: boolean;
 	showYearPicker?: boolean;
 	monthsTitle?: string[];

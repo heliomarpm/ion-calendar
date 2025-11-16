@@ -1,4 +1,4 @@
-import { DateTime, Info } from "luxon";
+import { DateTime, Info, DateObjectUnits } from "luxon";
 import { CalendarComponentPayloadType } from "../types";
 import { ICalendarLocale } from "../models";
 
@@ -16,7 +16,12 @@ class DateTimeHelper {
       return DateTime.fromJSDate(date);
     }
 
-    return DateTime.fromObject(date);
+    // If it's already a Luxon DateTime, return it; otherwise treat as DateObjectUnits
+    if (DateTime.isDateTime(date)) {
+      return date as DateTime;
+    }
+
+    return DateTime.now();
   }
 
   static now() {
