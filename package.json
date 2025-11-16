@@ -1,6 +1,6 @@
 {
   "name": "ion-calendar",
-  "version": "7.17.2",
+  "version": "7.17.3",
   "type": "module",
   "scripts": {
     "ng": "ng",
