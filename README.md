@@ -246,7 +246,7 @@ export class HomePage {
 | color                 | string                  | `'primary'`                           | 'primary', 'secondary','tertiary', 'success', 'warning', 'danger', 'dark', 'medium', 'light', 'custom', 'transparent'
 | colorSubtitle         | string                  | `undefined`                           | 'primary', 'secondary','tertiary', 'success', 'warning', 'danger', 'dark', 'medium', 'light', 'custom', 'transparent'
 | pickMode              | string                  | `single`                              | 'multi', 'range', 'single' 
-| showToggleButtons     | boolean                 | `true`                                | show toggle buttons 
+| showNavigateButtons   | boolean                 | `true`                                | show navigation buttons 
 | monthsTitle           | Array<string>           | `['JAN', 'FEB', ..., 'NOV', 'DEC']`   | month picker format 
 | showMonthPicker       | boolean                 | `true`                                | show month picker 
 | showYearPicker        | boolean                 | `true`                                | show year picker 
