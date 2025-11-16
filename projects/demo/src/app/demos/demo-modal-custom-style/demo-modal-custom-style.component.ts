@@ -21,6 +21,8 @@ export class DemoModalCustomStyleComponent {
       color: 'custom',
       doneIcon: true,
       closeIcon: true,
+      titlePosition: 'bottom',
+      actionsPosition: 'bottom',
     };
 
     const myCalendar = await this.modalCtrl.create({

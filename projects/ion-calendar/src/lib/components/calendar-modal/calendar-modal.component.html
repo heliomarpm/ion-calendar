@@ -1,15 +1,15 @@
 <ion-header>
-  <ion-toolbar [color]="def.color" class="ion-no-border">
-    <ion-buttons slot="start">
+  <ion-toolbar [color]="def.color" class="ion-no-border" *ngIf="options.titlePosition!=='bottom' || options.actionsPosition!=='bottom'">
+    <ion-buttons slot="start" *ngIf="options.actionsPosition !== 'bottom'">
       <ion-button type='button' slot="icon-only" shape="round" fill="clear" (click)="cancel()">
         <span *ngIf="def.closeLabel !== '' && !def.closeIcon">{{ def.closeLabel }}</span>
         <ion-icon *ngIf="def.closeIcon" name="close"></ion-icon>
       </ion-button>
     </ion-buttons>
 
-    <ion-title>{{ def.title }}</ion-title>
+    <ion-title *ngIf="options.titlePosition !== 'bottom'">{{ def.title }}</ion-title>
 
-    <ion-buttons slot="end">
+    <ion-buttons slot="end" *ngIf="options.actionsPosition !== 'bottom'">
       <ion-button type='button' *ngIf="!!def.clearLabel" shape="round" fill="clear" [disabled]="!canClear()" (click)="clear()">
         <span *ngIf="def.clearLabel !== ''">{{ def.clearLabel }}</span>
       </ion-button>
@@ -20,7 +20,7 @@
     </ion-buttons>
   </ion-toolbar>
 
-  <ng-content select="[sub-header]"></ng-content>
+  <!-- <ng-content select="[sub-header]"></ng-content> -->
 
   <ion-calendar-week [color]="def.color" [weekDays]="def.weekdays" [weekStart]="def.weekStart??0">
   </ion-calendar-week>
@@ -40,7 +40,7 @@
                             [pickMode]="def.pickMode||'single'"
                             [id]="def.id"
                             [color]="def.color"
-                            [colorSubtitle]="def.colorSubtitle" 
+                            [colorSubtitle]="def.colorSubtitle"
                             (onChange)="onChange($event)"
                             [(ngModel)]="datesTemp">
         </ion-calendar-month>
@@ -54,3 +54,26 @@
   </ion-infinite-scroll>
 
 </ion-content>
+
+<ion-footer *ngIf="options.titlePosition=='bottom' || options.actionsPosition=='bottom'">
+  <ion-toolbar [color]="def.color" class="ion-no-border">
+    <ion-buttons slot="start" *ngIf="options.actionsPosition === 'bottom'">
+      <ion-button type='button' slot="icon-only" shape="round" fill="clear" (click)="cancel()">
+        <span *ngIf="def.closeLabel !== '' && !def.closeIcon">{{ def.closeLabel }}</span>
+        <ion-icon *ngIf="def.closeIcon" name="close"></ion-icon>
+      </ion-button>
+    </ion-buttons>
+
+    <ion-title *ngIf="options.titlePosition === 'bottom'">{{ def.title }}</ion-title>
+
+    <ion-buttons slot="end" *ngIf="options.actionsPosition === 'bottom'">
+      <ion-button type='button' *ngIf="!!def.clearLabel" shape="round" fill="clear" [disabled]="!canClear()" (click)="clear()">
+        <span *ngIf="def.clearLabel !== ''">{{ def.clearLabel }}</span>
+      </ion-button>
+      <ion-button type='button' slot="icon-only" *ngIf="!def.autoDone" shape="round" fill="clear" [disabled]="!canDone()" (click)="done()">
+        <span *ngIf="def.doneLabel !== '' && !def.doneIcon">{{ def.doneLabel }}</span>
+        <ion-icon *ngIf="def.doneIcon" name="checkmark"></ion-icon>
+      </ion-button>
+    </ion-buttons>
+  </ion-toolbar>
+</ion-footer>
