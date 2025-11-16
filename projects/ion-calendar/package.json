@@ -1,6 +1,6 @@
 {
 	"name": "@heliomarpm/ion-calendar",
-	"version": "7.16.4",
+	"version": "7.17.0",
 	"description": "A date picker super component for ionic6+",
 	"author": "Heliomar P. Marques",
 	"license": "MIT",
@@ -26,8 +26,8 @@
 		"date-multi"
 	],
 	"peerDependencies": {
-		"@angular/common": "^16.2.0",
-		"@angular/core": "^16.2.0",
+		"@angular/common": "^17.3.12",
+		"@angular/core": "^17.3.12",
 		"luxon": "^3.4.3"
 	},
 	"dependencies": {

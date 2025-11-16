@@ -1,16 +1,20 @@
 {
   "name": "ion-calendar",
-  "version": "7.16.4",
+  "version": "7.17.0",
+  "type": "module",
   "scripts": {
     "ng": "ng",
     "prepare": "npm run build && cd dist/ion-calendar && npm link && cd ../../projects/demo && npm link @heliomarpm/ion-calendar",
+    "prebuild": "rimraf -rf dist",
     "build": "ng build ion-calendar",
     "build:demo": "ng build demo",
     "package": "npm run build && cd dist/ion-calendar && npm pack",
     "start": "ng serve -o",
+    "start:demo": "ng serve demo",
     "watch": "ng build --watch --configuration development",
     "test": "ng test",
-    "upversion": "node upversion.js"
+    "upversion": "node upversion.js",
+    "deploy": "node ./node_modules/gh_deploy/index.mjs"
   },
   "private": false,
   "dependencies": {
@@ -35,12 +39,15 @@
     "@angular/compiler-cli": "^17.3.12",
     "@types/jasmine": "~4.3.0",
     "@types/luxon": "^3.3.3",
+    "gh_deploy": "github:heliomarpm/gh_deploy",
     "jasmine-core": "~4.6.0",
     "karma": "~6.4.0",
     "karma-chrome-launcher": "~3.2.0",
     "karma-coverage": "~2.2.0",
     "karma-jasmine": "~5.1.0",
     "karma-jasmine-html-reporter": "~2.1.0",
+    "rimraf": "^6.1.0",
+    "semver": "^7.7.3",
     "typescript": "~5.4.5"
   }
 }
