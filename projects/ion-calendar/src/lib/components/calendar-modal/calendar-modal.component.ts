@@ -98,6 +98,12 @@ export class CalendarModalComponent implements OnInit, AfterViewInit {
           if (defaultDateRange.to) {
             this.datesTemp[1] = this.calSvc.createCalendarDay(this._getDayTime(defaultDateRange.to), this.def);
           }
+
+          if (!defaultDateRange.from) {
+            const dateFrom = Math.min(Date.now() as number, this._getDayTime(defaultDateRange.to||Date.now()));
+            defaultDateRange.from = dateFrom;
+            this.datesTemp[0] = this.calSvc.createCalendarDay(this._getDayTime(dateFrom), this.def);
+          }
         }
         break;
       case pickModes.multi:

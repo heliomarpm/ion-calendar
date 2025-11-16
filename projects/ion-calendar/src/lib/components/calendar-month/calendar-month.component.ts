@@ -14,11 +14,12 @@ export const MONTH_VALUE_ACCESSOR: Provider = {
 	templateUrl: "./calendar-month.component.html",
 	styleUrls: ["./calendar-month.component.scss"],
 	providers: [MONTH_VALUE_ACCESSOR],
-	host: {
-		"[class.component-mode]": "componentMode",
-	},
+	// host: {
+	// 	"[class.component-mode]": "componentMode",
+	// },
 })
 export class CalendarMonthComponent implements ControlValueAccessor, AfterViewInit {
+    // @Input() componentMode = false;
 	@Input() month!: ICalendarMonth;
 	@Input() pickMode: PickModeType = defaultValues.PICK_MODE as PickModeType;
 	@Input() id: string | undefined = undefined;
