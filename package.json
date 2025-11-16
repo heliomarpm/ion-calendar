@@ -14,7 +14,8 @@
     "watch": "ng build --watch --configuration development",
     "test": "ng test",
     "upversion": "node upversion.js",
-    "deploy": "node ./node_modules/gh_deploy/index.mjs"
+    "deploy": "node ./node_modules/gh_deploy/index.mjs",
+    "clean": "rimraf -rf dist node_modules"
   },
   "private": false,
   "dependencies": {
