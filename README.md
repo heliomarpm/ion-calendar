@@ -468,11 +468,13 @@ openCalendar() {
 | canBackwardsSelected  | boolean                  | `false`                               | can backwards selected
 | pickMode              | string                   | `single`                              | 'multi', 'range', 'single'
 | disableWeeks          | Array<number>            | `[]`                                  | week to be disabled (0-6)
-| closeLabel            | string                   | `CANCEL`                              | cancel button label
-| doneLabel             | string                   | `DONE`                                | done button label
+| closeLabel            | string                   | `'CANCEL'`                            | cancel button label
+| doneLabel             | string                   | `'DONE'`                              | done button label
 | clearLabel            | string                   | `null`                                | clear button label
 | closeIcon             | boolean                  | `false`                               | show cancel button icon
 | doneIcon              | boolean                  | `false`                               | show done button icon
+| titlePosition					| string 									 | `'top'`								 						 	 | show position for title. Values `'top'` or `'bottom'`
+| actionsPosition				| string 									 | `'top'`															 | show position for actions. Values `'top'` or `'bottom'`
 | monthFormat           | string                   | `'MMM yyyy'`                          | month title format
 | weekdays              | Array<string>            | `['S', 'M', 'T', 'W', 'T', 'F', 'S']` | weeks text
 | weekStart             | number                   | `0` (0 or 1)                          | set week start day
