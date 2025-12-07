@@ -15,7 +15,7 @@ next to their day job; you are not entitled to free customer service.
 ## Contents
 
 * [Contributions](./CONTRIBUTING.md)
-* [License](./blob/mainLICENSE)
+* [License](./blob/main/LICENSE)
 
 ## 📚 Documentation
 
