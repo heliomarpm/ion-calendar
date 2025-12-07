@@ -1,0 +1,21 @@
+cff-version: 1.2.0
+message: "If you use this software, please cite it using these metadata."
+title: "ion-calendar"
+abstract: "A date picker component for Ionic Framework (Ionic 6+) and Angular applications, using Luxon for date manipulation."
+version: 7.17.3
+date-released: 2025-11-17
+type: software
+authors:
+  - family-names: Marques
+    given-names: Heliomar
+    alias: heliomarpm
+url: "https://github.com/heliomarpm/ion-calendar"
+license: MIT
+keywords:
+  - ionic
+  - calendar
+  - datepicker
+  - angular
+  - component
+  - typescript
+  - luxon
