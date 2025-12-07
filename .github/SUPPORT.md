@@ -15,13 +15,13 @@ next to their day job; you are not entitled to free customer service.
 ## Contents
 
 * [Contributions](./CONTRIBUTING.md)
-* [License](./blob/main/LICENSE)
+* [License](../LICENSE)
 
 ## 📚 Documentation
 
 Before asking a question, please check our documentation:
 
-* [README.md](./blob/main/README.md)
+* [README.md](../README.md)
 
 ## 🐛 Reporting Bugs
 
