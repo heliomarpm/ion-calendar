@@ -21,7 +21,7 @@ export class DemoModalCustomStyleComponent {
       color: 'custom',
       doneIcon: true,
       closeIcon: true,
-      titlePosition: 'bottom',
+      titlePosition: 'top',
       actionsPosition: 'bottom',
     };
 

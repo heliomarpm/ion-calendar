@@ -1,28 +1,50 @@
 <ion-header>
-  <ion-toolbar [color]="def.color" class="ion-no-border" *ngIf="options.titlePosition!=='bottom' || options.actionsPosition!=='bottom'">
-    <ion-buttons slot="start" *ngIf="options.actionsPosition !== 'bottom'">
-      <ion-button type='button' slot="icon-only" shape="round" fill="clear" (click)="cancel()">
-        <span *ngIf="def.closeLabel !== '' && !def.closeIcon">{{ def.closeLabel }}</span>
-        <ion-icon *ngIf="def.closeIcon" name="close"></ion-icon>
-      </ion-button>
-    </ion-buttons>
+  @if (options.titlePosition !== 'bottom' || options.actionsPosition !== 'bottom') {
+    <ion-toolbar [color]="def.color" class="ion-no-border">
+      @if (options.actionsPosition !== 'bottom') {
+        <ion-buttons slot="start">
+          <ion-button type='button' slot="icon-only" shape="round" fill="clear" (click)="cancel()">
+            @if (def.closeLabel !== '' && !def.closeIcon) {
+              <span>{{ def.closeLabel }}</span>
+            }
+            @if (def.closeIcon) {
+              <ion-icon name="close"></ion-icon>
+            }
+          </ion-button>
+        </ion-buttons>
+      }
 
-    <ion-title *ngIf="options.titlePosition !== 'bottom'">{{ def.title }}</ion-title>
+      @if (options.titlePosition !== 'bottom') {
+        <ion-title>{{ def.title }}</ion-title>
+      }
 
-    <ion-buttons slot="end" *ngIf="options.actionsPosition !== 'bottom'">
-      <ion-button type='button' *ngIf="!!def.clearLabel" shape="round" fill="clear" [disabled]="!canClear()" (click)="clear()">
-        <span *ngIf="def.clearLabel !== ''">{{ def.clearLabel }}</span>
-      </ion-button>
-      <ion-button type='button' slot="icon-only" *ngIf="!def.autoDone" shape="round" fill="clear" [disabled]="!canDone()" (click)="done()">
-        <span *ngIf="def.doneLabel !== '' && !def.doneIcon">{{ def.doneLabel }}</span>
-        <ion-icon *ngIf="def.doneIcon" name="checkmark"></ion-icon>
-      </ion-button>
-    </ion-buttons>
-  </ion-toolbar>
+      @if (options.actionsPosition !== 'bottom') {
+        <ion-buttons slot="end">
+          @if (!!def.clearLabel) {
+            <ion-button type='button' shape="round" fill="clear" [disabled]="!canClear()" (click)="clear()">
+              @if (def.clearLabel !== '') {
+                <span>{{ def.clearLabel }}</span>
+              }
+            </ion-button>
+          }
+          @if (!def.autoDone) {
+            <ion-button type='button' slot="icon-only" shape="round" fill="clear" [disabled]="!canDone()" (click)="done()">
+              @if (def.doneLabel !== '' && !def.doneIcon) {
+                <span>{{ def.doneLabel }}</span>
+              }
+              @if (def.doneIcon) {
+                <ion-icon name="checkmark"></ion-icon>
+              }
+            </ion-button>
+          }
+        </ion-buttons>
+      }
+    </ion-toolbar>
+  }
 
   <!-- <ng-content select="[sub-header]"></ng-content> -->
 
-  <ion-calendar-week [color]="def.color" [weekDays]="def.weekdays" [weekStart]="def.weekStart??0">
+  <ion-calendar-week [color]="def.color!" [weekDays]="def.weekdays" [weekStart]="def.weekStart??0">
   </ion-calendar-week>
 
 </ion-header>
@@ -33,7 +55,7 @@
              [scrollEvents]="true">
 
   <div #months>
-    <ng-template ngFor let-month [ngForOf]="calendarMonths" [ngForTrackBy]="trackByIndex" let-i="index">
+    @for (month of calendarMonths; track trackByIndex(i, month); let i = $index) {
       <div class="month-box" [attr.id]="'month-' + i">
         <h4 class="text-center month-title">{{ _monthTitle(month.original.date) }}</h4>
         <ion-calendar-month [month]="month"
@@ -45,8 +67,7 @@
                             [(ngModel)]="datesTemp">
         </ion-calendar-month>
       </div>
-    </ng-template>
-
+    }
   </div>
 
   <ion-infinite-scroll threshold="25%" (ionInfinite)="nextMonth($event)">
@@ -55,25 +76,47 @@
 
 </ion-content>
 
-<ion-footer *ngIf="options.titlePosition=='bottom' || options.actionsPosition=='bottom'">
-  <ion-toolbar [color]="def.color" class="ion-no-border">
-    <ion-buttons slot="start" *ngIf="options.actionsPosition === 'bottom'">
-      <ion-button type='button' slot="icon-only" shape="round" fill="clear" (click)="cancel()">
-        <span *ngIf="def.closeLabel !== '' && !def.closeIcon">{{ def.closeLabel }}</span>
-        <ion-icon *ngIf="def.closeIcon" name="close"></ion-icon>
-      </ion-button>
-    </ion-buttons>
+@if (options.titlePosition === 'bottom' || options.actionsPosition === 'bottom') {
+  <ion-footer>
+    <ion-toolbar [color]="def.color" class="ion-no-border">
+      @if (options.actionsPosition === 'bottom') {
+        <ion-buttons slot="start">
+          <ion-button type='button' slot="icon-only" shape="round" fill="clear" (click)="cancel()">
+            @if (def.closeLabel !== '' && !def.closeIcon) {
+              <span>{{ def.closeLabel }}</span>
+            }
+            @if (def.closeIcon) {
+              <ion-icon name="close"></ion-icon>
+            }
+          </ion-button>
+        </ion-buttons>
+      }
 
-    <ion-title *ngIf="options.titlePosition === 'bottom'">{{ def.title }}</ion-title>
+      @if (options.titlePosition === 'bottom') {
+        <ion-title>{{ def.title }}</ion-title>
+      }
 
-    <ion-buttons slot="end" *ngIf="options.actionsPosition === 'bottom'">
-      <ion-button type='button' *ngIf="!!def.clearLabel" shape="round" fill="clear" [disabled]="!canClear()" (click)="clear()">
-        <span *ngIf="def.clearLabel !== ''">{{ def.clearLabel }}</span>
-      </ion-button>
-      <ion-button type='button' slot="icon-only" *ngIf="!def.autoDone" shape="round" fill="clear" [disabled]="!canDone()" (click)="done()">
-        <span *ngIf="def.doneLabel !== '' && !def.doneIcon">{{ def.doneLabel }}</span>
-        <ion-icon *ngIf="def.doneIcon" name="checkmark"></ion-icon>
-      </ion-button>
-    </ion-buttons>
-  </ion-toolbar>
-</ion-footer>
+      @if (options.actionsPosition === 'bottom') {
+        <ion-buttons slot="end">
+          @if (!!def.clearLabel) {
+            <ion-button type='button' shape="round" fill="clear" [disabled]="!canClear()" (click)="clear()">
+              @if (def.clearLabel !== '') {
+                <span>{{ def.clearLabel }}</span>
+              }
+            </ion-button>
+          }
+          @if (!def.autoDone) {
+            <ion-button type='button' slot="icon-only" shape="round" fill="clear" [disabled]="!canDone()" (click)="done()">
+              @if (def.doneLabel !== '' && !def.doneIcon) {
+                <span>{{ def.doneLabel }}</span>
+              }
+              @if (def.doneIcon) {
+                <ion-icon name="checkmark"></ion-icon>
+              }
+            </ion-button>
+          }
+        </ion-buttons>
+      }
+    </ion-toolbar>
+  </ion-footer>
+}
