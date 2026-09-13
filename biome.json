@@ -1,0 +1,88 @@
+{
+  "$schema": "https://biomejs.dev/schemas/2.5.12/schema.json",
+  "vcs": {
+    "enabled": true,
+    "clientKind": "git",
+    "useIgnoreFile": true
+  },
+  "files": {
+    "includes": ["**", "!!**/dist"]
+  },
+  "formatter": {
+    "enabled": true,
+    "indentStyle": "tab",
+    "useEditorconfig": true,
+    "formatWithErrors": false,
+    "attributePosition": "auto",
+    "expand": "auto",
+    "includes": ["**"]
+  },
+  "linter": {
+    "enabled": true,
+    "rules": {
+      "preset": "recommended",
+      "performance": {
+        "recommended": true
+      },
+      "complexity": {
+        "noForEach": "off",
+        "noUselessConstructor": "error"
+      },
+      "correctness": {
+        "noUnusedVariables": "error",
+        "useExhaustiveDependencies": "warn",
+        "noUnusedImports": "error",
+        "noUnsafeOptionalChaining": "error"
+      },
+      "style": {
+        "noNonNullAssertion": "info",
+        "useAsConstAssertion": "error",
+        "noParameterAssign": "error",
+        "useDefaultParameterLast": "error",
+        "useEnumInitializers": "error",
+        "useSelfClosingElements": "error",
+        "useSingleVarDeclarator": "error",
+        "noUnusedTemplateLiteral": "error",
+        "useNumberNamespace": "error",
+        "noInferrableTypes": "error",
+        "noUselessElse": "error",
+        "useTemplate": "error",
+        "useConst": "error",
+        "useExponentiationOperator": "error",
+        "useExportType": "error",
+        "useImportType": "warn",
+        "useLiteralEnumMembers": "error",
+        "useNodejsImportProtocol": "error",
+        "useShorthandFunctionType": "error"
+      },
+      "suspicious": {
+        "noConsole": "off",
+        "noExplicitAny": "info",
+        "noExtraNonNullAssertion": "error",
+        "noMisleadingInstantiator": "error",
+        "noUnsafeDeclarationMerging": "error",
+        "useNamespaceKeyword": "error",
+        "noAssignInExpressions": "error"
+      }
+    }
+  },
+  "javascript": {
+    "formatter": {
+      "quoteStyle": "double"
+    }
+  },
+  "json": {
+    "formatter": {
+      "indentStyle": "space",
+      "indentWidth": 2
+    }
+  },
+  "assist": {
+    "enabled": true,
+    "actions": {
+      "source": {
+        "organizeImports": "on"
+      }
+    }
+  }
+}

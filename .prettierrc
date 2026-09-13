@@ -1,12 +1,12 @@
 {
   "arrowParens": "always",
-  "bracketSameLine": false,
-  "bracketSpacing": false,
+  "bracketSameLine": true,
+  "bracketSpacing": true,
   "embeddedLanguageFormatting": "auto",
   "htmlWhitespaceSensitivity": "css",
   "insertPragma": false,
   "jsxSingleQuote": false,
-  "printWidth": 140,
+  "printWidth": 160,
   "proseWrap": "preserve",
   "quoteProps": "as-needed",
   "requirePragma": false,
@@ -15,5 +15,13 @@
   "singleQuote": false,
   "tabWidth": 4,
   "trailingComma": "es5",
-  "useTabs": true
+  "useTabs": true,
+  "overrides": [
+    {
+      "files": "*.html",
+      "options": {
+        "parser": "angular"
+      }
+    }
+  ]
 }
