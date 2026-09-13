@@ -26,9 +26,6 @@ export class MonthPickerComponent {
 		return this._monthsTitle;
 	}
 
-	constructor() {
-		// console.log("MonthPickerComponent.constructor");
-	}
 
 	_onSelect(month: number): void {
 		this.onSelect.emit(month);

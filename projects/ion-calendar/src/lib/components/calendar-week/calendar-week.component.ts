@@ -17,9 +17,6 @@ export class CalendarWeekComponent {
 
 	@Input() color: ColorType | undefined = defaultValues.COLOR as ColorType;
 
-	constructor() {
-		// console.log("CalendarWeekComponent.constructor");
-	}
 
 	@Input()
 	set weekDays(value: string[] | undefined) {

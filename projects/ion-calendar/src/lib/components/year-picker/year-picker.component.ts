@@ -18,7 +18,7 @@ export class YearPickerComponent {
 		this._year = value;
 	}
 
-	private _yearStep: number = 0;
+	private _yearStep = 0;
 	get yearStep(): number {
 		return this._yearStep;
 	}

@@ -1,4 +1,4 @@
-import { DateTime, Info, DateObjectUnits } from "luxon";
+import { DateTime, Info } from "luxon";
 import { CalendarComponentPayloadType } from "../types";
 import { ICalendarLocale } from "../models";
 
@@ -8,9 +8,11 @@ class DateTimeHelper {
 
 		if (typeof date === "number") {
 			return DateTime.fromMillis(date);
-		} else if (typeof date === "string") {
+		}
+		if (typeof date === "string") {
 			return DateTime.fromISO(date);
-		} else if (date instanceof Date) {
+		}
+		if (date instanceof Date) {
 			return DateTime.fromJSDate(date);
 		}
 
@@ -33,11 +35,11 @@ class DateTimeHelper {
 		}
 
 		if (typeof value === "number") {
-			return this.parse(value).isValid;
+			return DateTimeHelper.parse(value).isValid;
 		}
 
 		if (typeof value === "string") {
-			return this.parse(value).isValid;
+			return DateTimeHelper.parse(value).isValid;
 		}
 
 		// Se não for uma data válida em nenhum formato conhecido, retorne false
@@ -74,7 +76,7 @@ class DateTimeHelper {
 		return { firstDay, lastDay };
 	}
 
-	static monthsShortTitle(locale: string = "en") {
+	static monthsShortTitle(locale = "en") {
 		return Info.months("short", { locale }).map((m) =>
 			m.substring(0, 3).toUpperCase(),
 		);
@@ -89,7 +91,7 @@ class DateTimeHelper {
 		);
 
 		const today = DateTime.now();
-		const firstDay = this.getFirstAndLastDayOfWeek(
+		const firstDay = DateTimeHelper.getFirstAndLastDayOfWeek(
 			today.toJSDate(),
 		).firstDay.getDay();
 

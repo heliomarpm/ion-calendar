@@ -1,11 +1,11 @@
 export class ICalendarResult {
-	time: number = 0;
-	seconds: number = 0;
+	time = 0;
+	seconds = 0;
 	dateObj: Date = new Date();
-	string: string = "";
-	year: number = 0;
-	month: number = 0;
-	day: number = 0;
+	string = "";
+	year = 0;
+	month = 0;
+	day = 0;
 }
 
 export class ICalendarComponentWeekChange {

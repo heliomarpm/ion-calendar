@@ -46,7 +46,7 @@ export class CalendarComponent implements ControlValueAccessor, OnInit {
 	monthOpt!: ICalendarMonth;
 	calendarMonthValue: Array<ICalendarDay | null> = [null, null];
 	view: "year" | "month" | "days" = "days";
-	yearStep: number = 0;
+	yearStep = 0;
 
 	public _monthsTitle = DateTimeHelper.monthsShortTitle();
 
@@ -289,13 +289,14 @@ export class CalendarComponent implements ControlValueAccessor, OnInit {
 		};
 
 		switch (this.def.pickMode) {
-			case pickModes.single:
+			case pickModes.single: {
 				const dTime = eCD[0].time;
 				const date = this._handleType(dTime);
 
 				this.selectedDates = DateTimeHelper.parse(dTime).toJSDate();
 				emitOnChange(date);
 				break;
+			}
 
 			case pickModes.range:
 				if (eCD[0] && eCD[1]) {
@@ -316,7 +317,7 @@ export class CalendarComponent implements ControlValueAccessor, OnInit {
 				}
 				break;
 
-			case pickModes.multi:
+			case pickModes.multi: {
 				const emitChangeForMulti = (days: ICalendarDay[]): Array<Date> => {
 					const dates: Array<Date> = [];
 
@@ -334,6 +335,7 @@ export class CalendarComponent implements ControlValueAccessor, OnInit {
 				};
 				this.selectedDates = emitChangeForMulti(eCD);
 				break;
+			}
 
 			default:
 		}
@@ -463,13 +465,14 @@ export class CalendarComponent implements ControlValueAccessor, OnInit {
 				);
 				break;
 
-			case "range":
+			case "range": {
 				const { from, to } = value as CalendarComponentPayloadRangeType;
 				this.calendarMonthValue[0] = from
 					? this._createCalendarDay(from)
 					: null;
 				this.calendarMonthValue[1] = to ? this._createCalendarDay(to) : null;
 				break;
+			}
 
 			case "multi":
 				if (Array.isArray(value)) {

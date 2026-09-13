@@ -21,15 +21,15 @@ export class DemoBasicComponent {
 	LOCALE_BR = "pt-Br";
 	LOCALE_CN = "zh-cn";
 
-	formatMonthPicker: boolean = false;
-	formatWeekDays: boolean = false;
+	formatMonthPicker = false;
+	formatWeekDays = false;
 
 	date!: string | Date | number;
 	format = "yyyy-MM-dd";
 	readonly = false;
 
 	optModel: ICalendarComponentOptions = {
-		from: new Date().getTime(),
+		from: Date.now(),
 		pickMode: "single",
 		color: "primary",
 		weekStart: 0,
@@ -203,7 +203,7 @@ export class DemoBasicComponent {
 	onChangeDisableWeeks(disableWeeks: string[]) {
 		this.options = {
 			...this.options,
-			disableWeeks: disableWeeks.map((e) => parseInt(e, 10)),
+			disableWeeks: disableWeeks.map((e) => Number.parseInt(e, 10)),
 		};
 	}
 
