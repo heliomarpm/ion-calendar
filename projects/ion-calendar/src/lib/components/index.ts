@@ -6,17 +6,17 @@ import { MonthPickerComponent } from "./month-picker/month-picker.component";
 import { YearPickerComponent } from "./year-picker/year-picker.component";
 
 export {
-  CalendarModalComponent,
-  CalendarMonthComponent,
-  CalendarWeekComponent,
-  CalendarComponent,
-  MonthPickerComponent,
-  YearPickerComponent
-}
+	CalendarModalComponent,
+	CalendarMonthComponent,
+	CalendarWeekComponent,
+	CalendarComponent,
+	MonthPickerComponent,
+	YearPickerComponent,
+};
 
 export const ION_CALENDAR_COMPONENTS = [
-  CalendarModalComponent,
-  CalendarMonthComponent,
-  CalendarWeekComponent,
-  CalendarComponent
+	CalendarModalComponent,
+	CalendarMonthComponent,
+	CalendarWeekComponent,
+	CalendarComponent,
 ];

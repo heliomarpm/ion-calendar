@@ -1,5 +1,5 @@
-import {DateType, PickModeType, DisplayModeType, ColorType} from "../types";
-import {IDayConfig} from "./IDayConfig";
+import { DateType, PickModeType, DisplayModeType, ColorType } from "../types";
+import { IDayConfig } from "./IDayConfig";
 
 export interface ICalendarLocale {
 	locale: string;
@@ -41,10 +41,10 @@ export interface ICalendarModalOptions extends ICalendarOptions {
 	defaultScrollTo?: Date;
 	defaultDate?: DateType;
 	defaultDates?: DateType[];
-	defaultDateRange?: {from: DateType; to?: DateType} | null;
-    step?: number;
-    titlePosition?: 'top' | 'bottom';
-    actionsPosition?: 'top' | 'bottom';
+	defaultDateRange?: { from: DateType; to?: DateType } | null;
+	step?: number;
+	titlePosition?: "top" | "bottom";
+	actionsPosition?: "top" | "bottom";
 }
 
 export interface ICalendarComponentOptions extends ICalendarOptions {

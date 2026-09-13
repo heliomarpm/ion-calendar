@@ -1,10 +1,18 @@
-import {Component, Input, OnInit, Output, EventEmitter, forwardRef, Provider} from "@angular/core";
-import {ControlValueAccessor, NG_VALUE_ACCESSOR} from "@angular/forms";
+import {
+	Component,
+	Input,
+	OnInit,
+	Output,
+	EventEmitter,
+	forwardRef,
+	Provider,
+} from "@angular/core";
+import { ControlValueAccessor, NG_VALUE_ACCESSOR } from "@angular/forms";
 
-import {Settings as luxonSettings, DateTime} from "luxon";
-import {DateTimeHelper} from "../../helpers";
+import { Settings as luxonSettings, DateTime } from "luxon";
+import { DateTimeHelper } from "../../helpers";
 
-import {IonCalendarService} from "../../ion-calendar.service";
+import { IonCalendarService } from "../../ion-calendar.service";
 import {
 	ICalendarComponentMonthChange,
 	ICalendarComponentOptions,
@@ -43,7 +51,7 @@ export class CalendarComponent implements ControlValueAccessor, OnInit {
 	public _monthsTitle = DateTimeHelper.monthsShortTitle();
 
 	private _showNavigateButtons = true;
-    get showNavigateButtons(): boolean {
+	get showNavigateButtons(): boolean {
 		return this._showNavigateButtons;
 	}
 	set showNavigateButtons(value: boolean) {
@@ -77,9 +85,12 @@ export class CalendarComponent implements ControlValueAccessor, OnInit {
 	@Input() type: CalendarComponentType = "string";
 	@Input() readonly = false;
 
-	@Output() onChange: EventEmitter<CalendarComponentOnChangeType> = new EventEmitter();
-	@Output() onMonthChange: EventEmitter<ICalendarComponentMonthChange> = new EventEmitter();
-	@Output() onWeekChange: EventEmitter<ICalendarComponentWeekChange> = new EventEmitter();
+	@Output() onChange: EventEmitter<CalendarComponentOnChangeType> =
+		new EventEmitter();
+	@Output() onMonthChange: EventEmitter<ICalendarComponentMonthChange> =
+		new EventEmitter();
+	@Output() onWeekChange: EventEmitter<ICalendarComponentWeekChange> =
+		new EventEmitter();
 	@Output() onSelect: EventEmitter<ICalendarDay> = new EventEmitter();
 	@Output() onSelectStart: EventEmitter<ICalendarDay> = new EventEmitter();
 	@Output() onSelectEnd: EventEmitter<ICalendarDay> = new EventEmitter();
@@ -113,13 +124,16 @@ export class CalendarComponent implements ControlValueAccessor, OnInit {
 	}
 
 	protected switchView(): void {
-		const switchNext = this.options.showYearPicker ?? true ? "year" : "month";
+		const switchNext = (this.options.showYearPicker ?? true) ? "year" : "month";
 		const switchPrev = this.view === "year" ? "month" : "days";
 		this.view = this.view === "days" ? switchNext : switchPrev;
 	}
 
 	switchIcon(): string {
-		const secondIcon = (this.options.showYearPicker ?? true) && this.view === "year" ? "caret-down" : "caret-up";
+		const secondIcon =
+			(this.options.showYearPicker ?? true) && this.view === "year"
+				? "caret-down"
+				: "caret-up";
 		return this.view === "days" ? "caret-down" : secondIcon;
 	}
 
@@ -152,17 +166,23 @@ export class CalendarComponent implements ControlValueAccessor, OnInit {
 	}
 
 	private prevYear(): void {
-		const backTime = DateTime.fromMillis(this.monthOpt.original.time).minus({year: 1}).valueOf();
+		const backTime = DateTime.fromMillis(this.monthOpt.original.time)
+			.minus({ year: 1 })
+			.valueOf();
 		this.createWeekOrMonth(backTime);
 	}
 
 	private nextYear(): void {
-		const nextTime = DateTime.fromMillis(this.monthOpt.original.time).plus({year: 1}).valueOf();
+		const nextTime = DateTime.fromMillis(this.monthOpt.original.time)
+			.plus({ year: 1 })
+			.valueOf();
 		this.createWeekOrMonth(nextTime);
 	}
 
 	private nextMonth() {
-		const nextTime = DateTime.fromMillis(this.monthOpt.original.time).plus({months: 1}).valueOf();
+		const nextTime = DateTime.fromMillis(this.monthOpt.original.time)
+			.plus({ months: 1 })
+			.valueOf();
 		this.onMonthChange.emit({
 			oldMonth: this.calSvc.multiFormat(this.monthOpt.original.time),
 			newMonth: this.calSvc.multiFormat(nextTime),
@@ -171,15 +191,23 @@ export class CalendarComponent implements ControlValueAccessor, OnInit {
 	}
 
 	private nextWeek() {
-		const nextTime = DateTime.fromMillis(this.monthOpt.original.time).plus({weeks: this.def.weeks}).valueOf();
+		const nextTime = DateTime.fromMillis(this.monthOpt.original.time)
+			.plus({ weeks: this.def.weeks })
+			.valueOf();
 		const newWeek = this.calSvc.multiFormat(nextTime);
 		const oldWeek = this.calSvc.multiFormat(this.monthOpt.original.time);
 
 		this.monthOpt = this.createWeek(nextTime);
-		this.onWeekChange.emit({oldWeek: oldWeek, newWeek: this.calSvc.multiFormat(this.monthOpt.original.time)});
+		this.onWeekChange.emit({
+			oldWeek: oldWeek,
+			newWeek: this.calSvc.multiFormat(this.monthOpt.original.time),
+		});
 
 		if (oldWeek.month != newWeek.month) {
-			this.onMonthChange.emit({oldMonth: oldWeek, newMonth: this.calSvc.multiFormat(this.monthOpt.original.time)});
+			this.onMonthChange.emit({
+				oldMonth: oldWeek,
+				newMonth: this.calSvc.multiFormat(this.monthOpt.original.time),
+			});
 		}
 	}
 
@@ -191,7 +219,9 @@ export class CalendarComponent implements ControlValueAccessor, OnInit {
 	}
 
 	private backMonth(): void {
-		const backTime = DateTime.fromMillis(this.monthOpt.original.time).minus({months: 1}).valueOf();
+		const backTime = DateTime.fromMillis(this.monthOpt.original.time)
+			.minus({ months: 1 })
+			.valueOf();
 		this.onMonthChange.emit({
 			oldMonth: this.calSvc.multiFormat(this.monthOpt.original.time),
 			newMonth: this.calSvc.multiFormat(backTime),
@@ -200,14 +230,16 @@ export class CalendarComponent implements ControlValueAccessor, OnInit {
 	}
 
 	private backWeek(): void {
-		const backTime = DateTime.fromMillis(this.monthOpt.original.time).minus({weeks: this.def.weeks}).valueOf();
+		const backTime = DateTime.fromMillis(this.monthOpt.original.time)
+			.minus({ weeks: this.def.weeks })
+			.valueOf();
 		const newWeek = this.calSvc.multiFormat(backTime);
 		const oldWeek = this.calSvc.multiFormat(this.monthOpt.original.time);
 
-		this.onWeekChange.emit({oldWeek: oldWeek, newWeek: newWeek});
+		this.onWeekChange.emit({ oldWeek: oldWeek, newWeek: newWeek });
 
 		if (oldWeek.month != newWeek.month) {
-			this.onMonthChange.emit({oldMonth: oldWeek, newMonth: newWeek});
+			this.onMonthChange.emit({ oldMonth: oldWeek, newMonth: newWeek });
 		}
 
 		this.monthOpt = this.createWeek(backTime);
@@ -223,7 +255,9 @@ export class CalendarComponent implements ControlValueAccessor, OnInit {
 	onMonthSelect(month: number): void {
 		this.view = "days";
 
-		const newMonth = DateTimeHelper.parse(this.monthOpt.original.time).set({month}).valueOf();
+		const newMonth = DateTimeHelper.parse(this.monthOpt.original.time)
+			.set({ month })
+			.valueOf();
 		this.onMonthChange.emit({
 			oldMonth: this.calSvc.multiFormat(this.monthOpt.original.time),
 			newMonth: this.calSvc.multiFormat(newMonth),
@@ -234,7 +268,9 @@ export class CalendarComponent implements ControlValueAccessor, OnInit {
 	public onYearSelect(year: number): void {
 		this.view = "month";
 
-		const newYear = DateTimeHelper.parse(this.monthOpt.original.time).set({year}).valueOf();
+		const newYear = DateTimeHelper.parse(this.monthOpt.original.time)
+			.set({ year })
+			.valueOf();
 		this.onMonthChange.emit({
 			oldMonth: this.calSvc.multiFormat(this.monthOpt.original.time),
 			newMonth: this.calSvc.multiFormat(newYear),
@@ -271,7 +307,10 @@ export class CalendarComponent implements ControlValueAccessor, OnInit {
 						to: this._handleType(timeTo),
 					};
 
-					this.selectedDates = Array<Date>(DateTimeHelper.parse(timeFrom).toJSDate(), DateTimeHelper.parse(timeTo).toJSDate());
+					this.selectedDates = Array<Date>(
+						DateTimeHelper.parse(timeFrom).toJSDate(),
+						DateTimeHelper.parse(timeTo).toJSDate(),
+					);
 
 					emitOnChange(rangeDate);
 				}
@@ -304,20 +343,24 @@ export class CalendarComponent implements ControlValueAccessor, OnInit {
 	private _onTouched: Function = () => {};
 
 	private _payloadToTimeNumber(value: CalendarComponentPayloadType): number {
-		const date = typeof value === "string"
-      ? DateTime.fromFormat(value, this.format.replace(/Y/g, "y"))
-      : DateTimeHelper.parse(value);
+		const date =
+			typeof value === "string"
+				? DateTime.fromFormat(value, this.format.replace(/Y/g, "y"))
+				: DateTimeHelper.parse(value);
 
 		return date.valueOf();
 	}
 
 	monthFormat(date: number): string {
 		if (!this.def.monthFormat) return "";
-		return DateTimeHelper.parse(date).toFormat(this.def.monthFormat.replace(/Y/g, "y"), {locale: this._options.locale?.locale});
+		return DateTimeHelper.parse(date).toFormat(
+			this.def.monthFormat.replace(/Y/g, "y"),
+			{ locale: this._options.locale?.locale },
+		);
 	}
 
 	private initOpt(): void {
-        this.showNavigateButtons = this._options.showNavigateButtons ?? true;
+		this.showNavigateButtons = this._options.showNavigateButtons ?? true;
 		this.showMonthPicker = this._options.showMonthPicker ?? true;
 
 		if (this.view !== "days" && !this.showMonthPicker) {
@@ -337,7 +380,8 @@ export class CalendarComponent implements ControlValueAccessor, OnInit {
 		const locale = this._options.locale?.locale || "en";
 		luxonSettings.defaultLocale = locale;
 
-		this._monthsTitle = this._options.monthsTitle ?? DateTimeHelper.monthsShortTitle(locale);
+		this._monthsTitle =
+			this._options.monthsTitle ?? DateTimeHelper.monthsShortTitle(locale);
 	}
 
 	private createWeekOrMonth(time: number) {
@@ -357,8 +401,13 @@ export class CalendarComponent implements ControlValueAccessor, OnInit {
 		return period[0];
 	}
 
-	private _createCalendarDay(value: CalendarComponentPayloadType): ICalendarDay {
-		return this.calSvc.createCalendarDay(this._payloadToTimeNumber(value), this.def);
+	private _createCalendarDay(
+		value: CalendarComponentPayloadType,
+	): ICalendarDay {
+		return this.calSvc.createCalendarDay(
+			this._payloadToTimeNumber(value),
+			this.def,
+		);
 	}
 
 	private _handleType(value: number): CalendarComponentPayloadType {
@@ -383,8 +432,8 @@ export class CalendarComponent implements ControlValueAccessor, OnInit {
 		if (obj) {
 			if (this.calendarMonthValue[0]) {
 				if (!Number.isNaN(this.calendarMonthValue[0].time)) {
-          this.createWeekOrMonth(this.calendarMonthValue[0].time);
-        }
+					this.createWeekOrMonth(this.calendarMonthValue[0].time);
+				}
 			} else {
 				this.createWeekOrMonth(new Date().getTime());
 			}
@@ -409,12 +458,16 @@ export class CalendarComponent implements ControlValueAccessor, OnInit {
 
 		switch (this.def.pickMode) {
 			case "single":
-				this.calendarMonthValue[0] = this._createCalendarDay(value as CalendarComponentPayloadType);
+				this.calendarMonthValue[0] = this._createCalendarDay(
+					value as CalendarComponentPayloadType,
+				);
 				break;
 
 			case "range":
-				const {from, to} = value as CalendarComponentPayloadRangeType;
-				this.calendarMonthValue[0] = from ? this._createCalendarDay(from) : null;
+				const { from, to } = value as CalendarComponentPayloadRangeType;
+				this.calendarMonthValue[0] = from
+					? this._createCalendarDay(from)
+					: null;
 				this.calendarMonthValue[1] = to ? this._createCalendarDay(to) : null;
 				break;
 

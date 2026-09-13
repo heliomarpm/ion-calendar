@@ -1,3 +1,3 @@
-import DateTimeHelper from "./DateTimeHelper"
+import DateTimeHelper from "./DateTimeHelper";
 
-export { DateTimeHelper }
+export { DateTimeHelper };

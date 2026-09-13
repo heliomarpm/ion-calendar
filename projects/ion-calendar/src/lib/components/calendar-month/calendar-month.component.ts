@@ -1,7 +1,16 @@
-import {Component, ChangeDetectorRef, Input, Output, EventEmitter, forwardRef, AfterViewInit, Provider} from "@angular/core";
-import {ControlValueAccessor, NG_VALUE_ACCESSOR} from "@angular/forms";
-import {ICalendarDay, ICalendarMonth, ICalendarOriginal} from "../../models";
-import defaultValues, {ColorType, PickModeType, pickModes} from "../../types";
+import {
+	Component,
+	ChangeDetectorRef,
+	Input,
+	Output,
+	EventEmitter,
+	forwardRef,
+	AfterViewInit,
+	Provider,
+} from "@angular/core";
+import { ControlValueAccessor, NG_VALUE_ACCESSOR } from "@angular/forms";
+import { ICalendarDay, ICalendarMonth, ICalendarOriginal } from "../../models";
+import defaultValues, { ColorType, PickModeType, pickModes } from "../../types";
 
 export const MONTH_VALUE_ACCESSOR: Provider = {
 	provide: NG_VALUE_ACCESSOR,
@@ -18,8 +27,10 @@ export const MONTH_VALUE_ACCESSOR: Provider = {
 	// 	"[class.component-mode]": "componentMode",
 	// },
 })
-export class CalendarMonthComponent implements ControlValueAccessor, AfterViewInit {
-    // @Input() componentMode = false;
+export class CalendarMonthComponent
+	implements ControlValueAccessor, AfterViewInit
+{
+	// @Input() componentMode = false;
 	@Input() month!: ICalendarMonth;
 	@Input() pickMode: PickModeType = defaultValues.PICK_MODE as PickModeType;
 	@Input() id: string | undefined = undefined;
@@ -28,8 +39,10 @@ export class CalendarMonthComponent implements ControlValueAccessor, AfterViewIn
 	@Input() colorSubtitle: ColorType | undefined = undefined;
 	@Output() private onChange: EventEmitter<ICalendarDay[]> = new EventEmitter();
 	@Output() private onSelect: EventEmitter<ICalendarDay> = new EventEmitter();
-	@Output() private onSelectStart: EventEmitter<ICalendarDay> = new EventEmitter();
-	@Output() private onSelectEnd: EventEmitter<ICalendarDay> = new EventEmitter();
+	@Output() private onSelectStart: EventEmitter<ICalendarDay> =
+		new EventEmitter();
+	@Output() private onSelectEnd: EventEmitter<ICalendarDay> =
+		new EventEmitter();
 
 	private _date: Array<ICalendarDay | null> = [null, null];
 	private _isInit = false;
@@ -128,7 +141,9 @@ export class CalendarMonthComponent implements ControlValueAccessor, AfterViewIn
 					return time === this._date[1].time;
 				}
 			} else {
-				return this._date.findIndex((e) => e !== null && e.time === time) !== -1;
+				return (
+					this._date.findIndex((e) => e !== null && e.time === time) !== -1
+				);
 			}
 		}
 		return false;

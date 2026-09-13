@@ -1,8 +1,12 @@
-import {Component, ViewChild} from "@angular/core";
-import {ToastController} from "@ionic/angular";
+import { Component, ViewChild } from "@angular/core";
+import { ToastController } from "@ionic/angular";
 
-import {CalendarComponent, ICalendarComponentOptions, ICalendarLocale} from "@heliomarpm/ion-calendar";
-import {ColorType, PickModeType} from "@heliomarpm/ion-calendar/lib/types";
+import {
+	CalendarComponent,
+	ICalendarComponentOptions,
+	ICalendarLocale,
+} from "@heliomarpm/ion-calendar";
+import { ColorType, PickModeType } from "@heliomarpm/ion-calendar/lib/types";
 
 @Component({
 	selector: "app-demo-basic",
@@ -10,7 +14,7 @@ import {ColorType, PickModeType} from "@heliomarpm/ion-calendar/lib/types";
 	styleUrls: ["./demo-basic.component.scss"],
 })
 export class DemoBasicComponent {
-	@ViewChild("calendar", {read: CalendarComponent})
+	@ViewChild("calendar", { read: CalendarComponent })
 	calendarRef!: CalendarComponent;
 
 	events!: {};
@@ -118,42 +122,42 @@ export class DemoBasicComponent {
 		console.log("onChange", event);
 		this.events = {
 			...this.events,
-			onChange: {event},
+			onChange: { event },
 		};
 	}
 	onMonthChange(event: any) {
 		console.log("onMonthChange", event);
 		this.events = {
 			...this.events,
-			onMonthChange: {event},
+			onMonthChange: { event },
 		};
 	}
 	onWeekChange(event: any) {
 		console.log("onWeekChange", event);
 		this.events = {
 			...this.events,
-			onWeekChange: {event},
+			onWeekChange: { event },
 		};
 	}
 	onSelect(event: any) {
 		console.log("onSelect", event);
 		this.events = {
 			...this.events,
-			onSelect: {event},
+			onSelect: { event },
 		};
 	}
 	onSelectStart(event: any) {
 		console.log("onSelectStart", event);
 		this.events = {
 			...this.events,
-			onSelectStart: {event},
+			onSelectStart: { event },
 		};
 	}
 	onSelectEnd(event: any) {
 		console.log("onSelectEnd", event);
 		this.events = {
 			...this.events,
-			onSelectEnd: {event},
+			onSelectEnd: { event },
 		};
 	}
 
@@ -264,7 +268,20 @@ export class DemoBasicComponent {
 		if (change) {
 			this.options = {
 				...this.options,
-				monthsTitle: ["Jan", "Fev", "Mar", "Abr", "Mai", "Jun", "Jul", "Ago", "Set", "Out", "Nov", "Dez"],
+				monthsTitle: [
+					"Jan",
+					"Fev",
+					"Mar",
+					"Abr",
+					"Mai",
+					"Jun",
+					"Jul",
+					"Ago",
+					"Set",
+					"Out",
+					"Nov",
+					"Dez",
+				],
 			};
 		} else {
 			delete this.options.monthsTitle;
@@ -277,7 +294,7 @@ export class DemoBasicComponent {
 	onChangeWeekDays(change: boolean) {
 		if (change) {
 			const weekdays =
-				this.options.weekStart ?? 0 == 0
+				(this.options.weekStart ?? 0 == 0)
 					? ["Dom", "Seg", "Ter", "Qua", "Qui", "Sex", "Sáb"]
 					: ["Seg", "Ter", "Qua", "Qui", "Sex", "Sáb", "Dom"];
 

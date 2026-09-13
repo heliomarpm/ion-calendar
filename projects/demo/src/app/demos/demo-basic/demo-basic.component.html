@@ -1,202 +1,256 @@
 <hr>
 <h3 style="text-align: center;">IonCalendar Options</h3>
 
-
-<p style="text-align: center;">
-  SelectedDates: {{ date | json }}
-</p>
+<p style="text-align: center;">SelectedDates: {{ date | json }}</p>
 
 <ion-grid fixed>
-  <ion-row>
-    <ion-col size="12" size-sm="7">
-      <div class="mirror">
+	<ion-row>
+		<ion-col size="12" size-sm="7">
+			<div class="mirror">
+				<ion-calendar
+					#calendar
+					[(ngModel)]="date"
+					(onChange)="onChange($event)"
+					(onMonthChange)="onMonthChange($event)"
+					(onWeekChange)="onWeekChange($event)"
+					(onSelect)="onSelect($event)"
+					(onSelectEnd)="onSelectEnd($event)"
+					(onSelectStart)="onSelectStart($event)"
+					[options]="options"
+					type="string"
+					[format]="format"
+					[readonly]="readonly"
+				> </ion-calendar>
+			</div>
+			<!-- <pre [innerHTML]="options | jsonpretty:[true, 3]"></pre> -->
+			<ion-row>
+				<ion-col size="7">
+					<pre>{{ options | jsonpretty}}</pre>
+				</ion-col>
+				<ion-col>
+					<pre>{{ events | jsonpretty }}</pre>
+				</ion-col>
+			</ion-row>
+		</ion-col>
 
-        <ion-calendar #calendar
-                      [(ngModel)]="date"
-                      (onChange)="onChange($event)"
-                      (onMonthChange)="onMonthChange($event)"
-                      (onWeekChange)="onWeekChange($event)"
-                      (onSelect)="onSelect($event)"
-                      (onSelectEnd)="onSelectEnd($event)"
-                      (onSelectStart)="onSelectStart($event)"
-                      [options]="options"
-                      type="string"
-                      [format]="format"
-                      [readonly]="readonly">
-        </ion-calendar>
-
-      </div>
-      <!-- <pre [innerHTML]="options | jsonpretty:[true, 3]"></pre> -->
-      <ion-row>
-        <ion-col size="7">
-          <pre>{{ options | jsonpretty}}</pre>
-        </ion-col>
-        <ion-col>
-          <pre>{{ events | jsonpretty }}</pre>
-        </ion-col>
-      </ion-row>
-
-    </ion-col>
-
-    <ion-col size="12" size-sm="5">
-      <ion-list>
-
-        <ion-item>
-          <ion-button (click)="setDateToday()" color="dark">
-            set date today
-          </ion-button>
-          <ion-button (click)="selectedDates()" color="dark">
-            selected dates
-          </ion-button>
-        </ion-item>
-        <ion-item>
-          <ion-button (click)="setLocaleBR()" color="dark">
-            set locale BR
-          </ion-button>
-          <ion-button (click)="setLocaleCN()" color="dark">
-            set locale CN
-          </ion-button>
-        </ion-item>
-        <ion-item>
-          <ion-input label="format" placeholder="date format" [(ngModel)]="format"></ion-input>
-        </ion-item>
-        <ion-item>
-          <ion-checkbox title="readonly" [(ngModel)]="readonly" [checked]="readonly" >
-            readonly
-          </ion-checkbox>
-        </ion-item>
-        <ion-item>
-          <ion-checkbox title="Custom MonthPicker"
-                        [(ngModel)]="formatMonthPicker" (ngModelChange)="onChangemonthsTitle($event)">
-            Custom MonthPicker
-          </ion-checkbox>
-        </ion-item>
-        <ion-item>
-          <ion-checkbox title="Custom WeekDays"
-                        [(ngModel)]="formatWeekDays" (ngModelChange)="onChangeWeekDays($event)">
-            Custom WeekDays
-          </ion-checkbox>
-        </ion-item>
-        <ion-item>
-          <ion-select label="pickMode" [(ngModel)]="optModel.pickMode" (ngModelChange)="onChangePickMode($event)">
-            <ion-select-option color="single">single</ion-select-option>
-            <ion-select-option color="range">range</ion-select-option>
-            <ion-select-option color="multi">multi</ion-select-option>
-          </ion-select>
-        </ion-item>
-        <ion-item>
-          <ion-input label="From" type="date" [(ngModel)]="optModel.from" (ngModelChange)="onChangeFrom($event)"></ion-input>
-        </ion-item>
-        <ion-item>
-          <ion-input label="To"  type="date"[(ngModel)]="optModel.to" (ngModelChange)="onChangeTo($event)"></ion-input>
-        </ion-item>
-        <ion-item>
-          <ion-select label="color" [(ngModel)]="optModel.color" (ngModelChange)="onChangeColors($event)">
-            <ion-select-option value="primary">primary</ion-select-option>
-            <ion-select-option value="secondary">secondary</ion-select-option>
-            <ion-select-option value="tertiary">tertiary</ion-select-option>
-            <ion-select-option value="success">success</ion-select-option>
-            <ion-select-option value="warning">warning</ion-select-option>
-            <ion-select-option value="danger">danger</ion-select-option>
-            <ion-select-option value="dark">dark</ion-select-option>
-            <ion-select-option value="medium">medium</ion-select-option>
-            <ion-select-option value="light">light</ion-select-option>
-            <ion-select-option value="custom">custom</ion-select-option>
-          </ion-select>
-        </ion-item>
-        <ion-item>
-          <ion-select label="colorSubtitle" [(ngModel)]="optModel.colorSubtitle" (ngModelChange)="onChangeColorsSubtitle($event)">
-            <ion-select-option value="">default</ion-select-option>
-            <ion-select-option value="primary">primary</ion-select-option>
-            <ion-select-option value="secondary">secondary</ion-select-option>
-            <ion-select-option value="tertiary">tertiary</ion-select-option>
-            <ion-select-option value="success">success</ion-select-option>
-            <ion-select-option value="warning">warning</ion-select-option>
-            <ion-select-option value="danger">danger</ion-select-option>
-            <ion-select-option value="dark">dark</ion-select-option>
-            <ion-select-option value="medium">medium</ion-select-option>
-            <ion-select-option value="light">light</ion-select-option>
-            <ion-select-option value="custom">custom</ion-select-option>
-          </ion-select>
-        </ion-item>
-        <ion-item>
-          <ion-select label="disableWeeks" [(ngModel)]="optModel.disableWeeks" (ngModelChange)="onChangeDisableWeeks($event)"
-            multiple="true">
-            <ion-select-option value="0">0</ion-select-option>
-            <ion-select-option value="1">1</ion-select-option>
-            <ion-select-option value="2">2</ion-select-option>
-            <ion-select-option value="3">3</ion-select-option>
-            <ion-select-option value="4">4</ion-select-option>
-            <ion-select-option value="5">5</ion-select-option>
-            <ion-select-option value="6">6</ion-select-option>
-          </ion-select>
-        </ion-item>
-        <ion-item>
-          <ion-select label="weekStart" [(ngModel)]="optModel.weekStart" (ngModelChange)="onChangeWeekStart($event)" placeholder="0">
-            <ion-select-option value="0">0</ion-select-option>
-            <ion-select-option value="1">1</ion-select-option>
-          </ion-select>
-        </ion-item>
-        <ion-item>
-          <ion-checkbox [(ngModel)]="optModel.showNavigateButtons" (ngModelChange)="onChangeShowNavButtons($event)">
-            showNavigateButtons
-          </ion-checkbox>
-        </ion-item>
-        <ion-item>
-          <ion-checkbox [(ngModel)]="optModel.showMonthPicker" (ngModelChange)="onChangeShowMonthPicker($event)">
-            showMonthPicker
-          </ion-checkbox>
-        </ion-item>
-        <ion-item>
-          <ion-checkbox [(ngModel)]="optModel.showYearPicker" (ngModelChange)="onChangeShowYearPicker($event)" [disabled]="!optModel.showMonthPicker">
-            showYearPicker
-          </ion-checkbox>
-        </ion-item>
-        <ion-item>
-          <label>displayMode</label>
-          <ion-radio-group [(ngModel)]="optModel.displayMode" (ngModelChange)="onChangeDisplayMode($event)" slot="end">
-            <ion-row>
-              <ion-item lines="none">
-                <ion-radio value="month" aria-label="month">month</ion-radio>
-              </ion-item>
-              <ion-item lines="none">
-                <ion-radio value="week" aria-label="week">week</ion-radio>
-              </ion-item>
-            </ion-row>
-          </ion-radio-group>
-        </ion-item>
-        <ion-item>
-          <ion-checkbox [(ngModel)]="optModel.showAdjacentMonthDay"
-                        (ngModelChange)="onChangeShowAdjacentMonthDay($event)"
-                        [disabled]="optModel.displayMode === 'week'">
-            showAdjacentMonthDay
-          </ion-checkbox>
-        </ion-item>
-        <ion-item>
-          <ion-checkbox [(ngModel)]="optModel.showMonthAdjacentDays"
-                        (ngModelChange)="onChangeShowMonthAdjacentDays($event)"
-                        [disabled]="optModel.displayMode !== 'week'">
-            showMonthAdjacentDays
-          </ion-checkbox>
-        </ion-item>
-        <ion-item>
-          <!-- <ion-label position="floating">weeks</ion-label> -->
-          <ion-input label="weeks"
-                     type="number"
-                     inputmode="numeric"
-                     min="1" step="1"
-                     [disabled]="optModel.displayMode !== 'week'"
-                     [(ngModel)]="optModel.weeks"
-                     (ngModelChange)="onChangeNumberWeeks($event)"
-                     placeholder="1">
-          </ion-input>
-        </ion-item>
-      </ion-list>
-    </ion-col>
-  </ion-row>
+		<ion-col size="12" size-sm="5">
+			<ion-list>
+				<ion-item>
+					<ion-button (click)="setDateToday()" color="dark">
+						set date today
+					</ion-button>
+					<ion-button (click)="selectedDates()" color="dark">
+						selected dates
+					</ion-button>
+				</ion-item>
+				<ion-item>
+					<ion-button (click)="setLocaleBR()" color="dark">
+						set locale BR
+					</ion-button>
+					<ion-button (click)="setLocaleCN()" color="dark">
+						set locale CN
+					</ion-button>
+				</ion-item>
+				<ion-item>
+					<ion-input
+						label="format"
+						placeholder="date format"
+						[(ngModel)]="format"
+					></ion-input>
+				</ion-item>
+				<ion-item>
+					<ion-checkbox
+						title="readonly"
+						[(ngModel)]="readonly"
+						[checked]="readonly"
+					>
+						readonly
+					</ion-checkbox>
+				</ion-item>
+				<ion-item>
+					<ion-checkbox
+						title="Custom MonthPicker"
+						[(ngModel)]="formatMonthPicker"
+						(ngModelChange)="onChangemonthsTitle($event)"
+					>
+						Custom MonthPicker
+					</ion-checkbox>
+				</ion-item>
+				<ion-item>
+					<ion-checkbox
+						title="Custom WeekDays"
+						[(ngModel)]="formatWeekDays"
+						(ngModelChange)="onChangeWeekDays($event)"
+					>
+						Custom WeekDays
+					</ion-checkbox>
+				</ion-item>
+				<ion-item>
+					<ion-select
+						label="pickMode"
+						[(ngModel)]="optModel.pickMode"
+						(ngModelChange)="onChangePickMode($event)"
+					>
+						<ion-select-option color="single">single</ion-select-option>
+						<ion-select-option color="range">range</ion-select-option>
+						<ion-select-option color="multi">multi</ion-select-option>
+					</ion-select>
+				</ion-item>
+				<ion-item>
+					<ion-input
+						label="From"
+						type="date"
+						[(ngModel)]="optModel.from"
+						(ngModelChange)="onChangeFrom($event)"
+					></ion-input>
+				</ion-item>
+				<ion-item>
+					<ion-input
+						label="To"
+						type="date"
+						[(ngModel)]="optModel.to"
+						(ngModelChange)="onChangeTo($event)"
+					></ion-input>
+				</ion-item>
+				<ion-item>
+					<ion-select
+						label="color"
+						[(ngModel)]="optModel.color"
+						(ngModelChange)="onChangeColors($event)"
+					>
+						<ion-select-option value="primary">primary</ion-select-option>
+						<ion-select-option value="secondary">secondary</ion-select-option>
+						<ion-select-option value="tertiary">tertiary</ion-select-option>
+						<ion-select-option value="success">success</ion-select-option>
+						<ion-select-option value="warning">warning</ion-select-option>
+						<ion-select-option value="danger">danger</ion-select-option>
+						<ion-select-option value="dark">dark</ion-select-option>
+						<ion-select-option value="medium">medium</ion-select-option>
+						<ion-select-option value="light">light</ion-select-option>
+						<ion-select-option value="custom">custom</ion-select-option>
+					</ion-select>
+				</ion-item>
+				<ion-item>
+					<ion-select
+						label="colorSubtitle"
+						[(ngModel)]="optModel.colorSubtitle"
+						(ngModelChange)="onChangeColorsSubtitle($event)"
+					>
+						<ion-select-option value="">default</ion-select-option>
+						<ion-select-option value="primary">primary</ion-select-option>
+						<ion-select-option value="secondary">secondary</ion-select-option>
+						<ion-select-option value="tertiary">tertiary</ion-select-option>
+						<ion-select-option value="success">success</ion-select-option>
+						<ion-select-option value="warning">warning</ion-select-option>
+						<ion-select-option value="danger">danger</ion-select-option>
+						<ion-select-option value="dark">dark</ion-select-option>
+						<ion-select-option value="medium">medium</ion-select-option>
+						<ion-select-option value="light">light</ion-select-option>
+						<ion-select-option value="custom">custom</ion-select-option>
+					</ion-select>
+				</ion-item>
+				<ion-item>
+					<ion-select
+						label="disableWeeks"
+						[(ngModel)]="optModel.disableWeeks"
+						(ngModelChange)="onChangeDisableWeeks($event)"
+						multiple="true"
+					>
+						<ion-select-option value="0">0</ion-select-option>
+						<ion-select-option value="1">1</ion-select-option>
+						<ion-select-option value="2">2</ion-select-option>
+						<ion-select-option value="3">3</ion-select-option>
+						<ion-select-option value="4">4</ion-select-option>
+						<ion-select-option value="5">5</ion-select-option>
+						<ion-select-option value="6">6</ion-select-option>
+					</ion-select>
+				</ion-item>
+				<ion-item>
+					<ion-select
+						label="weekStart"
+						[(ngModel)]="optModel.weekStart"
+						(ngModelChange)="onChangeWeekStart($event)"
+						placeholder="0"
+					>
+						<ion-select-option value="0">0</ion-select-option>
+						<ion-select-option value="1">1</ion-select-option>
+					</ion-select>
+				</ion-item>
+				<ion-item>
+					<ion-checkbox
+						[(ngModel)]="optModel.showNavigateButtons"
+						(ngModelChange)="onChangeShowNavButtons($event)"
+					>
+						showNavigateButtons
+					</ion-checkbox>
+				</ion-item>
+				<ion-item>
+					<ion-checkbox
+						[(ngModel)]="optModel.showMonthPicker"
+						(ngModelChange)="onChangeShowMonthPicker($event)"
+					>
+						showMonthPicker
+					</ion-checkbox>
+				</ion-item>
+				<ion-item>
+					<ion-checkbox
+						[(ngModel)]="optModel.showYearPicker"
+						(ngModelChange)="onChangeShowYearPicker($event)"
+						[disabled]="!optModel.showMonthPicker"
+					>
+						showYearPicker
+					</ion-checkbox>
+				</ion-item>
+				<ion-item>
+					<label>displayMode</label>
+					<ion-radio-group
+						[(ngModel)]="optModel.displayMode"
+						(ngModelChange)="onChangeDisplayMode($event)"
+						slot="end"
+					>
+						<ion-row>
+							<ion-item lines="none">
+								<ion-radio value="month" aria-label="month">month</ion-radio>
+							</ion-item>
+							<ion-item lines="none">
+								<ion-radio value="week" aria-label="week">week</ion-radio>
+							</ion-item>
+						</ion-row>
+					</ion-radio-group>
+				</ion-item>
+				<ion-item>
+					<ion-checkbox
+						[(ngModel)]="optModel.showAdjacentMonthDay"
+						(ngModelChange)="onChangeShowAdjacentMonthDay($event)"
+						[disabled]="optModel.displayMode === 'week'"
+					>
+						showAdjacentMonthDay
+					</ion-checkbox>
+				</ion-item>
+				<ion-item>
+					<ion-checkbox
+						[(ngModel)]="optModel.showMonthAdjacentDays"
+						(ngModelChange)="onChangeShowMonthAdjacentDays($event)"
+						[disabled]="optModel.displayMode !== 'week'"
+					>
+						showMonthAdjacentDays
+					</ion-checkbox>
+				</ion-item>
+				<ion-item>
+					<!-- <ion-label position="floating">weeks</ion-label> -->
+					<ion-input
+						label="weeks"
+						type="number"
+						inputmode="numeric"
+						min="1"
+						step="1"
+						[disabled]="optModel.displayMode !== 'week'"
+						[(ngModel)]="optModel.weeks"
+						(ngModelChange)="onChangeNumberWeeks($event)"
+						placeholder="1"
+					> </ion-input>
+				</ion-item>
+			</ion-list>
+		</ion-col>
+	</ion-row>
 </ion-grid>
-
-
-
-
-

@@ -1,43 +1,42 @@
 <ion-header [translucent]="true">
-  <ion-toolbar>
-    <ion-title>
-      {{title}}
-    </ion-title>
+	<ion-toolbar>
+		<ion-title> {{title}} </ion-title>
 
-    <a href="https://github.com/heliomarpm/ion-calendar" slot="end" title="github" target="_blank"  rel="noreferrer noopener" >
-      <ion-icon slot="end" name="logo-github" color="dark"/>
-    </a>
-    <ion-toggle slot="end" (ionChange)="toggleTheme($event)" />
-
-  </ion-toolbar>
+		<a
+			href="https://github.com/heliomarpm/ion-calendar"
+			slot="end"
+			title="github"
+			target="_blank"
+			rel="noreferrer noopener"
+		>
+			<ion-icon slot="end" name="logo-github" color="dark" />
+		</a>
+		<ion-toggle slot="end" (ionChange)="toggleTheme($event)" />
+	</ion-toolbar>
 </ion-header>
 
 <ion-content [fullscreen]="true" class="ion-padding">
-  <ion-header collapse="condense">
-    <ion-toolbar>
-      <ion-title size="large">{{title}}</ion-title>
-    </ion-toolbar>
-  </ion-header>
+	<ion-header collapse="condense">
+		<ion-toolbar>
+			<ion-title size="large">{{title}}</ion-title>
+		</ion-toolbar>
+	</ion-header>
 
-  <div>
+	<div>
+		<h2>Install</h2>
+		<code> npm install &#64;heliomarpm/ion-calendar </code>
 
-    <h2>Install</h2>
-    <code>
-      npm install &#64;heliomarpm/ion-calendar
-    </code>
-    
+		<h2>Modal mode (result in console.log)</h2>
+		<app-demo-modal-basic></app-demo-modal-basic>
+		<app-demo-modal-config-days></app-demo-modal-config-days>
+		<app-demo-modal-custom-style></app-demo-modal-custom-style>
+		<app-demo-modal-disable-week></app-demo-modal-disable-week>
+		<app-demo-modal-locale></app-demo-modal-locale>
+		<app-demo-modal-multi></app-demo-modal-multi>
+		<app-demo-modal-range></app-demo-modal-range>
+		<app-demo-modal-range-noend-date></app-demo-modal-range-noend-date>
+		<app-demo-modal-range-backwards></app-demo-modal-range-backwards>
 
-    <h2>Modal mode (result in console.log)</h2>
-    <app-demo-modal-basic></app-demo-modal-basic>
-    <app-demo-modal-config-days></app-demo-modal-config-days>
-    <app-demo-modal-custom-style></app-demo-modal-custom-style>
-    <app-demo-modal-disable-week></app-demo-modal-disable-week>
-    <app-demo-modal-locale></app-demo-modal-locale>
-    <app-demo-modal-multi></app-demo-modal-multi>
-    <app-demo-modal-range></app-demo-modal-range>
-    <app-demo-modal-range-noend-date></app-demo-modal-range-noend-date>
-    <app-demo-modal-range-backwards></app-demo-modal-range-backwards>
-
-    <app-demo-basic></app-demo-basic>
-  </div>
+		<app-demo-basic></app-demo-basic>
+	</div>
 </ion-content>
