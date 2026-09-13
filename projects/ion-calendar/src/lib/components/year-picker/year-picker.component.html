@@ -1,9 +1,9 @@
 <div [class]="'year-picker ' + color">
-    @for (year of _yearRanges; track year) {
-    <div class="year-packer-item" [class.this-year]="year === _thisYear.getFullYear()" [class.active]="year === year">
-        <button type="button" (click)="_onSelect(year)">
-            {{ year }}
-        </button>
-    </div>
-    }
+	@for (yr of _yearRanges; track yr) {
+	<div class="year-packer-item" [class.this-year]="yr === _thisYear.getFullYear()" [class.active]="yr === year">
+		<button type="button" (click)="_onSelect(yr)">
+			{{ yr }}
+		</button>
+	</div>
+	}
 </div>
