@@ -65,8 +65,8 @@ International Organization for Standardization (ISO) 8601 formats.
 
 ## Support
 
-- @angular/core `^16.+"`
-- @ionic/angular `^6.+"`
+- @angular/core `^17.+"`
+- @ionic/angular `^7.+"`
 
 ## Installation
 
