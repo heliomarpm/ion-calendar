@@ -9,9 +9,7 @@
     "noImplicitOverride": true,
     "noPropertyAccessFromIndexSignature": true,
     "paths": {
-      "@heliomarpm/ion-calendar": [
-        "dist/ion-calendar"
-      ],
+      "@heliomarpm/ion-calendar": ["dist/ion-calendar"],
       "@heliomarpm/ion-calendar/lib/types": [
         "projects/ion-calendar/src/lib/types"
       ]
@@ -27,10 +25,7 @@
     "target": "ES2022",
     "module": "ES2022",
     "useDefineForClassFields": false,
-    "lib": [
-      "ES2022",
-      "dom"
-    ]
+    "lib": ["ES2022", "dom"]
   },
   "angularCompilerOptions": {
     "enableI18nLegacyMessageIdFormat": false,
